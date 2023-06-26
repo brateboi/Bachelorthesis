@@ -1,0 +1,247 @@
+\documentclass[a4paper,twoside,openright,11pt]{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[labelfont=bf,labelsep=period]{caption}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{numbertabbing}
+\usepackage{times}
+\usepackage{url}
+\usepackage{xspace}
+
+\floatstyle{ruled}
+\newfloat{algo}{htbp}{algo}
+\floatname{algo}{Algorithm}
+
+%%% fill in your data here %%%
+\newcommand{\thesistitle}{A Sample Thesis}
+\newcommand{\thesisauthor}{Happy I. Am}
+\newcommand{\thesisauthororigin}{Bern, Switzerland}
+\newcommand{\thesisleiter}{Prof.\ Christian Cachin}
+\newcommand{\thesisasst}{Alice Assistant}
+\newcommand{\thesisurl}{http://crypto.unibe.ch/}
+\newcommand{\thesissubtitle}{A Novel Approach to a New Idea}
+\newcommand{\thesisdate}{31. December 9999}
+
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\begin{titlepage}  
+  \thispagestyle{empty}
+
+  \begin{center}  
+    \begin{figure}[t]  
+      \center{\includegraphics[scale=0.5]{UNI_Bern.png}}
+      \vspace{1in}     
+    \end{figure}
+    
+    {\bfseries\Huge \thesistitle \\[2mm]
+      \Large \thesissubtitle}\\
+    \vspace{1.5cm}
+
+    {\bfseries\LARGE Bachelor Thesis}\\
+    \vspace{1.5cm}
+    
+    {\Large \thesisauthor\\[2mm]
+      from\\[2mm]
+      \thesisauthororigin}\\
+    \vspace{1.5cm}
+
+    {\Large Faculty of Science, University of Bern}\\
+    \vspace{1.5cm}
+
+    {\Large \thesisdate}\\
+    \vspace{1.5cm}
+
+    \vspace*{\fill}
+    {\Large
+      \thesisleiter\\
+      \thesisasst\\
+      Cryptology and Data Security Group\\
+      Institute of Computer Science\\
+      University of Bern, Switzerland\\}
+  \end{center}
+\end{titlepage}
+
+
+\chapter*{\centering Abstract}
+\begin{quote}\noindent
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+  occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+  mollit anim id est laborum.
+\end{quote}
+
+\cleardoublepage
+
+
+\tableofcontents
+
+
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+
+\chapter{Introduction}
+\label{ch:intro}
+
+Every thesis should start with an introduction.
+
+  
+\chapter{Background}
+
+This chapter sets the stage and introduces already existing material.
+
+
+\chapter{First main chapter}
+
+There are no fixed rules for the organization of the main chapters in a
+thesis.  They should describe the project and its results according to the
+standard scientific approach in the field.
+
+\paragraph{Software projects.}
+
+For a software project, the report often has just three chapters:
+\begin{enumerate}
+\item Design;
+\item Implementation;
+\item Validation.
+\end{enumerate}
+
+
+\paragraph{Theoretical projects.}
+
+A report for a theoretical project should correspond to the organization of
+the material.
+
+
+\chapter{Second main chapter}
+
+Here is an example for how to specify an algorithm in pseudo-code.
+
+% These macros are only used for the pseudo-code example
+\newcommand{\str}[1]{\textsc{#1}}
+\newcommand{\var}[1]{\textit{#1}}
+\newcommand{\op}[1]{\textsl{#1}}
+\def \ifempty#1{\def\temp{#1} \ifx\temp\empty }
+\newcommand{\msg}[2]{\ensuremath{\ifempty{#2} [\str{#1}] \else [\str{#1}, {#2}] \fi}}
+\newcommand{\tup}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\nil}{\ensuremath{\bot}}
+\newcommand{\false}{\textsc{false}\xspace}
+\newcommand{\true}{\textsc{true}\xspace}
+
+\newcommand\lastts{\var{lastts}\xspace}
+\newcommand\nextts{\var{nextts}\xspace}
+\newcommand\trusted{\var{trusted}\xspace}
+\newcommand\newepoch{\var{newepoch}\xspace}
+\newcommand\leader{\var{leader}\xspace}
+\newcommand\ts{\var{ts}\xspace}
+\newcommand{\CK}{\ensuremath{\mathcal{K}}\xspace}
+\newcommand{\CP}{\ensuremath{\mathcal{P}}\xspace}
+\newcommand{\CQ}{\ensuremath{\mathcal{Q}}\xspace}
+
+
+\begin{algo*}
+  \vbox{
+    \small
+    \begin{numbertabbing}
+      xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
+      \textbf{State} \label{}\\
+      \> \(\lastts \gets 0\): most recently started epoch \label{}\\
+      \> \(\nextts \gets 0\): timestamp of the next epoch \label{}\\
+      \> \(\newepoch \gets \msg{\nil}{}^n\): list of \str{newepoch} messages\label{}\\
+      \\
+      \textbf{upon event} \(\op{complain}(p_{\ell})\) \textbf{such that} \( p_{\ell} = \leader(\lastts)\)  \textbf{do} \label{}\\  
+      \> \textbf{if} \(\nextts = \lastts\) \textbf{then}\label{}\\
+      \> \> \(\nextts \gets \lastts + 1\) \label{}\\
+      \> \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \mathcal{P}\) \label{}\\
+      \\
+      \textbf{upon} receiving a message
+      \(\msg{\str{newepoch}}{\ts}\)  from $p_j$
+      \textbf{such that}  \(\ts = \lastts + 1 \) \textbf{do} \label{}\\
+      \> \(\newepoch[j] \gets \str{newepoch}\) \label{}\\
+      \\
+      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CK_i\) \textbf{and} \(\nextts = \lastts\) \textbf{do} \label{}\\
+      \> \(\nextts \gets \lastts + 1\) \label{}\\
+      \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \CP\) \label{}\\
+      \\
+      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CQ_i\) \textbf{and} \(\nextts > \lastts\) \textbf{do} \label{}\\
+      \> \(\lastts \gets \nextts\) \label{}\\
+      \> \(\newepoch \gets [\nil]^n\)\label{}\\
+      \> \textbf{output} \(\op{startepoch}(\lastts, \leader(\lastts))\) \label{}
+    \end{numbertabbing}
+  }
+  \caption{Byzantine Leader-Based Epoch-Change (process $p_i$).}
+  \label{alg:epoch-change}
+\end{algo*}
+
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+The conclusion looks back at the entire work, gives a critical look,
+summarizes, and discusses extensions and future work.
+
+
+\appendix
+\chapter{Extra material}
+\label{app:extra}
+
+Extra material may be placed in an appendix that appears after the conclusion.
+
+
+% The bibliography appears after any appendix.
+
+
+% remove this again once you understand citations
+\nocite{*}
+
+% using BiBTeX is required
+\bibliography{thesis}
+
+% any bibstyle is fine, this one give particularly compact output 
+\bibliographystyle{ieeesort}
+
+% mandatory declaration of origin, this must be the last page
+\chapter*{Erklärung}
+
+\emph{Erklärung gemäss Art.~30 RSL Phil.-nat. 18}
+
+\vspace*{1cm}
+
+\noindent
+Ich erkläre hiermit, dass ich diese Arbeit selbstständig verfasst und keine
+anderen als die angegebenen Quellen benutzt habe. Alle Stellen, die
+wörtlich oder sinngemäss aus Quellen entnommen wurden, habe ich als solche
+gekennzeichnet. Mir ist bekannt, dass andernfalls der Senat gemäss Artikel
+36 Absatz 1 Buchstabe r des Gesetzes vom 5. September 1996 über die
+Universität zum Entzug des auf Grund dieser Arbeit verliehenen Titels
+berechtigt ist.
+
+\vspace*{1cm}
+
+\noindent
+Für die Zwecke der Begutachtung und der Überprüfung der Einhaltung der
+Selbständigkeitserklärung bzw.  der Reglemente betreffend Plagiate erteile
+ich der Universität Bern das Recht, die dazu erforderlichen Personendaten
+zu bearbeiten und Nutzungshandlungen vorzunehmen, insbesondere die
+schriftliche Arbeit zu vervielfältigen und dauerhaft in einer Datenbank zu
+speichern sowie diese zur Überprüfung von Arbeiten Dritter zu verwenden
+oder hierzu zur Verfügung zu stellen.
+
+\vspace*{5cm}
+
+\par\noindent\makebox[6cm]{\hrulefill}   \hfill\makebox[8cm]{\hrulefill}
+\par\noindent\makebox[6cm][l]{Ort/Datum} \hfill\makebox[8cm][l]{Unterschrift}
+
+\end{document}

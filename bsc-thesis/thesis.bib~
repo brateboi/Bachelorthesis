@@ -1,0 +1,40 @@
+@book{Lamport86,
+   author       = {Leslie Lamport},
+   title        = {{\LaTeX}: A Document Preparation System},
+   publisher    = {Addison-Wesley},
+   year         = 1986,
+   address      = {Reading}
+}
+
+
+@book{CachinGR11,
+   author       = {Christian Cachin and Rachid Guerraoui and Lu{\'{i}}s
+                  Rodrigues},
+   title        = {Introduction to Reliable and Secure Distributed
+                  Programming ({Second Edition})},
+   publisher    = {Springer},
+   year         = {2011}
+}
+
+
+@inproceedings{abbccd18,
+   author       = {Elli Androulaki and Artem Barger and Vita Bortnikov and
+                  Christian Cachin and Konstantinos Christidis and Angelo
+                  {De~Caro} and David Enyeart and Christopher Ferris and
+                  Gennady Laventman and Yacov Manevich and Srinivasan
+                  Muralidharan and Chet Murthy and Binh Nguyen and Manish
+                  Sethi and Gari Singh and Keith Smith and Alessandro
+                  Sorniotti and Chrysoula Stathakopoulou and Marko
+                  Vukoli\'{c} and Sharon Weed and Jason Yellick},
+   title        = {{Hyperledger} {Fabric}: A Distributed Operating System for
+                  Permissioned Blockchains},
+   booktitle    = {Proc.\ 13th European Conference on Computer Systems
+                  (EuroSys)},
+   year         = {2018},
+   pages        = {30:1--30:15},
+   month        = apr,
+   articleno    = {30},
+   url          = {https://doi.org/10.1145/3190508.3190538}
+}
+
+
