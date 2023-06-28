@@ -21,14 +21,18 @@
 \floatname{algo}{Algorithm}
 
 % Fill in your data here.
-\newcommand{\thesistitle}{A Sample Thesis}
-\newcommand{\thesisauthor}{Happy I. Am}
+\newcommand{\thesistitle}{3D Metric Fields}
+\newcommand{\thesisauthor}{Florin Achermann}
 \newcommand{\thesisauthororigin}{Bern, Switzerland}
 \newcommand{\thesisleiter}{Prof.\ Christian Cachin}
-\newcommand{\thesisasst}{Alice Assistant}
-\newcommand{\thesisurl}{http://crypto.unibe.ch/}
+\newcommand{\thesisasst}{Denis Kalmykov}
+\newcommand{\thesisurl}{http://cgg.unibe.ch/}
 \newcommand{\thesissubtitle}{A Novel Approach to a New Idea}
-\newcommand{\thesisdate}{31. December 9999}
+\newcommand{\thesisdate}{15. September 2023}
+
+% bars for matrices
+\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
 
 
 \begin{document}
@@ -66,7 +70,7 @@
     {\Large
       \thesisleiter\\
       \thesisasst\\
-      Cryptology and Data Security Group\\
+      Computer Graphics Group\\
       Institute of Computer Science\\
       University of Bern, Switzerland\\}
   \end{center}
@@ -105,6 +109,55 @@ in \LaTeX~\cite{DBLP:books/daglib/0023602}.
 \chapter{Background}
 
 This chapter sets the stage and introduces already existing material.
+
+A frame F is a set of 6 vectors $\{\pm F_0, \pm F_1, \pm F_2 \}$.
+We can represent such a frame F as a $3\times3$ matrix F, where the $i$th-column is $F_i$.
+A frame field then maps to every point in 3D-space such a frame, i.e. $F: \mathbb{R}^3 \to \mathbb{R}^{3\times3}$.
+Usually, we work on a 3-manifold $\mathcal{M}$ and a positively oriented frame field, i.e.
+$F\vert_{\mathcal{M}}: \mathcal{M} \to \mathbb{R}^{3\times3}$, where $\det(F)>0$.
+To allow for anisotropic, nonuniform meshes, we generalize orthonormality of frames to
+$g$-orthonormal frames. Orthonormality is measured in some metric $g$, and a frame F satifisfies the condition
+$\langle F_i, F_j \rangle _g = \delta_{ij}$.
+Any frame field with $\det(F)>0$ naturally defines a metric $g= (FF^T)^{-1}$, where $F$ is $g$-orthonormal
+$$F^TgF = Id.$$
+We can factor the frame field F into a symmetric part $g^{1/2}$ and a rotational part $R$
+$$F = g^{-1/2}R$$
+The symmetric part $g^{-1/2}$ keeps $F$ $g$-orthonormal
+$$ \implies F^TgF = (g^{-1/2}R)^Tgg^{-1/2}R)=R^Tg^{-1/2}gg^{-1/2}R =Id.$$
+and $R$ represents a rotational field $R: \mathcal{M} \to SO(3)$.
+The requirements for our frame field are:
+\begin{itemize}
+  \item Smoothness
+  \item Integrability
+  \item Metric consistency: $g = (FF^T)^{-1}$
+\end{itemize}
+
+A vector field $U$ is integrable, if and only if $\nabla \times U = 0$,
+which means the vector field has vanishing curl everywhere.
+We can express this more naturally with the language of differential forms:
+The curl can be written as the exterior derivative $d$ of a one-form $\alpha$.
+A one-form (more generally, a differential form) is closed, if $d\alpha = 0$.
+Therefore, the local integrability can be expressed as the closedness of a one-form.
+We want $F^{-1}$ (TODO: why $F^{-1}$) to be integrable.
+To achieve local integrability for, it suffices to make $R$ locally integrable.
+We can think of a rotation field $R$ as the composition of 3 vector fields
+$$R = \begin{bmatrix}
+  \vertbar & \vertbar & \vertbar \\
+  R_1 & R_2 & R_3 \\
+  \vertbar & \vertbar & \vertbar
+\end{bmatrix}$$
+where $R_i : \mathbb{R}^3 \to \mathbb{R}^3$ is a vector field.
+We can therefore construct a vector-valued one-form, given $p=(x,y,z)^T$ in Euclidean coordinates
+$$\alpha \triangleq F^{-1}dp = R^Tg^{1/2}dp$$
+where $dp = (dx,dy,dz)^T$ is the common orthonormal one-form basis of $\Omega^1(\mathcal{M})$.
+$$R \text{ locally integrable} \iff 0 = d\alpha$$
+
+% $$
+% \alpha \triangleq  \begin{bmatrix}
+%   \alpha_1 \\ \alpha_2 \\ \alpha_3
+% \end{bmatrix}
+% $$
+
 
 
 \chapter{First main chapter}
