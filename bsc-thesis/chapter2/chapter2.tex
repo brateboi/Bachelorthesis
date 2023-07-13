@@ -1,0 +1,34 @@
+\documentclass[../thesis.tex]{subfiles}
+
+
+
+\begin{document}
+\chapter{Mathematical Background}
+
+This chapter sets the stage and introduces already existing material.
+
+A frame F is a set of 6 vectors $\{\pm F_0, \pm F_1, \pm F_2 \}$.
+We can represent such a frame F as a $3\times3$ matrix F, where the $i$th-column is $F_i$.
+A frame field then maps to every point in 3D-space such a frame, i.e. $F: \mathbb{R}^3 \to \mathbb{R}^{3\times3}$.
+Usually, we work on a 3-manifold $\mathcal{M}$ and a positively oriented frame field, i.e.
+$F\vert_{\mathcal{M}}: \mathcal{M} \to \mathbb{R}^{3\times3}$, where $\det(F)>0$.
+To allow for anisotropic, nonuniform meshes, we generalize orthonormality of frames to
+$g$-orthonormal frames. Orthonormality is measured in some metric $g$, and a frame F satifisfies the condition
+$\langle F_i, F_j \rangle _g = \delta_{ij}$.
+Any frame field with $\det(F)>0$ naturally defines a metric $g= (FF^{\top})^{-1}$, where $F$ is $g$-orthonormal
+$$F^{\top}gF = Id.$$
+We can factor the frame field F into a symmetric part $g^{1/2}$ and a rotational part $R$
+$$F = g^{-1/2}R$$
+The symmetric part $g^{-1/2}$ keeps $F$ $g$-orthonormal
+$$ \implies F^{\top}gF = (g^{-1/2}R)^{\top}gg^{-1/2}R)=R^{\top}g^{-1/2}gg^{-1/2}R =Id.$$
+and $R$ represents a rotational field $R: \mathcal{M} \to SO(3)$.
+The requirements for our frame field are:
+\begin{itemize}
+  \item Smoothness
+  \item Integrability
+  \item Metric consistency: $g = (FF^{\top})^{-1}$
+\end{itemize}
+
+
+
+\end{document}

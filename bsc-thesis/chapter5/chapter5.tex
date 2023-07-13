@@ -1,0 +1,67 @@
+\documentclass[../thesis.tex]{subfiles}
+\begin{document}
+
+
+\chapter{Algorithm for $R$ between two arbitrary points in a mesh}
+\cite{Fang23}
+Here is an example for how to specify an algorithm in pseudo-code.
+
+% These macros are only used for the pseudo-code example.
+\newcommand{\str}[1]{\textsc{#1}}
+\newcommand{\var}[1]{\textit{#1}}
+\newcommand{\op}[1]{\textsl{#1}}
+\def \ifempty#1{\def\temp{#1} \ifx\temp\empty }
+\newcommand{\msg}[2]{\ensuremath{\ifempty{#2} [\str{#1}] \else [\str{#1}, {#2}] \fi}}
+\newcommand{\tup}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\nil}{\ensuremath{\bot}}
+\newcommand{\false}{\textsc{false}\xspace}
+\newcommand{\true}{\textsc{true}\xspace}
+
+\newcommand\lastts{\var{lastts}\xspace}
+\newcommand\nextts{\var{nextts}\xspace}
+\newcommand\trusted{\var{trusted}\xspace}
+\newcommand\newepoch{\var{newepoch}\xspace}
+\newcommand\leader{\var{leader}\xspace}
+\newcommand\ts{\var{ts}\xspace}
+\newcommand{\CK}{\ensuremath{\mathcal{K}}\xspace}
+\newcommand{\CP}{\ensuremath{\mathcal{P}}\xspace}
+\newcommand{\CQ}{\ensuremath{\mathcal{Q}}\xspace}
+
+
+\begin{algo*}
+  \vbox{
+    \small
+    \begin{numbertabbing}
+      xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
+      \textbf{State} \label{}\\
+      \> \(\lastts \gets 0\): most recently started epoch \label{}\\
+      \> \(\nextts \gets 0\): timestamp of the next epoch \label{}\\
+      \> \(\newepoch \gets \msg{\nil}{}^n\): list of \str{newepoch} messages\label{}\\
+      \\
+      \textbf{upon event} \(\op{complain}(p_{\ell})\) \textbf{such that} \( p_{\ell} = \leader(\lastts)\)  \textbf{do} \label{}\\  
+      \> \textbf{if} \(\nextts = \lastts\) \textbf{then}\label{}\\
+      \> \> \(\nextts \gets \lastts + 1\) \label{}\\
+      \> \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \mathcal{P}\) \label{}\\
+      \\
+      \textbf{upon} receiving a message
+      \(\msg{\str{newepoch}}{\ts}\)  from $p_j$
+      \textbf{such that}  \(\ts = \lastts + 1 \) \textbf{do} \label{}\\
+      \> \(\newepoch[j] \gets \str{newepoch}\) \label{}\\
+      \\
+      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CK_i\) \textbf{and} \(\nextts = \lastts\) \textbf{do} \label{}\\
+      \> \(\nextts \gets \lastts + 1\) \label{}\\
+      \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \CP\) \label{}\\
+      \\
+      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CQ_i\) \textbf{and} \(\nextts > \lastts\) \textbf{do} \label{}\\
+      \> \(\lastts \gets \nextts\) \label{}\\
+      \> \(\newepoch \gets [\nil]^n\)\label{}\\
+      \> \textbf{output} \(\op{startepoch}(\lastts, \leader(\lastts))\) \label{}
+    \end{numbertabbing}
+  }
+  \caption{Byzantine Leader-Based Epoch-Change (process $p_i$).}
+  \label{alg:epoch-change}
+\end{algo*}
+
+
+
+\end{document}
