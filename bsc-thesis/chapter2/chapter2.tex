@@ -16,9 +16,6 @@ In simple terms, a manifold is \emph{smooth} if it is similar enough to $\mathbb
 like differentiation or integration on it. For this, each point on the manifold must be
 locally \emph{diffeomorphic} to an open subset of $\mathbb{R}^n$ space.
 
-A \emph{Riemannian manifold} $(\mathcal{M},g)$ is a real, smooth manifold, which is additionally equipped with
-a metric $g$ at each point $p$ on the manifold.
-
 \paragraph{Tangent space, Tangent bundle} There are many equivalent definitions
 for the tangent space. One definition is for each point $p$ in the manifold $\mathcal{M}$,
 the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths $\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}$
@@ -32,12 +29,57 @@ A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuos map, with
 Sections of $T\mathcal{M}$ are vector fields on $\mathcal{M}$.
 
 \paragraph{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
-consists of all linear maps $L: V \to \mathbb{R}$.
+consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
+$V^*$ is itself a vector space, with the same dimension as $V$ and operations like addition and scalar multiplication
+can be performed on its elements. Any element in a vector space can be expressed as 
+a finite linear combination of its basis. This basis is called the \emph{dual basis}.
+Thus, we call the dual space of the vector space $T_p\mathcal{M}$ its \emph{cotangent space},
+denoted by $T^*_p\mathcal{M}$. As before, the disjoint union of $T^*_p\mathcal{M}$ forms the \emph{cotangent bundle}:
+$T^*\mathcal{M}=\sqcup _{p\in \mathcal{M}}T^*_p\mathcal{M}$. Defined analogously from above,
+sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}.
 
-\paragraph{Metric}
-\paragraph{g-orthonormality}
-\paragraph{Exterior Derivative, Differential}
-\paragraph{One-Forms in particular}
+\paragraph{Tensors}
+Before we can introduce differential forms in the next paragraph, we need to go a little bit into \emph{tensors}.
+In simple words, tensors are real-valued, multilinear functions.
+A map $F: V_1 \times \dots V_k \to W$ is multilinear, if $F$ is linear in each component.
+For example, the dot product in $\mathbb{R}^n$ is a tensor. It takes two vectors and is linear in each component - bilinear.
+Another example is the \emph{Tensor Product of Covectors}:
+Let $V$ be a vector space and take two covectors $\omega, \eta \in V^*$.
+Define the new function $\omega \otimes \eta: V\times V \to \mathbb{R}$ by
+$\omega \otimes \eta (v_1,v_2) = \omega(v_1)\eta(v_2)$. It is multilinear, because $\omega$ and $\eta$ are linear.
+We look at a special class of tensors, the \emph{alternating tensors}.
+A tensor is alternating, if it changes sign whenever two arguments are interchanged,
+i.e. $\omega(v_1, v_2) = -\omega(v_2, v_1)$.
+A covariant tensor field over a manifold defines a covariant tensor at each point on the manifold,
+covariant because the tensor is over the cotangent space $T^*_p\mathcal{M}$.
+An alternating tensor field is called a \emph{differential form}.
+
+\paragraph{Differential Forms, Exterior Derivative}
+Recall that a section from $T^*\mathcal{M}$ is called a differential 1-form, or just 1-form.
+Define the \emph{wedge product} (or \emph{exterior product}) between two 1-forms:
+$$(\omega \wedge \eta)_p = \omega_p \wedge \eta_p$$
+Notice the similarity to the \emph{Tensor Product of Covectors}: We get a new map, (a 2-form):
+$$\omega \wedge \eta: T\mathcal{M} \times T\mathcal{M} \to \mathbb{R}$$
+The wedge product is antisymmetric, therefore $\omega \wedge \eta = -\eta \wedge \omega$ for 1-forms $\omega$ and $\eta$.
+There is a natural differential operator $d$ on differential forms we call \emph{exterior derivative}.
+The exterior derivative is a generalization of the differential of a function.
+In particular, a smooth function $f$ (a 0-form) has the derivative $df$ which is a 1-form.
+The exact definition is not important for us, so let us just look at some properties so we can work with it.
+If $\omega$ is a k-form, $d\omega$ is a (k+1)-form.
+TODO
+
+\paragraph{Riemannian metric, $g$-orthonormality}
+Inner products are examples of symmetric tensors. They allow us to define lengths and angles
+between vectors. We can apply this idea to manifolds.
+A Riemannian metric $g$ is a symmetric positive-definite tensor field at each point.
+If $\mathcal{M}$ is a manifold, the pair $(\mathcal{M},g)$ is called a \emph{Riemannian manifold}.
+Let $g$ be the Riemannian metric on $\mathcal{M}$ and $p\in \mathcal{M}$,
+then $g_p$ is an inner product on $T_p\mathcal{M}$. We write $\langle \cdot, \cdot\rangle_g$ to denote this inner product.
+Any Riemannian metric can be written as positive-definite symmetric matrix, which allows for this simple form: $\langle v,w\rangle_g = v^{\top}gw$.
+
+Such a new metric allows for the definition of \emph{$g$-orthonormality}:
+A basis $[e_1, e_2, e_3]$ of $T_p\mathcal{M}$ is $g$-orthonormal if $\langle e_i, e_j \rangle_g = \delta_{ij}$.
+
 \paragraph{connection, covariant derivative}
 \paragraph{lie algebra so(3)}
 \paragraph{Frame field, vector field, integrability}
