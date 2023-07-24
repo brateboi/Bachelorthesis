@@ -44,7 +44,7 @@ $$\omega = RdR^{\top} \in \mathfrak{so}(3).$$
   \end{align*}
 \end{proof}
 Elements of the Lie algebra $\mathfrak{so}(3)$ can be thought as infinitesimal rotations and $\omega$ can be used
-as a connection one-form. For our purposes, it suffices to know that elements are antisymmetric matrices.
+as a connection one-form. The Lie algebra $\mathfrak{so}(3)$ has manifold structure, but for our purposes, it suffices to know that elements are antisymmetric matrices.
 To make $R$ locally integrable, we find $\omega$ such that the one-form $\alpha$ is closed ($d\alpha = 0$, curl-free),
 then try to match the $\omega$ with $R$, which can be expressed as
 $$\min_{R\in SO(3)} ||RdR^T - \omega ||^2.$$
@@ -79,11 +79,11 @@ $$
 So e.g. $$\omega_{23} = \begin{bmatrix}
   dx & dy & dz
 \end{bmatrix}W_1 = (\omega^{23})_1dx + (\omega^{23})_2dy + (\omega^{23})_3dz$$
-We write $A = g^{1/2}= \begin{bmatrix}
+We also write $A = g^{1/2}= \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$.
 We use the equation $\bm{0} = \omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)$.
-First part:
+Let us start with the first part:
 \begin{align*}
   \omega \wedge g^{1/2}dp &= 
   \begin{bmatrix}
@@ -218,7 +218,8 @@ With these two definitions, we can transform the above equality into a linear sy
 $$A_{\times} \vecop(W) = \vecop (\nabla \times A)$$
 where $\nabla \times A$ is just the curl applied to each column. This transformation can be checked by laboriously plugging in the definitions and comparing the coefficients.
 With tedious calculations, one can show that $\det(A_{\times})=-2\det(A)^3=-2\det(g)^{3/2}<0$, which
-means this is a linear system that can be used to solve for $W$ at a point.
+means this is a linear system that is solvable and can be used to calculate $W$ at a point.
+
 
 
 
