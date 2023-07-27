@@ -45,6 +45,18 @@
 \newtheorem*{remark}{Remark}
 
 
+% gilles castel figures
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+\pdfsuppresswarningpagegroup=1
+
+
 \begin{document}
 
 \pagenumbering{roman}

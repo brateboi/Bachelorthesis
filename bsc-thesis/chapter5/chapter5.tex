@@ -1,11 +1,6 @@
 \documentclass[../thesis.tex]{subfiles}
 \begin{document}
 
-
-\chapter{Algorithm for $R$ between two arbitrary points in a mesh}
-\cite{Fang23}
-Here is an example for how to specify an algorithm in pseudo-code.
-
 % These macros are only used for the pseudo-code example.
 \newcommand{\str}[1]{\textsc{#1}}
 \newcommand{\var}[1]{\textit{#1}}
@@ -26,6 +21,42 @@ Here is an example for how to specify an algorithm in pseudo-code.
 \newcommand{\CK}{\ensuremath{\mathcal{K}}\xspace}
 \newcommand{\CP}{\ensuremath{\mathcal{P}}\xspace}
 \newcommand{\CQ}{\ensuremath{\mathcal{Q}}\xspace}
+
+\chapter{Algorithm for $R$ between two arbitrary points in a mesh}
+To measure the Dirichlet energy, we need to calculate the rotation coefficient
+between to arbitrary points $q$ and $p$ that do not necessarily lie within the same 
+tetrahedron. Since the metric and curl is different in each tet, we need to be
+able to efficiently determine all tets that get intersected by the straight
+line from $q$ to $p$, and use the correct metric for each corresponding
+line segment.
+The calculation for the coefficient then works in the following way:
+\begin{algo*}
+  \vbox{
+    \small
+    \begin{numbertabbing}
+      xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
+      \textbf{Input} $(q,p)$ \label{}\\
+      \> $\str{lineSegments} \gets$ $\op{tetFinder($q,p$)}$ //returns all tets intersected by the line $\Vec{pq}$ with the line segments within them \label{}\\
+      \> $R \gets \Id$ \label{}\\
+      \> \textbf{for each} $\str{segment}$ \textbf{in} $\str{lineSegments}$ \label{}\\
+      \> \> $R \gets R \cdot \op{calcCoeff}(\str{segment})$ \label{}\\
+      \\
+      \textbf{return} $R$ \label{}
+    \end{numbertabbing}
+  }
+  \caption{Rotation coefficient $R$ between $q$ and $p$}
+\end{algo*}
+
+The missing component here is how do we efficiently find all tetrahedra
+that get intersected. One possibility would be to use ray-triangle intersection and
+test against the whole mesh, but this is not practical, as we have have local information
+that we can exploit.
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{10em}
+  \input{figures/illustration.pdf_tex}
+  \caption*{Mesh}        
+\end{figure}
 
 
 \begin{algo*}
