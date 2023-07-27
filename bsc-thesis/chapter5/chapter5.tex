@@ -47,16 +47,85 @@ The calculation for the coefficient then works in the following way:
   \caption{Rotation coefficient $R$ between $q$ and $p$}
 \end{algo*}
 
-The missing component here is how do we efficiently find all tetrahedra
+The missing component here is how to efficiently find all tetrahedra
 that get intersected. One possibility would be to use ray-triangle intersection and
 test against the whole mesh, but this is not practical, as we have have local information
 that we can exploit.
+
+
+We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which relies only on
+on so called \emph{orientation tests} to determine which triangles we traverse.
+\paragraph{Framework}
+Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that is convex.
+The straight walk traverses all triangles that get intersected by the line segment
+from $q$ to $p$. The algorithm first makes an initialization step to get into a valid state, 
+then the straight walk can start.
+To get a feeling how the algorithm works, let us go through an example in 2D.
+If the algorithm was in a valid state before, the line from $q$ to $p$
+intersects with some edge $\vec{lr}$. Two triangles share this edge.
+We test on which side point $p$ lies of this edge to decide whether the walk continues.
+If the walk continues, we jump through the edge to hop from the old triangle to a new one.
+This triangle is defined by three vertices $(l,r,s)$. We decide if
+the new candidate point $s$ lies on the left side or right side of the line from $q$ to $p$.
+If $s$ lies on the left, point $l$ is moved, else point $r$ is moved.
+A new edge intersected with the line $\vec{qp}$ is found and the walk repeats.
+This process is illustrated in Figure \ref{alg:straight-walk-2d}
 \begin{figure}[htb]
   \centering
-  \def\svgwidth{10em}
+  \def\svgwidth{35em}
   \input{figures/illustration.pdf_tex}
-  \caption*{Mesh}        
+  \caption{Straight walk step}\label{alg:straight-walk-2d}        
 \end{figure}
+
+To determine the on which side a point lies in 2D, the geometric \emph{orientation} predicate is used.
+It corresponds to evaluating the sign of a determinant. Analogously in 3D, the orientation predicate
+tests whether a fourth point lies above or below a plane defined by three other points.
+How ``above'' the plane is defined depends on the ordering within the determinant. In this case,
+it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise 
+\begin{align*}
+  orientation(\alpha, \beta, \gamma) &= 
+  sign\left(
+  \begin{vmatrix}
+    \beta_x -\alpha_x & \gamma_x - \alpha_x \\
+    \beta_y -\alpha_y & \gamma_y - \alpha_y 
+  \end{vmatrix}\right)
+  \\
+  orientation(\alpha, \beta, \gamma, \delta) &= 
+  sign\left(
+  \begin{vmatrix}
+    \beta_x -\alpha_x & \gamma_x - \alpha_x & \delta_x - \alpha_x \\
+    \beta_y -\alpha_y & \gamma_y - \alpha_y & \delta_y - \alpha_y \\
+    \beta_z -\alpha_z & \gamma_z - \alpha_z & \delta_z - \alpha_z
+  \end{vmatrix}\right)
+\end{align*}
+
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/orientation2d.pdf_tex}
+  \caption{Orientation predicate}\label{alg:orient2d}        
+\end{figure}
+It is important that the sign of the determinant is evaluated exactly.
+If geometric predicates are implemented with floating point arithmetic,
+the answers may be inconsistent and wrong.
+Because of the finite mantissa in floating point representation \cite{ieee754}, many numbers cannot be represented exactly.
+The machine needs to round a number $x$ to its nearest number that is exactly representable.
+Many times, roundoff errors occur, a famous example of this is $0.1 + 0.2 = 0.30000000000000004$.
+We call the distance between two exactly representable floating point numbers \emph{machine epsilon} $\varepsilon$.
+See figure \ref{alg:floatingpoint} for how this machine epsilon can cause trouble (Example from http://groups.csail.mit.edu/graphics/classes/6.838/S98/meetings/m12/pred/m12.html).
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/floatingpointerror.pdf_tex}
+  \caption{The orientation predicate implemented with floating point arithmetic cannot distinguish these two cases.
+  The orientation test calculates $(a+\varepsilon)-a$. If $a=0$, the orientation test is strictly positive.
+  If $a=1$, then the result is $0$, because during the calculation the machine had to round.
+  }\label{alg:floatingpoint}
+\end{figure}
+Logical decision based on floating point arithmetic is correct most of the times, but not always.
+To fix this issue, we make use of exact predicates that are implemented with arbitrary precision \cite{RichardShewchuk1997}.
+Inputs to the orientation test subroutines are assumed to be exact, and we can be sure
+that the result has the correct sign.
 
 
 \begin{algo*}
