@@ -68,20 +68,40 @@ If the walk continues, we jump through the edge to hop from the old triangle to 
 This triangle is defined by three vertices $(l,r,s)$. We decide if
 the new candidate point $s$ lies on the left side or right side of the line from $q$ to $p$.
 If $s$ lies on the left, point $l$ is moved, else point $r$ is moved.
-A new edge intersected with the line $\vec{qp}$ is found and the walk repeats.
-This process is illustrated in Figure \ref{alg:straight-walk-2d}
+A new edge intersected with the ray $\vec{qp}$ is found and the walk repeats.
+This process is illustrated in Figure \ref{fig:straight-walk-2d}
 \begin{figure}[htb]
   \centering
   \def\svgwidth{35em}
   \input{figures/illustration.pdf_tex}
-  \caption{Straight walk step}\label{alg:straight-walk-2d}        
+  \caption{Straight walk step}\label{fig:straight-walk-2d}        
 \end{figure}
 
-To determine the on which side a point lies in 2D, the geometric \emph{orientation} predicate is used.
+Notice how the ray $\vec{qp}$ always intersects the edge $\vec{lr}$ at each update step.
+We can use this observation to add each edge at each update step to a list.
+When the algorithm terminates, we can just iterate over this list, find
+the intersection point of the ray $\vec{qp}$ with the edge and calculate the rotation
+coefficient for this segment.
+The straight walk in 3d works similarly. The initialization step consists of finding a starting tet $t$
+where $q$ is contained. Then, we find the face of the tet $t$ that gets intersected by the ray
+$\vec{qp}$. Again, at each step, we know that the ray goes out of our current tet $t$ through some
+face $e$ defined by vertices $uvw$. We decide if the walk continues by checking on which side $p$ lies relative to $e$.
+If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two orientation tests
+we decide which of the vertices $u, v, w$ gets moved to the new candidate point $s$. This defines
+a new face $e_{new}$ where our ray intersects and the walk repeats.
+Degenerate cases such as when the ray $\vec{qp}$ goes exactly through a vertex or
+when the ray lies within a face, the algorithm may get into
+an invalid state, where the algorithm may then traverse through
+cells that do not get intersected by the ray. We need to detect and escape those degenerate cases
+through some additional checks. These are not described in the paper\cite{Devillers}.
+In most cases, a simple reinitialization is enough when the invalid state is detected.
+
+\paragraph{A note on orientation tests}
+To determine on which side some point $s$ lies relative to two other points $q,p$ (that represent a line) in 2D, the geometric \emph{orientation} predicate is used.
 It corresponds to evaluating the sign of a determinant. Analogously in 3D, the orientation predicate
 tests whether a fourth point lies above or below a plane defined by three other points.
 How ``above'' the plane is defined depends on the ordering within the determinant. In this case,
-it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise 
+it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise (see figure \ref{fig:orient2d}).
 \begin{align*}
   orientation(\alpha, \beta, \gamma) &= 
   sign\left(
@@ -103,7 +123,8 @@ it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise
   \centering
   \def\svgwidth{20em}
   \input{figures/orientation2d.pdf_tex}
-  \caption{Orientation predicate}\label{alg:orient2d}        
+  \caption{Orientation predicate: Point $a$ lies above the plane $bcd$ because it sees the points in counterclockwise order, $orientation(a,b,c,d)>0$}
+  \label{fig:orient2d}
 \end{figure}
 It is important that the sign of the determinant is evaluated exactly.
 If geometric predicates are implemented with floating point arithmetic,
@@ -112,7 +133,7 @@ Because of the finite mantissa in floating point representation \cite{ieee754}, 
 The machine needs to round a number $x$ to its nearest number that is exactly representable.
 Many times, roundoff errors occur, a famous example of this is $0.1 + 0.2 = 0.30000000000000004$.
 We call the distance between two exactly representable floating point numbers \emph{machine epsilon} $\varepsilon$.
-See figure \ref{alg:floatingpoint} for how this machine epsilon can cause trouble (Example from http://groups.csail.mit.edu/graphics/classes/6.838/S98/meetings/m12/pred/m12.html).
+See figure \ref{fig:floatingpoint} for how this machine epsilon can cause trouble (Example from http://groups.csail.mit.edu/graphics/classes/6.838/S98/meetings/m12/pred/m12.html).
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -120,48 +141,64 @@ See figure \ref{alg:floatingpoint} for how this machine epsilon can cause troubl
   \caption{The orientation predicate implemented with floating point arithmetic cannot distinguish these two cases.
   The orientation test calculates $(a+\varepsilon)-a$. If $a=0$, the orientation test is strictly positive.
   If $a=1$, then the result is $0$, because during the calculation the machine had to round.
-  }\label{alg:floatingpoint}
+  }\label{fig:floatingpoint}
 \end{figure}
 Logical decision based on floating point arithmetic is correct most of the times, but not always.
 To fix this issue, we make use of exact predicates that are implemented with arbitrary precision \cite{RichardShewchuk1997}.
 Inputs to the orientation test subroutines are assumed to be exact, and we can be sure
 that the result has the correct sign.
 
+The final algorithm to find all intersected tetrahedra between two points is as follows.
+
 
 \begin{algo*}
   \vbox{
     \small
     \begin{numbertabbing}
+      \reset
       xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
-      \textbf{State} \label{}\\
-      \> \(\lastts \gets 0\): most recently started epoch \label{}\\
-      \> \(\nextts \gets 0\): timestamp of the next epoch \label{}\\
-      \> \(\newepoch \gets \msg{\nil}{}^n\): list of \str{newepoch} messages\label{}\\
+      \textbf{Input} $(q,p)$ \label{}\\
+      \> $t = \op{LocateTet(q)}$ \label{}\\
+      \> $\op{initialization(t)}$ \label{}\\
       \\
-      \textbf{upon event} \(\op{complain}(p_{\ell})\) \textbf{such that} \( p_{\ell} = \leader(\lastts)\)  \textbf{do} \label{}\\  
-      \> \textbf{if} \(\nextts = \lastts\) \textbf{then}\label{}\\
-      \> \> \(\nextts \gets \lastts + 1\) \label{}\\
-      \> \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \mathcal{P}\) \label{}\\
+      \> // $qp$ intersects triangle $uvw$ \label{}\\
+      \> // $wvqp, vuqp, uwqp$ are positively oriented \label{}\\
+      \> $\str{lineSegments} = [~]$\label{}\\
+      \> $\str{prev} = q$\label{}\\
+      \> $\str{curr} = \op{intersection}(qp, uvw)$\label{}\\
       \\
-      \textbf{upon} receiving a message
-      \(\msg{\str{newepoch}}{\ts}\)  from $p_j$
-      \textbf{such that}  \(\ts = \lastts + 1 \) \textbf{do} \label{}\\
-      \> \(\newepoch[j] \gets \str{newepoch}\) \label{}\\
+      \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
       \\
-      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CK_i\) \textbf{and} \(\nextts = \lastts\) \textbf{do} \label{}\\
-      \> \(\nextts \gets \lastts + 1\) \label{}\\
-      \> send message \(\msg{\str{newepoch}}{\nextts}\) to all \(p_j \in \CP\) \label{}\\
-      \\
-      \textbf{upon exists} \(\ts\) \textbf{such that} \(\{ p_j \in \CP |~\newepoch[j] = \ts \} \in \CQ_i\) \textbf{and} \(\nextts > \lastts\) \textbf{do} \label{}\\
-      \> \(\lastts \gets \nextts\) \label{}\\
-      \> \(\newepoch \gets [\nil]^n\)\label{}\\
-      \> \textbf{output} \(\op{startepoch}(\lastts, \leader(\lastts))\) \label{}
+      \> \textbf{while} $orientation(u,w,v,p)>0$ \{ \label{}\\
+      \> \> $t$ = neighbor($t$ through $uvw$) \label{}\\
+      \> \> $s$ = vertex of $t, s \neq u, s \neq v, s \neq w$ \label{}\\
+      \> \> $\str{prev} = \str{curr}$ \label{}\\
+      \> \> \textbf{if} $orientation(u,s,q,p) > 0$ // $qp$ does not intersect triangle $usw$\label{}\\
+      \> \> \> \textbf{if} $orientation(v,s,q,p) > 0$ // $qp$ intersects triangle $vsw$ \label{}\\
+      \> \> \> \> u = s \label{}\\
+      \> \> \> \textbf{else} // $qp$ intersects triangle $usv$ \label{}\\
+      \> \> \> \> w = s \label{}\\
+      \> \> \textbf{else} // $qp$ does not intersect $usv$ \label{}\\
+      \> \> \> \textbf{if} $orientation(w,s,q,p) > 0$ // $qp$ intersects triangle $usw$ \label{}\\
+      \> \> \> \> v = s \label{}\\
+      \> \> \> \textbf{else} // $qp$ intersects triangle $vsw$ \label{}\\
+      \> \> \> \> u = s \label{}\\
+      \> \> $\str{curr} = \op{intersection}(qp, uvw)$ \label{}\\
+      \> \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
+      \> \} // $t$ contains $p$ \label{}\\
+      \> $\str{lineSegments}.\op{add}([t, \str{prev}, p])$ \label{}\\
     \end{numbertabbing}
   }
-  \caption{Byzantine Leader-Based Epoch-Change (process $p_i$).}
-  \label{alg:epoch-change}
+  \caption{tetFinder}
+  \label{alg:tetFinder}
 \end{algo*}
-
+The algorithm uses several subroutines which are described here:
+  \begin{itemize}
+    \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
+    \item \texttt{vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
+    vertices are known
+    \item \texttt{initialization()}
+  \end{itemize}
 
 
 \end{document}
