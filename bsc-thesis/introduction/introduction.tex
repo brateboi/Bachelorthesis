@@ -3,6 +3,48 @@
 \begin{document}
 \chapter{Introduction}
 \label{ch:intro}
+In many applications of computer graphics or engineering, the geometry of objects
+has to be described in some way. Finite elements encode various information such as physical properties
+to be used in e.g. stress simulations.
+While it is possible for simple objects such as spheres or planes to describe them
+with analytical formulas, this is unfeasible for arbitrary objects of any shape.
+To describe any geometric object, it is discretized and encoded as a mesh.
+Volumetric meshes are used to encode the surface and the interior of an object.
+The most common types of volumetric meshes are tetrahedral and hexahedral meshes.
+Hexahedral meshes, that is a decomposition into cube-like elements,
+are usually prefered due to their superior numerical accuracy and faster compute time.
+However, automatically generating high-quality meshes remains a hard challenge
+in computer graphics.
+A promising research direction is through the use of frame fields.
+
+A \emph{frame field} can be seen as a generalization of vector fields.
+They prescribe a \emph{frame} to each point on an object, that is, three linearly-independent
+vectors. Each frame locally represents the orientation and deformation of a cube.
+Consequently, frame fields must be so called boundary-aligned:
+At the boundary of an object, one vector of the frame must be aligned with the surface normal
+as hexahedral elements should align at the boundary.
+Then, the objective is to find the ``best'' frame field.
+Usually, ``best'' is measured in the smoothness of the frame field.
+Smoothness is measured with the Dirichlet energy $\int_{\Omega}||\nabla \phi||^2dx$,
+where $\phi$ is a frame, and we measure how much these frames twist and rotate within the object.
+
+To allow for non-uniform and anisotropic hexahedral elements, we introduce
+\emph{metric fields}. Optimizing the frame field in this new metric (instead of the usual euclidean metric) then results
+in elements that are uniform and isotropic in this new metric.
+To this end, the expression for the Dirichlet energy must be changed.
+We will show how to calculate a special rotation matrix $R$, which describes
+how frames are aligned in the new metric.
+
+
+In this thesis, we rederive how we pull back the metric with the rotation coefficient $R$ such that we can measure
+the Dirichlet energy in the usual cartesian coordinates as described in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
+The necessary mathematical background is introduced in \ref{ch:math-background}.
+
+
+
+
+
+
 \begin{itemize}
   \item What are Frame Fields?
   \item Why are they important?
@@ -10,7 +52,6 @@
 \end{itemize}
 A frame field 
 
-A vector field is locally integrable, if and only if $\nabla \times A = 0$. \cite{Pap20}
 
 
 \end{document}
