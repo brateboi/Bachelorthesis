@@ -2,11 +2,11 @@
 
 \begin{document}
 \chapter{Mathematical Background}\label{ch:math-background}
-We will make heavy use of differential geometry in the following sections.
+We will make heavy use of differential geometry in the following chapters.
 To get us all on the same page, I introduce the basic concepts what we will use, but I refrain from
 giving any proofs. I will give definitions only as far as we need it. These definitions
 will by no means be exhaustive. The following is an incomplete summary of what we need presented in
-``Introduction to smooth manifolds'' \cite{Lee00}
+\emph{Introduction to smooth manifolds}\cite{Lee00}.
 
 \paragraph{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
 More exactly, a $n$-manifold is a topological space, where each point on the manifold has an open neighborhood
@@ -26,7 +26,7 @@ is a manifold of dimension $2n$. An element of $T\mathcal{M}$ can be written
 as $(p,v)$ with $p \in \mathcal{M}$ and $v \in T_p\mathcal{M}$. This admits a natural projection $\pi : T\mathcal{M} \to \mathcal{M}$,
 which sends each vector $v \in T_p\mathcal{M}$ to the point $p$ where it is tangent: $\pi(p,v)=p$.
 A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuos map, with $\pi \circ \sigma = \Id_{\mathcal{M}}$.
-Sections of $T\mathcal{M}$ are vector fields on $\mathcal{M}$.
+Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 
 \paragraph{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
@@ -61,12 +61,19 @@ $$(\omega \wedge \eta)_p = \omega_p \wedge \eta_p$$
 Notice the similarity to the \emph{Tensor Product of Covectors}: We get a new map, (a 2-form):
 $$\omega \wedge \eta: T\mathcal{M} \times T\mathcal{M} \to \mathbb{R}$$
 The wedge product is antisymmetric, therefore $\omega \wedge \eta = -\eta \wedge \omega$ for 1-forms $\omega$ and $\eta$.
+We denote by $\Omega^k(\mathcal{M})$ the space of differential $k$-forms on $\mathcal{M}$.
 There is a natural differential operator $d$ on differential forms we call \emph{exterior derivative}.
-The exterior derivative is a generalization of the differential of a function.
-In particular, a smooth function $f$ (a 0-form) has the derivative $df$ which is a 1-form.
-The exact definition is not important for us, so let us just look at some properties so we can work with it.
-If $\omega$ is a k-form, $d\omega$ is a (k+1)-form.
-TODO
+It maps $k$-forms to $(k+1)$-forms, i.e. $d: \Omega^k(\mathcal{M}) \to \Omega^{k+1}(\mathcal{M})$
+and has the the following properties:
+\begin{itemize}
+  \item $df$ is the ordinary differential of a smooth function $f$. Smooth functions are 0-forms.
+  \item $d(d\alpha) = 0$
+  \item $d(\alpha \wedge \beta) = (d\alpha \wedge \beta) + (-1)^k(\alpha \wedge d\beta)$ for a $k$-form $\alpha$. (Leibnitz Rule)
+\end{itemize}
+In section \ref{ch:connection} we will need what $d\omega$ is for some smooth 1-form $\omega$, the calculation
+will be done there. For now, just note that 
+any arbitrary smooth 1-form can be written as $\omega = Fdx+Gdy+Hdz$ for some appropriate smooth functions $F,G,H$.
+
 
 \paragraph{Riemannian metric, $g$-orthonormality}
 Inner products are examples of symmetric tensors. They allow us to define lengths and angles
@@ -80,7 +87,35 @@ Any Riemannian metric can be written as positive-definite symmetric matrix, whic
 Such a new metric allows for the definition of \emph{$g$-orthonormality}:
 A basis $[e_1, e_2, e_3]$ of $T_p\mathcal{M}$ is $g$-orthonormal if $\langle e_i, e_j \rangle_g = \delta_{ij}$.
 
-\paragraph{connection, covariant derivative}
+\paragraph{Connection, Covariant derivative, Parallel transport}
+A connection defines how two different tangent spaces are connected to each other, such that tangent vector fields
+can be differentiated. There is an infinite amount of connections on a manifold.
+An \emph{affine connection} $\nabla$ is a bilinear map that takes two tangent vector fields $X,Y$ and maps it
+to a new tangent vector field $\nabla_XY$ on $\mathcal{M}$ such that
+\begin{itemize}
+  \item $\nabla_{fX}Y = f \nabla_XY$, where $f\in C^{\infty}(\mathcal{M}, \mathbb{R})$
+  \item $\nabla_X(fY) = f\nabla_XY + (Xf)Y$ for $f\in C^{\infty}(\mathcal{M}, \mathbb{R})$, it satisfies the Leibnitz rule in the second variable
+\end{itemize}
+We call $\nabla_XY$ the \emph{covariant derivative of $Y$ in the direction of $X$}.
+A connection $\nabla$ defines the parallel transport
+of a vector along a curve. Given a curve $\gamma: [0,1] \to \mathcal{M}$ and
+a vector $v_0 \in T_{\gamma(0)}\mathcal{M}$, there exists a unique parallel vector field $V: [0,1] \to T\mathcal{M}$ along $\gamma$
+such that $V(0) = v_0$ \cite{LeeCurvature}.
+Recall: a vector field $V$ along $\gamma$ means $\pi(V(t))=\gamma(t)$.
+The uniqueness and existence is a consequence of the vector field $V$ being the solution
+of $\nabla_{\dot{\gamma}(t)}V(t) = 0$ defining a linear ordinary differential equation with initial condition
+$V(0)=v_0$. This vector field $V(t)$ is called the \emph{parallel transport} of $v_0$ along $\gamma$.
+It is ``parallel'' in the sense that the transported vector does not change within the tangent space.
+See figure \ref{fig:vectorfield}
+
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/vektorfeld.pdf_tex}
+  \caption{A parallel vector field $V(t)$ along a curve $\gamma$. Each $V(t)\in T_{\gamma(t)}\mathcal{M}$ and
+  $\nabla_{\dot{\gamma}(t)}V(t) = 0$, so each vector that is drawn is parallel to each other.}
+  \label{fig:vectorfield}
+\end{figure}
 \paragraph{lie algebra so(3)}
 \paragraph{Frame field, vector field, integrability}
 

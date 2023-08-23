@@ -15,7 +15,7 @@ Hexahedral meshes, that is a decomposition into cube-like elements,
 are usually prefered due to their superior numerical accuracy and faster compute time.
 However, automatically generating high-quality meshes remains a hard challenge
 in computer graphics.
-A promising research direction is through the use of frame fields.
+A promising research direction is through the use of frame fields \cite{Hex22}.
 
 A \emph{frame field} can be seen as a generalization of vector fields.
 They prescribe a \emph{frame} to each point on an object, that is, three linearly-independent
@@ -36,21 +36,23 @@ We will show how to calculate a special rotation matrix $R$, which describes
 how frames are aligned in the new metric.
 
 
-In this thesis, we rederive how we pull back the metric with the rotation coefficient $R$ such that we can measure
+In this thesis, we rederive how to pull back the metric with the rotation coefficient $R$ such that we can measure
 the Dirichlet energy in the usual cartesian coordinates as described in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
-The necessary mathematical background is introduced in \ref{ch:math-background}.
-
-
-
-
-
-
-\begin{itemize}
-  \item What are Frame Fields?
-  \item Why are they important?
-  \item How do \emph{we} generate them?
-\end{itemize}
-A frame field 
+The necessary mathematical background is introduced in Section \ref{ch:math-background}.
+In Section \ref{ch:connection}, by focusing on integrability of the frame field,
+we derive the connection $\omega$ under our new metric field and how to evaluate it.
+Section \ref{ch:calculation} discusses how the metric field is piecewise-linearly discretized as a tetrahedral
+mesh and how the rotation coefficient $R$ to align frames in the metric is calculated within a specific tetrahedron.
+Because in general, $R$ is needed between arbitrary points in the metric field, a robust tetrahedron finder algorithm is
+presented in Section \ref{ch:algorithm}.
+We briefly explain how the actual frame field optimization works in Section \ref{ch:simone}.
+The whole frame field generation is tested with some experiments in Section \ref{ch:experiments}.
+We conclude in Section \ref{ch:conclusion}.
+% \begin{itemize}
+%   \item What are Frame Fields?
+%   \item Why are they important?
+%   \item How do \emph{we} generate them?
+% \end{itemize}
 
 
 
