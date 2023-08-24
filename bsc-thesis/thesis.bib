@@ -109,3 +109,92 @@ doi={10.1007/PL00009321},
 url={https://doi.org/10.1007/PL00009321}
 }
 
+@article{integer-grid,
+author = {Bommes, David and Campen, Marcel and Ebke, Hans-Christian and Alliez, Pierre and Kobbelt, Leif},
+title = {Integer-Grid Maps for Reliable Quad Meshing},
+year = {2013},
+issue_date = {July 2013},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {32},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/2461912.2462014},
+doi = {10.1145/2461912.2462014},
+abstract = {Quadrilateral remeshing approaches based on global parametrization enable many desirable mesh properties. Two of the most important ones are (1) high regularity due to explicit control over irregular vertices and (2) smooth distribution of distortion achieved by convex variational formulations. Apart from these strengths, state-of-the-art techniques suffer from limited reliability on real-world input data, i.e. the determined map might have degeneracies like (local) non-injectivities and consequently often cannot be used directly to generate a quadrilateral mesh. In this paper we propose a novel convex Mixed-Integer Quadratic Programming (MIQP) formulation which ensures by construction that the resulting map is within the class of so called Integer-Grid Maps that are guaranteed to imply a quad mesh. In order to overcome the NP-hardness of MIQP and to be able to remesh typical input geometries in acceptable time we propose two additional problem specific optimizations: a complexity reduction algorithm and singularity separating conditions. While the former decouples the dimension of the MIQP search space from the input complexity of the triangle mesh and thus is able to dramatically speed up the computation without inducing inaccuracies, the latter improves the continuous relaxation, which is crucial for the success of modern MIQP optimizers. Our experiments show that the reliability of the resulting algorithm does not only annihilate the main drawback of parametrization based quad-remeshing but moreover enables the global search for high-quality coarse quad layouts - a difficult task solely tackled by greedy methodologies before.},
+journal = {ACM Trans. Graph.},
+month = {jul},
+articleno = {98},
+numpages = {12},
+keywords = {mixed-integer optimization, parametrization, quadrangulation, remeshing}
+}
+
+@article{Nieser,
+author = {Nieser, M. and Reitebuch, U. and Polthier, K.},
+title = {CubeCover– Parameterization of 3D Volumes},
+journal = {Computer Graphics Forum},
+volume = {30},
+number = {5},
+pages = {1397-1406},
+keywords = {I.3.5 Computer Graphics: Curve, surface, solid, and object representations—Computational Geometry and Object Modeling},
+doi = {https://doi.org/10.1111/j.1467-8659.2011.02014.x},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2011.02014.x},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-8659.2011.02014.x},
+abstract = {Abstract Despite the success of quad-based 2D surface parameterization methods, effective parameterization algorithms for 3D volumes with cubes, i.e. hexahedral elements, are still missing. CubeCover is a first approach for generating a hexahedral tessellation of a given volume with boundary aligned cubes which are guided by a frame field. The input of CubeCover is a tetrahedral volume mesh. First, a frame field is designed with manual input from the designer. It guides the interior and boundary layout of the parameterization. Then, the parameterization and the hexahedral mesh are computed so as to align with the given frame field. CubeCover has similarities to the QuadCover algorithm and extends it from 2D surfaces to 3D volumes. The paper also provides theoretical results for 3D hexahedral parameterizations and analyses topological properties of the appropriate function space.},
+year = {2011}
+}
+
+@article{Huang,
+author = {Huang, Jin and Tong, Yiying and Wei, Hongyu and Bao, Hujun},
+title = {Boundary Aligned Smooth 3D Cross-Frame Field},
+year = {2011},
+issue_date = {December 2011},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {30},
+number = {6},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/2070781.2024177},
+doi = {10.1145/2070781.2024177},
+abstract = {In this paper, we present a method for constructing a 3D cross-frame field, a 3D extension of the 2D cross-frame field as applied to surfaces in applications such as quadrangulation and texture synthesis. In contrast to the surface cross-frame field (equivalent to a 4-Way Rotational-Symmetry vector field), symmetry for 3D cross-frame fields cannot be formulated by simple one-parameter 2D rotations in the tangent planes. To address this critical issue, we represent the 3D frames by spherical harmonics, in a manner invariant to combinations of rotations around any axis by multiples of π/2. With such a representation, we can formulate an efficient smoothness measure of the cross-frame field. Through minimization of this measure under certain boundary conditions, we can construct a smooth 3D cross-frame field that is aligned with the surface normal at the boundary. We visualize the resulting cross-frame field through restrictions to the boundary surface, streamline tracing in the volume, and singularities. We also demonstrate the application of the 3D cross-frame field to producing hexahedron-dominant meshes for given volumes, and discuss its potential in high-quality hexahedralization, much as its 2D counterpart has shown in quadrangulation.},
+journal = {ACM Trans. Graph.},
+month = {dec},
+pages = {1–8},
+numpages = {8},
+keywords = {hexahedral, spherical harmonics, N-RoSy frame field}
+}
+
+@article{Ray,
+  author       = {Nicolas Ray and
+                  Dmitry Sokolov},
+  title        = {On Smooth 3D Frame Field Design},
+  journal      = {CoRR},
+  volume       = {abs/1507.03351},
+  year         = {2015},
+  url          = {http://arxiv.org/abs/1507.03351},
+  eprinttype    = {arXiv},
+  eprint       = {1507.03351},
+  timestamp    = {Thu, 10 Jan 2019 11:28:16 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/RayS15a.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{Panozzo,
+author = {Panozzo, Daniele and Puppo, Enrico and Tarini, Marco and Sorkine-Hornung, Olga},
+title = {Frame Fields: Anisotropic and Non-Orthogonal Cross Fields},
+year = {2014},
+issue_date = {July 2014},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {33},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/2601097.2601179},
+doi = {10.1145/2601097.2601179},
+abstract = {We introduce frame fields, which are a non-orthogonal and non-unit-length generalization of cross fields. Frame fields represent smoothly varying linear transformations on tangent spaces of a surface. We propose an algorithm to create discrete, dense frame fields that satisfy a sparse set of constraints. By computing a surface deformation that warps a frame field into a cross field, we generalize existing quadrangulation algorithms to generate anisotropic and non-uniform quad meshes whose elements shapes match the frame field. With this, our framework enables users to control not only the alignment but also the density and anisotropy of the elements' distribution, resulting in high-quality adaptive quad meshing.},
+journal = {ACM Trans. Graph.},
+month = {jul},
+articleno = {134},
+numpages = {11},
+keywords = {n-RoSy field, frame field, anisotropic quad mesh}
+}

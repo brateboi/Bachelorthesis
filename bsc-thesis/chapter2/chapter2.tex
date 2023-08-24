@@ -106,8 +106,7 @@ The uniqueness and existence is a consequence of the vector field $V$ being the 
 of $\nabla_{\dot{\gamma}(t)}V(t) = 0$ defining a linear ordinary differential equation with initial condition
 $V(0)=v_0$. This vector field $V(t)$ is called the \emph{parallel transport} of $v_0$ along $\gamma$.
 It is ``parallel'' in the sense that the transported vector does not change within the tangent space.
-See figure \ref{fig:vectorfield}
-
+See figure \ref{fig:vectorfield} for an illustration in 2D.
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -116,33 +115,105 @@ See figure \ref{fig:vectorfield}
   $\nabla_{\dot{\gamma}(t)}V(t) = 0$, so each vector that is drawn is parallel to each other.}
   \label{fig:vectorfield}
 \end{figure}
-\paragraph{lie algebra so(3)}
+ 
+
+
+% \newpage
+% A frame $F$ is a set of 6 vectors $\{\pm F_0, \pm F_1, \pm F_2 \}$.
+% We can represent such a frame F as a $3\times3$ matrix F, where the $i$th-column is $F_i$.
+% A frame field then maps to every point in 3D-space such a frame, i.e. $F: \mathbb{R}^3 \to \mathbb{R}^{3\times3}$.
+% Usually, we work on a 3-manifold $\mathcal{M}$ and a positively oriented frame field, i.e.
+% $F\vert_{\mathcal{M}}: \mathcal{M} \to \mathbb{R}^{3\times3}$, where $\det(F)>0$.
+% To allow for anisotropic, nonuniform meshes, we generalize orthonormality of frames to
+% $g$-orthonormal frames. Orthonormality is measured in some metric $g$, and a frame F satifisfies the condition
+% $\langle F_i, F_j \rangle _g = \delta_{ij}$.
+% Any frame field with $\det(F)>0$ naturally defines a metric $g= (FF^{\top})^{-1}$, where $F$ is $g$-orthonormal
+% $$F^{\top}gF = Id.$$
+% We can factor the frame field F into a symmetric part $g^{1/2}$ and a rotational part $R$
+% $$F = g^{-1/2}R$$
+% The symmetric part $g^{-1/2}$ keeps $F$ $g$-orthonormal
+% $$ \implies F^{\top}gF = (g^{-1/2}R)^{\top}gg^{-1/2}R)=R^{\top}g^{-1/2}gg^{-1/2}R =Id.$$
+% and $R$ represents a rotational field $R: \mathcal{M} \to SO(3)$.
+% The requirements for our frame field are:
+% \begin{itemize}
+%   \item Smoothness
+%   \item Integrability
+%   \item Metric consistency: $g = (FF^{\top})^{-1}$
+% \end{itemize}
+
+
 \paragraph{Frame field, vector field, integrability}
+Recall from the introduction that we are trying to find a hexahedral mesh
+for some geometric object. In 2D, integer-grid maps have proven to be reliable
+in generating the analogue of hexahedral meshes, quad meshes \cite{integer-grid}.
+The idea is to use the same idea but in three dimensions.
+The objective is to find a parametrization
+$\phi : \mathcal{M} \to \mathbb{R}^3$, which embeds the $3$-dimensional object
+onto an $3$-dimensional voxel grid, where the inverse $\phi^{-1}$ maps the deformed
+grid back onto the object to recover a shape-aligned hexahedral mesh, see figure \ref{fig:integer-grid}.
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=20em]{figures/integer-grid-rough}
+  \caption{Idea of quadrangulation with integer-grid maps in 2D}
+  \label{fig:integer-grid}
+\end{figure}
+This is called an integer-grid map and by minimizing distortion and satisfying boundary alignment,
+a hexahedral mesh could be extracted.
+However, this is a hard mixed-integer and non-convex optimization problem for which no current
+optimization technique is available that would result in an acceptable solution.
+By taking the Jacobian of the parametrization, $\nabla \phi$, we get a mapping
+$\nabla \phi : \mathcal{M} \to \mathbb{R}^{3\times3}$ of \emph{frames}, a \emph{frame field}.
+The idea of frame fields is then to search for an approximation of $\nabla \phi$.
+If $F: \mathcal{M} \to \mathbb{R}^{3\times3}$ is the approximation of $\nabla \phi$, we can
+solve for $\phi : \mathcal{M} \to \mathbb{R}^3$ with
+$$\min \limits_{\phi} \int \limits_{\mathcal{M}} ||\nabla \phi F - \Id||^2$$
+where $||\cdot||$ is the Frobenius norm. If this is sufficiently small, then $F^{-1} \approx \nabla \phi$ and 
+the extracted hexahedral mesh closely follow the integer-grid isolines.
+We treat a frame $F$ as a set of 3 linearly independent vectors $\{F_1,F_2,F_3 \}$ which we can
+collect into a matrix $F=(F_1,F_2,F_3) \in \mathbb{R}^{3\times 3}$.
+A frame locally represents the edges of a deformed cube.
+We can think of a frame field as the composition of three vector fields. However, frame fields
+can contain singularities that the underlying vector fields do not contain \cite{Nieser}.
+Notice that many of these frames are equivalent.
+There are $2^3$ choices of the sign, and $3!$ possible permutations, which
+gives $2^3\cdot 3! = 48$ equivalent frames.
+Since we want non-degenerate frames and the same orientation through the grid, the constraint $\det(F)>0$ is imposed,
+which leaves $24$ equivalent frames.
+Equivalence of frames is then defined as
+$$F_u \sim F_v \iff \exists R \in \mathcal{O} : F_u=RF_v$$
+where $\mathcal{O}$ is the \emph{chiral cubical symmetry group}\cite{Nieser}.
+These symmetries make the optimization for frame fields more complicated.
+To handle these symmetries, we use the spherical harmonics based representation \cite{Huang}.
+The idea is to use the polynomial $x^4+y^4+z^4$ to express the frames as rotations.
+Under the restriction of the polynomial to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$, the octahedral frames
+are invariant under the chiral cubical symmetry group. However, the spherical harmonics
+manifold is 9-dimensional so not all vectors in the spherical harmonics represent valid frames,
+since rotations only exhibit 3 degrees of freedom.
+While optimizing the frame field, some kind of ``average'' of two frames will be done.
+This averaging makes sense in the spherical harmonics space, but the result may be outside the valid
+space of frames. A projection from the spherical
+harmonics space back to the valid space of frames will be needed, see fig. \ref{fig:projection} \cite{Ray}.
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/projection.pdf_tex}
+  \caption{Combination of two valid frames leads to a resulting frame outside the valid frames. A projection to the nearest valid frame is done.}
+  \label{fig:projection}
+\end{figure}
 
+When a frame $F$ has orthonormal columns, the resulting hex elements look like unit cubes.
+By introducing a metric $g$, we can control the size and shear of the cubes by
+relaxing the orthonormality constraint to $g$-orthonormality when
+$$F^{-1}gF = \Id$$
+holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
+(akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$.
 
-\newpage
-A frame $F$ is a set of 6 vectors $\{\pm F_0, \pm F_1, \pm F_2 \}$.
-We can represent such a frame F as a $3\times3$ matrix F, where the $i$th-column is $F_i$.
-A frame field then maps to every point in 3D-space such a frame, i.e. $F: \mathbb{R}^3 \to \mathbb{R}^{3\times3}$.
-Usually, we work on a 3-manifold $\mathcal{M}$ and a positively oriented frame field, i.e.
-$F\vert_{\mathcal{M}}: \mathcal{M} \to \mathbb{R}^{3\times3}$, where $\det(F)>0$.
-To allow for anisotropic, nonuniform meshes, we generalize orthonormality of frames to
-$g$-orthonormal frames. Orthonormality is measured in some metric $g$, and a frame F satifisfies the condition
-$\langle F_i, F_j \rangle _g = \delta_{ij}$.
-Any frame field with $\det(F)>0$ naturally defines a metric $g= (FF^{\top})^{-1}$, where $F$ is $g$-orthonormal
-$$F^{\top}gF = Id.$$
-We can factor the frame field F into a symmetric part $g^{1/2}$ and a rotational part $R$
-$$F = g^{-1/2}R$$
-The symmetric part $g^{-1/2}$ keeps $F$ $g$-orthonormal
-$$ \implies F^{\top}gF = (g^{-1/2}R)^{\top}gg^{-1/2}R)=R^{\top}g^{-1/2}gg^{-1/2}R =Id.$$
-and $R$ represents a rotational field $R: \mathcal{M} \to SO(3)$.
-The requirements for our frame field are:
-\begin{itemize}
-  \item Smoothness
-  \item Integrability
-  \item Metric consistency: $g = (FF^{\top})^{-1}$
-\end{itemize}
-
-
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=25em]{figures/factorization}
+  \caption{Factorization of a $g$-orthogonal frame field into a symmetric metric part $g^{-1/2}$ and a rotational part $R$
+  (Figure from \cite{Fang23}).}
+  \label{fig:factorization}
+\end{figure}
 
 \end{document}

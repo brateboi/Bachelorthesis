@@ -22,13 +22,13 @@ They prescribe a \emph{frame} to each point on an object, that is, three linearl
 vectors. Each frame locally represents the orientation and deformation of a cube.
 Consequently, frame fields must be so called boundary-aligned:
 At the boundary of an object, one vector of the frame must be aligned with the surface normal
-as hexahedral elements should align at the boundary.
+as hexahedral elements (\emph{short: hex element}) should align at the boundary.
 Then, the objective is to find the ``best'' frame field.
 Usually, ``best'' is measured in the smoothness of the frame field.
 Smoothness is measured with the Dirichlet energy $\int_{\Omega}||\nabla \phi||^2dx$,
 where $\phi$ is a frame, and we measure how much these frames twist and rotate within the object.
 
-To allow for non-uniform and anisotropic hexahedral elements, we introduce
+To allow for non-uniform and anisotropic hex elements, we introduce
 \emph{metric fields}. Optimizing the frame field in this new metric (instead of the usual euclidean metric) then results
 in elements that are uniform and isotropic in this new metric.
 To this end, the expression for the Dirichlet energy must be changed.
