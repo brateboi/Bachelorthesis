@@ -28,10 +28,6 @@
 
 \chapter{Calculation of rotation coefficient}
 \label{ch:calculation}
-% Open Question from me: In the paper, they say that in general $R_{\ell}$ cannot be simplified
-% to $\exp (-\int_{\ell}\omega)$, because of the noncommutativity of rotations in 3D.
-% I say we can, because of the closedness of our one-form, therefore the
-% integral is path-independent.
 We are interested in the rotation.
 Let $p,q$ be points on the manifold and $\ell$ a path connecting them.
 Let $R: \mathcal{M} \to SO(3)$ be a rotation field, i.e. $R(p), R(q)$ are orthogonal frames.
@@ -53,7 +49,7 @@ $$R_{ab}=\exp \left( \left(\frac{1}{2}(W_a + W_b)^{\top}(b-a)\right)_{\times}\ri
 where $W_a, W_b$ is solved for by the 9x9 linear system given by $A_x$ and $\nabla \times A$.
 
 
-\paragraph{Piecewise linear discretization}
+\section{Piecewise linear discretization}
 We discretize our metric field with a tetrahedral mesh $\mathcal{T}$.
 At each vertex, we attach a metric and linearly interpolate with barycentric coordinates within a tet.
 
@@ -120,7 +116,7 @@ $$\nabla \times A^i = \begin{pmatrix}
 and $\nabla \times A = \nabla \times (A^1, A^2, A^3)$.
 Notice that the curl is constant within a tetrahedron.
 
-\paragraph*{Recursive Subdivision}
+\section{Recursive subdivision}
 Whenever the rotation coefficient $R_{pq}$ is needed between some points $p$ and $q$,
 it is unclear ahead of time how many sampling points on the line $\ell$
 are needed such that $R_{pq}$ accurately describes how the frame rotates along $\ell$.

@@ -57,7 +57,7 @@ that we can exploit.
 
 We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which relies only on
 on so called \emph{orientation tests} to determine which triangles we traverse.
-\paragraph{Framework}
+\section{Framework}
 Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that is convex.
 The straight walk traverses all triangles that get intersected by the line segment
 from $q$ to $p$. The algorithm first makes an initialization step to get into a valid state, 
@@ -98,7 +98,7 @@ cells that do not get intersected by the ray. We need to detect and escape those
 through some additional checks. These are not described in the paper\cite{Devillers}.
 In most cases, a simple reinitialization is enough when the invalid state is detected.
 
-\paragraph{A note on orientation tests}
+\subsection{A note on orientation tests}
 To determine on which side some point $s$ lies relative to two other points $q,p$ (that represent a line) in 2D, the geometric \emph{orientation} predicate is used.
 It corresponds to evaluating the sign of a determinant. Analogously in 3D, the orientation predicate
 tests whether a fourth point lies above or below a plane defined by three other points.
@@ -150,6 +150,8 @@ To fix this issue, we make use of exact predicates that are implemented with arb
 Inputs to the orientation test subroutines are assumed to be exact, and we can be sure
 that the result has the correct sign.
 
+
+\section{Algorithm $\op{tetFinder}$}
 The final algorithm to find all intersected tetrahedra between two points is as follows.
 
 

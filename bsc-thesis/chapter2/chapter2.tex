@@ -2,13 +2,17 @@
 
 \begin{document}
 \chapter{Mathematical Background}\label{ch:math-background}
-We will make heavy use of differential geometry in the following chapters.
-To get us all on the same page, I introduce the basic concepts what we will use, but I refrain from
+
+A solid mathematical introduction is key to understanding how and why the approach
+in this thesis work. This chapter serves as a primer to differential geometry and frame fields.
+\section{Differential Geometry}
+We will make heavy use of differential geometry in chapter \autoref{ch:connection}.
+I introduce the basic concepts what we will use, but I refrain from
 giving any proofs. I will give definitions only as far as we need it. These definitions
-will by no means be exhaustive. The following is an incomplete summary of what we need presented in
+will by no means be exhaustive. The following is an incomplete summary of concepts that we need presented in
 \emph{Introduction to smooth manifolds}\cite{Lee00}.
 
-\paragraph{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
+\subsection{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
 More exactly, a $n$-manifold is a topological space, where each point on the manifold has an open neighborhood
 that is locally homeomorphic to an open subset of Euclidean space $\mathbb{R}^n$.
 A manifold can be equipped with additional structure. For example, we can work on \emph{smooth manifolds}.
@@ -16,7 +20,7 @@ In simple terms, a manifold is \emph{smooth} if it is similar enough to $\mathbb
 like differentiation or integration on it. For this, each point on the manifold must be
 locally \emph{diffeomorphic} to an open subset of $\mathbb{R}^n$ space.
 
-\paragraph{Tangent space, Tangent bundle} There are many equivalent definitions
+\subsection{Tangent space, Tangent bundle} There are many equivalent definitions
 for the tangent space. One definition is for each point $p$ in the manifold $\mathcal{M}$,
 the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths $\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}$
 with $p = \gamma(0)$. The tangent space is a vector space which has the same dimension as its manifold,
@@ -28,7 +32,7 @@ which sends each vector $v \in T_p\mathcal{M}$ to the point $p$ where it is tang
 A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuos map, with $\pi \circ \sigma = \Id_{\mathcal{M}}$.
 Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 
-\paragraph{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
+\subsection{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
 $V^*$ is itself a vector space, with the same dimension as $V$ and operations like addition and scalar multiplication
 can be performed on its elements. Any element in a vector space can be expressed as 
@@ -38,7 +42,7 @@ denoted by $T^*_p\mathcal{M}$. As before, the disjoint union of $T^*_p\mathcal{M
 $T^*\mathcal{M}=\sqcup _{p\in \mathcal{M}}T^*_p\mathcal{M}$. Defined analogously from above,
 sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}.
 
-\paragraph{Tensors}
+\subsection{Tensors}
 Before we can introduce differential forms in the next paragraph, we need to go a little bit into \emph{tensors}.
 In simple words, tensors are real-valued, multilinear functions.
 A map $F: V_1 \times \dots V_k \to W$ is multilinear, if $F$ is linear in each component.
@@ -54,7 +58,7 @@ A covariant tensor field over a manifold defines a covariant tensor at each poin
 covariant because the tensor is over the cotangent space $T^*_p\mathcal{M}$.
 An alternating tensor field is called a \emph{differential form}.
 
-\paragraph{Differential Forms, Exterior Derivative}
+\subsection{Differential Forms, Exterior Derivative}
 Recall that a section from $T^*\mathcal{M}$ is called a differential 1-form, or just 1-form.
 Define the \emph{wedge product} (or \emph{exterior product}) between two 1-forms:
 $$(\omega \wedge \eta)_p = \omega_p \wedge \eta_p$$
@@ -75,7 +79,7 @@ will be done there. For now, just note that
 any arbitrary smooth 1-form can be written as $\omega = Fdx+Gdy+Hdz$ for some appropriate smooth functions $F,G,H$.
 
 
-\paragraph{Riemannian metric, $g$-orthonormality}
+\subsection{Riemannian metric, $g$-orthonormality}
 Inner products are examples of symmetric tensors. They allow us to define lengths and angles
 between vectors. We can apply this idea to manifolds.
 A Riemannian metric $g$ is a symmetric positive-definite tensor field at each point.
@@ -87,7 +91,7 @@ Any Riemannian metric can be written as positive-definite symmetric matrix, whic
 Such a new metric allows for the definition of \emph{$g$-orthonormality}:
 A basis $[e_1, e_2, e_3]$ of $T_p\mathcal{M}$ is $g$-orthonormal if $\langle e_i, e_j \rangle_g = \delta_{ij}$.
 
-\paragraph{Connection, Covariant derivative, Parallel transport}
+\subsection{Connection, Covariant derivative, Parallel transport}
 A connection defines how two different tangent spaces are connected to each other, such that tangent vector fields
 can be differentiated. There is an infinite amount of connections on a manifold.
 An \emph{affine connection} $\nabla$ is a bilinear map that takes two tangent vector fields $X,Y$ and maps it
@@ -142,15 +146,21 @@ See figure \ref{fig:vectorfield} for an illustration in 2D.
 % \end{itemize}
 
 
-\paragraph{Frame field, vector field, integrability}
+\section{Frame fields}
 Recall from the introduction that we are trying to find a hexahedral mesh
-for some geometric object. In 2D, integer-grid maps have proven to be reliable
+for some geometric object. In the following sections, the key idea to
+tackle this problem through \emph{integer-grid maps} is discussed and
+how the problem is relaxed through \emph{frame fields}.
+\subsection{Integer-grid maps}
+
+In 2D, integer-grid maps have proven to be reliable
 in generating the analogue of hexahedral meshes, quad meshes \cite{integer-grid}.
-The idea is to use the same idea but in three dimensions.
+The goal is to use the same approach, but in three dimensions.
 The objective is to find a parametrization
 $\phi : \mathcal{M} \to \mathbb{R}^3$, which embeds the $3$-dimensional object
-onto an $3$-dimensional voxel grid, where the inverse $\phi^{-1}$ maps the deformed
-grid back onto the object to recover a shape-aligned hexahedral mesh, see figure \ref{fig:integer-grid}.
+to be meshed
+onto a $3$-dimensional voxel grid, where the inverse $\phi^{-1}$ maps the deformed
+grid back onto the object to recover a shape-aligned hexahedral mesh, see figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=20em]{figures/integer-grid-rough}
@@ -161,6 +171,8 @@ This is called an integer-grid map and by minimizing distortion and satisfying b
 a hexahedral mesh could be extracted.
 However, this is a hard mixed-integer and non-convex optimization problem for which no current
 optimization technique is available that would result in an acceptable solution.
+
+\subsection{Frame fields as a relaxation}
 By taking the Jacobian of the parametrization, $\nabla \phi$, we get a mapping
 $\nabla \phi : \mathcal{M} \to \mathbb{R}^{3\times3}$ of \emph{frames}, a \emph{frame field}.
 The idea of frame fields is then to search for an approximation of $\nabla \phi$.
@@ -169,11 +181,17 @@ solve for $\phi : \mathcal{M} \to \mathbb{R}^3$ with
 $$\min \limits_{\phi} \int \limits_{\mathcal{M}} ||\nabla \phi F - \Id||^2$$
 where $||\cdot||$ is the Frobenius norm. If this is sufficiently small, then $F^{-1} \approx \nabla \phi$ and 
 the extracted hexahedral mesh closely follow the integer-grid isolines.
+A frame locally represents the edges of a deformed cube.
+We can think of a frame field as the composition of three vector fields
+and as a relaxation of the original problem. However, frame fields
+can contain singularities that the underlying vector fields do not contain \cite{Nieser}
+and contain types of singularities that cannot appear in hex meshes \cite{Liu}.
+These singularities are said to be non-meshable.
+The problem of non-meshability is not discussed further here, but it
+is something to be aware of.
+
 We treat a frame $F$ as a set of 3 linearly independent vectors $\{F_1,F_2,F_3 \}$ which we can
 collect into a matrix $F=(F_1,F_2,F_3) \in \mathbb{R}^{3\times 3}$.
-A frame locally represents the edges of a deformed cube.
-We can think of a frame field as the composition of three vector fields. However, frame fields
-can contain singularities that the underlying vector fields do not contain \cite{Nieser}.
 Notice that many of these frames are equivalent.
 There are $2^3$ choices of the sign, and $3!$ possible permutations, which
 gives $2^3\cdot 3! = 48$ equivalent frames.
@@ -187,7 +205,7 @@ To handle these symmetries, we use the spherical harmonics based representation 
 The idea is to use the polynomial $x^4+y^4+z^4$ to express the frames as rotations.
 Under the restriction of the polynomial to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$, the octahedral frames
 are invariant under the chiral cubical symmetry group. However, the spherical harmonics
-manifold is 9-dimensional so not all vectors in the spherical harmonics represent valid frames,
+manifold is 9-dimensional, so not all vectors in the spherical harmonics represent valid frames,
 since rotations only exhibit 3 degrees of freedom.
 While optimizing the frame field, some kind of ``average'' of two frames will be done.
 This averaging makes sense in the spherical harmonics space, but the result may be outside the valid
@@ -207,7 +225,8 @@ By introducing a metric $g$, we can control the size and shear of the cubes by
 relaxing the orthonormality constraint to $g$-orthonormality when
 $$F^{-1}gF = \Id$$
 holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
-(akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$.
+(akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$,
+see figure \ref{fig:factorization}.
 
 \begin{figure}[htb]
   \centering
@@ -216,6 +235,8 @@ holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal
   (Figure from \cite{Fang23}).}
   \label{fig:factorization}
 \end{figure}
+
+
 
 \begin{itemize}
   \item Dirichlet energy, what are we optimizing
