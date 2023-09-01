@@ -24,7 +24,7 @@
 
 \chapter{Algorithm for $R$ between two arbitrary points in a mesh}
 \label{ch:algorithm}
-To measure the Dirichlet energy, we need to calculate the rotation coefficient
+To measure the Dirichlet energy, we need to calculate the rotation coefficient $R$
 between to arbitrary points $q$ and $p$ that do not necessarily lie within the same 
 tetrahedron. Since the metric and curl is different in each tet, we need to be
 able to efficiently determine all tets that get intersected by the straight
@@ -38,7 +38,8 @@ The calculation for the coefficient then works in the following way:
       \reset
       xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
       \textbf{Input} $(q,p)$ \label{}\\
-      \> $\str{lineSegments} \gets$ $\op{tetFinder($q,p$)}$ //returns all tets intersected by the line $\Vec{pq}$ with the line segments within them \label{}\\
+      \>  //returns all tets intersected by the line $\Vec{pq}$ with the line segments within them \label{}\\
+      \> $\str{lineSegments} \gets$ $\op{tetFinder($q,p$)}$ \label{}\\
       \> $R \gets \Id$ \label{}\\
       \> \textbf{for each} $\str{segment}$ \textbf{in} $\str{lineSegments}$ \label{}\\
       \> \> $R \gets R \cdot \op{calcCoeff}(\str{segment})$ \label{}\\
@@ -56,7 +57,7 @@ that we can exploit.
 
 
 We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which relies only on
-on so called \emph{orientation tests} to determine which triangles we traverse.
+so called \emph{orientation tests} to determine which triangles we traverse.
 \section{Framework}
 Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that is convex.
 The straight walk traverses all triangles that get intersected by the line segment

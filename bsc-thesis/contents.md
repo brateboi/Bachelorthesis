@@ -47,7 +47,7 @@ is flat ($g$ constant)
 
 Reformulations, set up linear system for $\omega$
 
-# Calculation of rotation coefficient within tet
+# Alignment in the metric field
 
 Problem statement, question is how to measure if two frames are "parallel" within new metric. Corresponds to parallel transport.
 Calculate rotation $R$ from one point to another how a frame would get rotated within the metric field.

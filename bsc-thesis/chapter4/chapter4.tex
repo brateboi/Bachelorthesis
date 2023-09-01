@@ -28,6 +28,11 @@
 
 \chapter{Calculation of rotation coefficient}
 \label{ch:calculation}
+Recall that we want to measure the smoothness of the frame field
+by the Dirichlet energy. 
+
+
+
 We are interested in the rotation.
 Let $p,q$ be points on the manifold and $\ell$ a path connecting them.
 Let $R: \mathcal{M} \to SO(3)$ be a rotation field, i.e. $R(p), R(q)$ are orthogonal frames.
@@ -36,7 +41,7 @@ $$R(q)= \exp(R_{pq}(\omega))R(p)$$
 is a differential equation that corresponds to the parallel transport under the connection $\omega$
 of the frame along $\ell$.
 To recover this rotation $R_{pq}$, we integrate $\omega$ along $\ell$.
-\paragraph{Discretization}
+\paragraph{Setup}
 We parametrize the path by $\ell(0)=a, \ell(1)=b$.
 We resort to numerical integration for $R_{ab}$ and cut the path into $n$ small segments, i.e.
 $$R_{ab}= R_nR_{n-1} \dotsb R_1$$
@@ -46,7 +51,7 @@ $$\exp(u_{\times}) = \Id + \sin(\theta) \hat{u}_{\times} + (1-\cos(\theta)) \hat
 where $\theta = ||u||_2$ is the rotation angle and $\hat{u}= u/\theta$ is the rotation axis.
 We use the trapezoidal rule to evaluate the a short interval of the integral of $W$, which is given by
 $$R_{ab}=\exp \left( \left(\frac{1}{2}(W_a + W_b)^{\top}(b-a)\right)_{\times}\right)$$
-where $W_a, W_b$ is solved for by the 9x9 linear system given by $A_x$ and $\nabla \times A$.
+where $W_a, W_b$ is solved for by the 9x9 linear system given by $A_{\times}$ and $\nabla \times A$.
 
 
 \section{Piecewise linear discretization}
