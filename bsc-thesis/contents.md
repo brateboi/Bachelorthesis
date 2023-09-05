@@ -5,10 +5,12 @@
 - why we need hexahedral meshes (storage of geometric objects)
 - how we approach the problem (integer grid maps are too hard -> frame fields as relaxation)
 - What are frame fields?
-- introduction of metric field
+- introduction of metric field, what we optimise how we do the change
 - structure of thesis
 
-# Mathematical Background
+# Mathematical Background 
+
+(best to explain with examples how I need it in my thesis, and just reference to literature)
 
 ## differential geometry
 
@@ -35,6 +37,9 @@
 relaxation because frame fields are over general, sometimes they exhibit non-meshable structure
 
 # Connection for local Integrability
+
+explain how dirichlet with metric gives good integrability of the frame field
+(important, explain in own words, make everything clear)
 
 Formulation of connection by starting from local integrability
 
@@ -66,15 +71,27 @@ Problem statement
 
 ## Exact formulation of algorithm
 
+Explain everything that was needed to make it exact.
+- How to find the location of the starting point,
+- pointInTet exact,
+- rayTriangleIntersection exact,
+- Handling degenerate cases,
+
 # Frame Field optimization
 
 - Problem statement
 
-- Simone algorithm from a high level
+Just from a high level, it's MBO algorithm,
+explain how this metric approach works if you do these pairs of
+$||R_{ij}t_i-t_j||$ would work with any dirichlet optimiser
 
 - Caching of coeffs
 
 # Experiments
+
+(Important chapter)
+also show how increasing the $k$ parameter increases the amount of singularities
+and discuss
 
 Different experiment setups:
 
@@ -89,3 +106,7 @@ Different experiment setups:
 # Conclusion
 
 Future work, how to store rotation coeffs in octree
+
+discussion of discretization
+
+storage of metric fields, other ways to do it (octree, other bases)
