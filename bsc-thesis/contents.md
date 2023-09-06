@@ -72,6 +72,7 @@ Problem statement
 ## Exact formulation of algorithm
 
 Explain everything that was needed to make it exact.
+
 - How to find the location of the starting point,
 - pointInTet exact,
 - rayTriangleIntersection exact,

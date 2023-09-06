@@ -4,58 +4,104 @@
 \chapter{Connection One-Form $\omega$}
 \label{ch:connection}
 
-TODO: introduction, why are we doing this
+Recall that our goal is to find a frame field $F:\mathcal{M}\to \mathbb{R}^{3\times3}$,
+such that the target parametrization of $\phi$ can sufficiently reduce
+the difference between $\nabla \phi$ and $F^{-1}$.
+For this, $F^{-1}$ needs to stay as close to being locally integrable
+as possible. 
+In this chapter, by starting from the local integrability condition,
+we formulate a connection one-form $\omega$ which is used to
+measure the Dirichlet energy in the new metric $g$, such that
+the frames stay close to being $g$-orthonormal ($F^{-1}gF= \Id$).
+We follow the steps in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
 
-A vector field $U$ is integrable, if and only if $\nabla \times U = 0$,
-which means the vector field has vanishing curl everywhere.
+\section{Local integrability}
+A vector field $U$ is integrable if and only if $\nabla \times U = 0$,
+which means the vector field has vanishing curl \cite{Pap20}.
+Although in general it is more complicated \cite{Nieser}, we can think of a frame field $F$ as the composition of 3 vector fields
+$$F = \begin{bmatrix}
+  \vertbar & \vertbar & \vertbar \\
+  F_1 & F_2 & F_3 \\
+  \vertbar & \vertbar & \vertbar
+\end{bmatrix}$$
+where $F_i : \mathbb{R}^3 \to \mathbb{R}^3$ are vector fields.
+To achieve local integrability for $F^{-1}$, we therefore want
+$$\nabla \times F^{-1} \overset{!}{=}0$$
+where the curl is applied to each column.
 We can express this more naturally with the language of differential forms:
 The curl can be written as the exterior derivative $d$ of a one-form $\alpha$.
 A one-form (more generally, a differential form) is closed, if $d\alpha = 0$.
-Therefore, the local integrability can be expressed as the closedness of a one-form.
-We want $F^{-1}$ (TODO: why $F^{-1}$) to be integrable.
-To achieve local integrability for, it suffices to make $R$ locally integrable.
-We can think of a rotation field $R$ as the composition of 3 vector fields
-$$R = \begin{bmatrix}
-  \vertbar & \vertbar & \vertbar \\
-  R_1 & R_2 & R_3 \\
-  \vertbar & \vertbar & \vertbar
-\end{bmatrix}$$
-where $R_i : \mathbb{R}^3 \to \mathbb{R}^3$ is a vector field.
-We can therefore construct a vector-valued one-form, given $p=(x,y,z)^{\top}$ in Euclidean coordinates
-$$\alpha \triangleq F^{-1}dp = R^{\top}g^{1/2}dp$$
-where $dp = (dx,dy,dz)^{\top}$ is the common orthonormal one-form basis.
-$$R \text{ locally integrable} \iff \bm{0} = d\alpha$$
+We construct a vector-valued one-form out of our frame field,
+given $\bm{p}=(x,y,z)^{\top}$ in Euclidean coordinates
+$$\alpha \triangleq F^{-1}d\bm{p} = R^{\top}g^{1/2}d\bm{p}$$
+where $d\bm{p} = (dx,dy,dz)^{\top}$ is the common orthonormal one-form basis.
+Local integrability of $F^{-1}$ is then formulated as the closedness of $\alpha$, i.e.
+$$F^{-1} \text{ locally integrable} \iff \bm{0} = d\alpha$$
 Some reformulations yield:
 \begin{align*}
-  \bm{0} = d\alpha &= d(R^{\top}g^{1/2}dp)\overset{(1)}{=} dR^{\top} \wedge  (g^{1/2}dp) + R^{\top}d(g^{1/2}dp) \\
-  &= R^{\top}(\omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp))
-\end{align*} where for (1), the Leibnitz Rule for the exterior derivative is applied,
-and we define
-$$\omega = RdR^{\top} \in \mathfrak{so}(3).$$
-\begin{remark}
-  $\omega$ is an antisymmetric matrix-valued one-form (every element is a one-form).
-\end{remark}
-\begin{proof}
-  We differentiate the orthogonality condition of the rotation matrix $R$ (taking the derivative w.r.t. every element):
+  \bm{0} &= d\alpha = d(F^{-1}d\bm{p}) = d(R^{\top}g^{1/2}d\bm{p})\\
+  &= dR^{\top} \wedge  (g^{1/2}d\bm{p}) + R^{\top}d(g^{1/2}d\bm{p}) \\
+  &= R^{\top}(\omega \wedge (g^{1/2}d\bm{p})+ d(g^{1/2}d\bm{p}))
+\end{align*}
+which we can simplify to
+\begin{equation}\label{eq:oneform}
+  \bm{0} = \omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)
+\end{equation}
+where the Leibnitz Rule for the exterior derivative is applied
+and $\wedge$ is the exterior product between a matrix-valued one-form and a vector-valued one-form,
+i.e. one-forms in each component and the matrix vector product uses $\wedge$
+as the multiplication, see \ref{sec:evaluation} for the evaluation.
+We further define
+$$\omega = RdR^{\top} \in \mathfrak{so}(3)$$
+which is an antisymmetric matrix-valued one-form. To see this, 
+we differentiate the orthogonality condition of the rotation matrix $R$ (taking the derivative w.r.t. every element):
   \begin{align*}
-    Id &= RR^{\top} \\
-    d(Id) &= d(RR^{\top}) \\
+    \Id &= RR^{\top} \\
+    d(\Id) &= d(RR^{\top}) \\
     \bm{0} &= dRR^{\top} + RdR^{\top} \\
     \bm{0} &= (RdR^{\top})^{\top} + RdR^{\top} \\
     -(RdR^{\top})^{\top} &= RdR^{\top}
   \end{align*}
-\end{proof}
-Elements of the Lie algebra $\mathfrak{so}(3)$ can be thought as infinitesimal rotations and $\omega$ can be used
-as a connection one-form. The Lie algebra $\mathfrak{so}(3)$ has manifold structure, but for our purposes, it suffices to know that elements are antisymmetric matrices.
-To make $R$ locally integrable, we find $\omega$ such that the one-form $\alpha$ is closed ($d\alpha = 0$, curl-free),
-then try to match the $\omega$ with $R$, which can be expressed as
-$$\min_{R\in SO(3)} ||RdR^T - \omega ||^2.$$
+The Lie algebra $\mathfrak{so}(3)$ consists of all antisymmetric 3x3 matrices and has manifold structure.
+Elements of $\mathfrak{so}(3)$ are infinitesimal rotations, that is,
+they are tangent to the manifold $\mathrm{SO}(3)$ at the element $\Id$.
+Thus, we can use $\omega$ as a connection one-form to do the alignment of frames in
+the new metric $g$, i.e. the parallel transport is done with $\omega$ and then compared.
+
+To solve for local integrability, we find $\omega$ such that the one-form $\alpha$ is closed,
+then try to match the $\omega$ with $R$. This can be expressed as
+\begin{equation}\label{eq:objective}
+  \min_{R\in \mathrm{SO}(3)} ||RdR^{\top} - \omega ||^2,
+\end{equation}
+where $\omega$ is determined by $g$ through a system of linear equations (see \ref{sec:evaluation}).
+In general, Eq. \ref{eq:objective} cannot be minimised to zero, therefore we solve we solve
+for the nearly integrable 3D rotation field $R$.
 
 \section{Smoothness measure}
+Many frame field generation methods rely on maximising smoothness through
+the minimization of the Dirichlet energy.
+Here, we show that integrability through $\omega$ is closely related to the usual
+Dirichlet energy.
+We can take Eq. \ref{eq:objective} as a smoothness measure and reformulate, i.e.
+\begin{equation}\label{eq:smoothness}
+  ||RdR^{\top}-\omega||^2 = ||-dRR^{\top} - \omega||^2 = \cdot||-dRR^{\top}R-\omega R||^2 = ||dR+ \omega R||^2.
+\end{equation}
+By defining
+\begin{equation}
+  \mathcal{D}R \triangleq dR + \omega R,
+\end{equation}
+we can measure the smoothness and the integrability with a single energy $\int_{\mathcal{R}}||\mathcal{D}R||^2$.
+Now, when $g$ is constant in euclidean coordinates $(x,y,z)$, Eq. \ref{eq:oneform} tells us
+that $\omega = 0$, which reduces the smoothness measure $||\mathcal{D}R||$ to 
+$||dR||^2$, which corresponds to the usual Dirichlet energy.
+In fact, $\mathcal{D}R$ corresponds to the covariant derivative of $R$ under
+the connection $\omega$, which shows that local integrability is related
+to the covariant-based Dirichlet energy.
 
-\section{Connection evaluation}
-To find $\omega$, we use the above equation
-$$ \bm{0} = R^{\top}(\omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)) \iff \bm{0} = \omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)$$
+
+\section{Connection evaluation}\label{sec:evaluation}
+To find $\omega$, we use equation \ref{eq:oneform}
+$$\bm{0} = \omega \wedge (g^{1/2}d\bm{p})+ d(g^{1/2}d\bm{p})$$
 and reformulate into a linear system.
 We represent the antisymmetric matrix-valued one-form $\omega$
 $$\omega = \begin{bmatrix}
@@ -80,14 +126,13 @@ Recall, a one-form can be expressed as
 $$
 \omega_{ij}= (\omega^{ij})_1dx + (\omega^{ij})_2dy + (\omega^{ij})_3dz
 $$
-So e.g. $$\omega_{23} = \begin{bmatrix}
+So e.g. for $\omega_{23}$ we get $$\omega_{23} = \begin{bmatrix}
   dx & dy & dz
-\end{bmatrix}W_1 = (\omega^{23})_1dx + (\omega^{23})_2dy + (\omega^{23})_3dz$$
+\end{bmatrix}W_1 = (\omega^{23})_1dx + (\omega^{23})_2dy + (\omega^{23})_3dz.$$
 We also write $A = g^{1/2}= \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$.
-We use the equation $\bm{0} = \omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)$.
-Let us start with the first part:
+Starting with the first part of eq. \ref{eq:oneform}, we get
 \begin{align*}
   \omega \wedge g^{1/2}dp &= 
   \begin{bmatrix}
@@ -145,9 +190,9 @@ We use the fact that $\begin{bmatrix}
 \end{bmatrix} = \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$ because $A$ is symmetric, and $W_1$ corresponds to $\omega_{23}$, $W_2$ to $\omega_{31}$ and $W_3$ to $\omega_{12}$.
-Second part:
+We continue with the second part of eq. \ref{eq:oneform}:
 \begin{align*}
-  d(g^{1/2}dp)= d(Adp) = d\left(\begin{bmatrix}
+  d(g^{1/2}d\bm{p})= d(Ad\bm{p}) = d\left(\begin{bmatrix}
     A^1_1 & A^2_1 & A^3_1 \\
     A^1_2 & A^2_2 & A^3_2 \\
     A^1_3 & A^2_3 & A^3_3
@@ -157,7 +202,7 @@ Second part:
   \end{bmatrix}
   \right)
 \end{align*}
-Again, we can do this separately for each row:
+Again, we can do this separately for each row (we use the fact that the exterior derivative $d$ is the ordinary differential for a smooth function):
 \begin{align*}
   & \hspace{1.35em} d(A^1_k dx + A^2_k dy + A^3_k dz) \\
   &= dA^1_k \wedge dx + dA^2_k \wedge dy + dA^3_k \wedge dz \\
@@ -221,7 +266,7 @@ $$A^i_{\times} = \begin{bmatrix}
 With these two definitions, we can transform the above equality into a linear system
 $$A_{\times} \vecop(W) = \vecop (\nabla \times A)$$
 where $\nabla \times A$ is just the curl applied to each column. This transformation can be checked by laboriously plugging in the definitions and comparing the coefficients.
-With tedious calculations, one can show that $\det(A_{\times})=-2\det(A)^3=-2\det(g)^{3/2}<0$, which
+With tedious brute-force calculations, one can show that $\det(A_{\times})=-2\det(A)^3=-2\det(g)^{3/2}<0$, which
 means this is a linear system that is solvable and can be used to calculate $W$ at a point.
 
 
