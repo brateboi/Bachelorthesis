@@ -28,13 +28,61 @@
 
 \chapter{Calculation of rotation coefficient}
 \label{ch:calculation}
-Recall that we want to measure the smoothness of the frame field
-by the Dirichlet energy. 
+When the metric $g$ is globally flat with no additional constraints like
+boundary alignment, a globally integrable frame field is achievable
+by parallel transport. No singularities in the frame field would be present.
+However, this is not possible in general.
+In this section, by starting from the assumption that the metric
+is flat, we recover the rotation happening by parallel transport under
+the connection $\omega$ which allows us
+to pull back the covariant derivative based Dirichlet energy
+and minimize as if we were minimizing
+the Dirichlet energy in Euclidean coordinates.
 
+The smoothness measure $\mathcal{D}R$ is zero if all frames are parallel
+to each other under the connection $\omega$, i.e., if all frames
+are the same if parallel transported to the same point.
+This is deliberately kept vague as parallel transport is path
+dependent in general (parallel transport is path independent if the metric is flat).
+To get a feeling for the problem statement, see figure \ref{fig:rotation}.
 
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/rotation.pdf_tex}
+  \caption{Under the metric induced by $\phi$, the frame at $q$ is parallel to $p$.
+  To compare them, we need to recover how $p$ is rotated under $\omega$.}
+  \label{fig:rotation}
+\end{figure}
 
-We are interested in the rotation.
-Let $p,q$ be points on the manifold and $\ell$ a path connecting them.
+As we want parallelness under $\omega$ along a path $\gamma$, we set $\mathcal{D}R \overset{!}{=}0$ and treat it as a set of
+differential equations. Again, as $R$ essentially consists of 
+three rotation fields, what is meant that $\mathcal{D}R_i =0$ for each field.
+\paragraph{Differential Equation}
+Let $p,q$ be points on the manifold and $\ell : [0,1]\to \mathcal{M}$ a path connecting them,
+with $\ell(0)=q$ and $\ell(1)=p$.
+Our differential equation is then given by
+\begin{equation}
+  \bm{0} = dR_i(\ell(t)) + \omega(\ell(t)) R_i(\ell(t))
+\end{equation}
+which we rearrange to
+\begin{equation}
+  \underbrace{-\omega (\ell(t))}_{\bm{A}(t)}  \underbrace{R_i(\ell(t))}_{\bm{\alpha}(t)} = \underbrace{dR_i(\ell(t))}_{\bm{\dot{\alpha}}(t)}
+\end{equation}
+where we explicitly indicate that $\omega$ depends on the point evaluated and is not constant.
+Do not get confused what we are differentiating:
+The differential equation consists of mappings 
+$$\omega : \mathcal{M} \to \mathbb{R}^{3\times3} \text{ and }R_i : \mathcal{M}\to \mathbb{R}^3.$$
+Thus, the concatenation with $\ell: [0,1] \to \mathcal{M}$ gives us mappings
+$\bm{A}: [0,1] \to \mathbb{R}^{3\times 3}$ and $\bm{\alpha}:[0,1] \to \mathbb{R}^3$
+where it makes sense to take the derivative with respect to $t$.
+This differential equation has the form of a \emph{matrix differential equation},
+for which a general closed form solution is hard to find.
+However, when $\omega$ and its integral $\int_0^t-\omega(\ell(s))ds$ commute, the general solution
+$\bm{\alpha}(t)= e^{\int_0^t \bm{A}(s)ds}\bm{\alpha}(0)$ exists,
+which is the case when $\omega$ along $\ell$ rotate around the same axis
+(the same way rotation matrices commute when they rotate around the same axis).
+
 Let $R: \mathcal{M} \to SO(3)$ be a rotation field, i.e. $R(p), R(q)$ are orthogonal frames.
 Under the initial condition that $R(p)= \Id$, the equation
 $$R(q)= \exp(R_{pq}(\omega))R(p)$$

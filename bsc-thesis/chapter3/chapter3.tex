@@ -50,18 +50,18 @@ which we can simplify to
 where the Leibnitz Rule for the exterior derivative is applied
 and $\wedge$ is the exterior product between a matrix-valued one-form and a vector-valued one-form,
 i.e. one-forms in each component and the matrix vector product uses $\wedge$
-as the multiplication, see \ref{sec:evaluation} for the evaluation.
+as the multiplication, see section \ref{sec:evaluation} for the evaluation.
 We further define
 $$\omega = RdR^{\top} \in \mathfrak{so}(3)$$
 which is an antisymmetric matrix-valued one-form. To see this, 
-we differentiate the orthogonality condition of the rotation matrix $R$ (taking the derivative w.r.t. every element):
-  \begin{align*}
-    \Id &= RR^{\top} \\
-    d(\Id) &= d(RR^{\top}) \\
-    \bm{0} &= dRR^{\top} + RdR^{\top} \\
-    \bm{0} &= (RdR^{\top})^{\top} + RdR^{\top} \\
-    -(RdR^{\top})^{\top} &= RdR^{\top}
-  \end{align*}
+we differentiate the orthogonality condition of the rotation matrix $R$ (we assume $R$ rotates about the axis $a$ with angle $\theta$):
+\begin{align*}
+  \Id &= RR^{\top} \\
+  d(\Id) &= d(RR^{\top}) \\
+  \bm{0} &= dRR^{\top} + RdR^{\top} \\
+  \bm{0} &= (RdR^{\top})^{\top} + RdR^{\top} \\
+  -(RdR^{\top})^{\top} &= RdR^{\top}
+\end{align*}
 The Lie algebra $\mathfrak{so}(3)$ consists of all antisymmetric 3x3 matrices and has manifold structure.
 Elements of $\mathfrak{so}(3)$ are infinitesimal rotations, that is,
 they are tangent to the manifold $\mathrm{SO}(3)$ at the element $\Id$.
@@ -97,7 +97,12 @@ $||dR||^2$, which corresponds to the usual Dirichlet energy.
 In fact, $\mathcal{D}R$ corresponds to the covariant derivative of $R$ under
 the connection $\omega$, which shows that local integrability is related
 to the covariant-based Dirichlet energy.
-
+Special care must be taken as we abuse the notation of the covariant derivative. The
+covariant derivative $\mathcal{D}$ acts on each column of $R$ separately.
+We define 
+$$\mathcal{D}R_i \triangleq \nabla_{\dot{\gamma}(t)}R_i \triangleq dR_i + \omega R_i$$
+where $dR_i$ is the derivative of each entry with respect to the angle $\theta$ and $\gamma$ is some curve on the manifold.
+% The covariant derivative $\mathcal{D}R$ is given by 
 
 \section{Connection evaluation}\label{sec:evaluation}
 To find $\omega$, we use equation \ref{eq:oneform}
