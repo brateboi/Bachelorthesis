@@ -158,7 +158,7 @@ As described in section \ref{sec:framework}, the straight walk needs different
 components to work. These components are described in the following subsections.
 The final algorithm to find all intersected tetrahedra between two points is as follows.
 
-\subsection{Starting point}
+\subsection{Starting tet}\label{subsec:starttet}
 To start, the algorithm needs to know in which tet the starting point $q$ is located.
 With a simple linear nearest neighbor search of point $q$, we find a good heuristic starting point
 $s$. From $s$, every tet incident to $s$ is checked if it contains $q$.
@@ -184,7 +184,7 @@ $$q \in \mathcal{T} \iff \substack{
 }$$
 By checking for each plane of the tet, we check if the point $q$ is on the same side of the plane 
 (characterised by the same orientation sign) as the remaining vertex.
-\subsection{Initialization and valid state}
+\subsection{Valid state and initialization}
 To walk in the tet mesh, the algorithm needs to be in a state where everything is as expected.
 In 2D, we define this valid state as
 \begin{itemize}
@@ -201,9 +201,27 @@ Analogously in 3D, we define the valid state such that
   \item vertices of the triangle $\triangle uvw$ are ordered in the way that
   $$\op{orientation}(w,v,q,p)>0, \op{orientation}(v,u,q,p)>0, \op{orientation}(u,w,q,p)>0$$
 \end{itemize}
+Again, by starting in this configuration, all triangles $\triangle uvw$
+traversed get intersected by $\Vec{qp}$. Then, we find each
+intersection point with the ray, add the intersection points to a list
+with the current tet $t$ and finally use this as input for
+calculating the rotation coefficient as described in chapter \ref{ch:calculation}.
+To get into a valid state, an initialization needs to be performed.
+In \emph{Walking in a triangulation}\cite{Devillers}, they assume that
+$q$ is a vertex in the tet mesh. Thus, their approach of turning around $q$
+is not applicable in our case.
 
+We solve this problem with a brute-force approach.
+First, we find which tet $t$ contains $q$ as described in \ref{subsec:starttet}.
+From there, we go through the four faces of the tet and check which
+one gets intersected by the ray $\Vec{qp}$.
+When the face which gets intersected was found,
+we check the 6 permutations of the three vertices $(u,v,w)$
+until the configuration is found, where the orientations are positive.
 
-\subsection{Exact ray-triangle intersection}
+\subsection{Robust ray-triangle intersection}
+\cite{segura}\emph{An algorithm for determining intersection segment-polygon in 3D}
+
 \subsection{Robustness}
 
 
