@@ -58,7 +58,7 @@ To get a feeling for the problem statement, see figure \ref{fig:rotation}.
 As we want parallelness under $\omega$ along a path $\gamma$, we set $\mathcal{D}R \overset{!}{=}0$ and treat it as a set of
 differential equations. Again, as $R$ essentially consists of 
 three rotation fields, what is meant that $\mathcal{D}R_i =0$ for each field.
-\paragraph{Differential Equation}
+
 Let $p,q$ be points on the manifold and $\ell : [0,1]\to \mathcal{M}$ a path connecting them,
 with $\ell(0)=q$ and $\ell(1)=p$.
 Our differential equation is then given by
@@ -75,29 +75,35 @@ The differential equation consists of mappings
 $$\omega : \mathcal{M} \to \mathbb{R}^{3\times3} \text{ and }R_i : \mathcal{M}\to \mathbb{R}^3.$$
 Thus, the concatenation with $\ell: [0,1] \to \mathcal{M}$ gives us mappings
 $\bm{A}: [0,1] \to \mathbb{R}^{3\times 3}$ and $\bm{\alpha}:[0,1] \to \mathbb{R}^3$
-where it makes sense to take the derivative with respect to $t$.
+where it makes sense to take the derivative with respect only to $t$.
 This differential equation has the form of a \emph{matrix differential equation},
 for which a general closed form solution is hard to find.
 However, when $\omega$ and its integral $\int_0^t-\omega(\ell(s))ds$ commute, the general solution
 $\bm{\alpha}(t)= e^{\int_0^t \bm{A}(s)ds}\bm{\alpha}(0)$ exists,
 which is the case when $\omega$ along $\ell$ rotate around the same axis
 (the same way rotation matrices commute when they rotate around the same axis).
-
-Let $R: \mathcal{M} \to SO(3)$ be a rotation field, i.e. $R(p), R(q)$ are orthogonal frames.
-Under the initial condition that $R(p)= \Id$, the equation
-$$R(q)= \exp(R_{pq}(\omega))R(p)$$
-is a differential equation that corresponds to the parallel transport under the connection $\omega$
+Plugging in values $0$ and $1$ for $t$ and assuming $\omega$ commutes with its integral gives us the solution
+$$\bm{\alpha}(1) = R(\ell(1)) = R(p) = e^{\int_0^1\bm{A}(s)ds}R(\ell(0))= e^{\int_0^1\bm{A}(s)ds}R(q),$$
+which shows that we can 
+align frames with a single rotation matrix $R_{qp}$, i.e.
+$$R(p)= R_{qp}R(q)$$
+which corresponds to the parallel transport under the connection $\omega$
 of the frame along $\ell$.
-To recover this rotation $R_{pq}$, we integrate $\omega$ along $\ell$.
-\paragraph{Setup}
+Discretization of the covariant based Dirichlet energy is then given by
+\begin{equation}
+  ||R_{qp}R(q)-R(p)||^2.
+\end{equation}
 We parametrize the path by $\ell(0)=a, \ell(1)=b$.
 We resort to numerical integration for $R_{ab}$ and cut the path into $n$ small segments, i.e.
 $$R_{ab}= R_nR_{n-1} \dotsb R_1$$
-where $R_i = \exp(-\omega (\dot{\ell}(i\gamma))\gamma) = \exp((\int W^{\top}dp)_{\times})$, and $\gamma$ is the length of a segment and $\dot{\ell}(s)=\frac{\partial \ell}{\partial s}(s)$.
-Calculating the exponential map of an antisymmetric matrix (which $\omega \in \mathfrak{so}(3)$ is) can be done with Rodrigues' formula:
+where $R_i = \exp(-\omega (\dot{\ell}(i\gamma))\gamma)$, $\gamma$ is the length of a segment and $\dot{\ell}(s)=\frac{\partial \ell}{\partial s}(s)$.
+By cutting up the path into small segments, $\omega$ should rotate around the same axis along $\ell$, which as described above
+allows us to use the general solution $R_{i}=\exp((-\int_{\gamma} \omega d\bm{p})_{\times})$.
+Calculating the exponential map of an antisymmetric matrix (which $\omega \in \mathfrak{so}(3)$ is) yields a
+rotation matrix $R\in \mathrm{SO}(3)$ and can be done with Rodrigues' formula:
 $$\exp(u_{\times}) = \Id + \sin(\theta) \hat{u}_{\times} + (1-\cos(\theta)) \hat{u}_{\times}^2$$
 where $\theta = ||u||_2$ is the rotation angle and $\hat{u}= u/\theta$ is the rotation axis.
-We use the trapezoidal rule to evaluate the a short interval of the integral of $W$, which is given by
+We use the trapezoidal rule to evaluate the short interval of the integral of $W$, which is given by
 $$R_{ab}=\exp \left( \left(\frac{1}{2}(W_a + W_b)^{\top}(b-a)\right)_{\times}\right)$$
 where $W_a, W_b$ is solved for by the 9x9 linear system given by $A_{\times}$ and $\nabla \times A$.
 
@@ -133,7 +139,7 @@ $$\underbrace{\begin{pmatrix}
 T^{-1}\lambda = p \iff  \lambda = Tp
 $$
 $T$ always exists because $v_1, \dots , v_4$ are linearly independent,
-else it would not be a tetrahedron.
+else it would not be a valid tetrahedron.
 By denoting $T= \{ t_{ij} \}_{i,j \in \{ 1,\dots, 4\} }$, we can write our barycentric functions as
 \begin{align*}
 \alpha(x,y,z) &= t_{11}x + t_{12}y + t_{13}z + t_{14} \\
@@ -170,15 +176,15 @@ and $\nabla \times A = \nabla \times (A^1, A^2, A^3)$.
 Notice that the curl is constant within a tetrahedron.
 
 \section{Recursive subdivision}
-Whenever the rotation coefficient $R_{pq}$ is needed between some points $p$ and $q$,
+Whenever the rotation coefficient $R_{qp}$ is needed between some points $p$ and $q$,
 it is unclear ahead of time how many sampling points on the line $\ell$
-are needed such that $R_{pq}$ accurately describes how the frame rotates along $\ell$.
+are needed such that $R_{qp}$ accurately describes how the frame rotates along $\ell$.
 We apply a recursive subdivision scheme to recursively sample more points on $\ell$ only where is needed
 until sampling more points leads to no noticable improvement anymore (see figure \ref{fig:recursiveSubdivision}).
 We begin by calculating $R_{ab}$ with just the endpoints. This coefficient is then compared to the result if the midpoint was sampled aswell,
 so i.e. if
 $$\frac{||R_{ab} - R_{am}\cdot R_{mb}||^2_2}{\ell^2}< \varepsilon$$
-then no measurable improvement happened. We divide by the length of the segment $\vec{ab}$, because the segments get smaller
+then no measurable improvement happened. We divide by the length $\ell = ||a-b||_2$ of the segment $\vec{ab}$, because the segments get smaller
 and we want the tolerance $\varepsilon$ to remain the same.
 This approach has the advantage of only sampling points where there is improvement.
 See section \ref{ch:experiments} for results.
@@ -190,8 +196,7 @@ See section \ref{ch:experiments} for results.
   If sampling more points within some line segment leads to noticable improvement, more points are sampled.}
   \label{fig:recursiveSubdivision}
 \end{figure}
-
-The following code does what is described above.
+The algorithm for this simple recursive scheme is shown in below.
 \begin{algo*}
   \vbox{
     \small
