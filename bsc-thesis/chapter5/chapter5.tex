@@ -96,7 +96,8 @@ when the ray lies within a face, the algorithm may get into
 an invalid state, where the algorithm may then traverse through
 cells that do not get intersected by the ray. We need to detect and escape those degenerate cases
 through some additional checks. These are not described in the paper\cite{Devillers}.
-In most cases, a simple reinitialization is enough when the invalid state is detected.
+How we handle these degenerate cases is described in Sec.~\ref{subsec:degenerate}.
+% In most cases, a simple reinitialization is enough when the invalid state is detected.
 
 \subsection{A note on orientation tests}
 To determine on which side some point $s$ lies relative to two other points $q$ and $p$ (that represent a line) in 2D, the geometric \emph{orientation} predicate is used.
@@ -156,7 +157,7 @@ we can be sure that the result has the correct sign.
 \section{Algorithm $\op{tetFinder}$}
 As described in section \ref{sec:framework}, the straight walk needs different
 components to work. These components are described in the following subsections.
-The final algorithm to find all intersected tetrahedra between two points is as follows.
+The final algorithm to find all intersected tetrahedra between two points is in Sec. \ref{subsec:tetfinder}.
 
 \subsection{Starting tet}\label{subsec:starttet}
 To start, the algorithm needs to know in which tet the starting point $q$ is located.
@@ -184,11 +185,11 @@ $$q \in \mathcal{T} \iff \substack{
 }$$
 By checking for each plane of the tet, we check if the point $q$ is on the same side of the plane 
 (characterised by the same orientation sign) as the remaining vertex.
-\subsection{Valid state and initialization}
+\subsection{Valid state and initialization}\label{subsec:validstate}
 To walk in the tet mesh, the algorithm needs to be in a state where everything is as expected.
 In 2D, we define this valid state as
 \begin{itemize}
-  \item the line $\Vec{qp}$ intersects the edge defined by vertices $\Vec{lr}$
+  \item the line $\Vec{qp}$ intersects the edge defined by vertices $\Vec{lr}$ and this edge lies between $q$ and $p$
   \item vertex $l$ lies on the left of the line defined by $\Vec{qp}$
   \item vertex $r$ lies on the right of the line defined by $\Vec{qp}$
 \end{itemize}
@@ -220,11 +221,76 @@ we check the 6 permutations of the three vertices $(u,v,w)$
 until the configuration is found, where the orientations are positive.
 
 \subsection{Robust ray-triangle intersection}
-\cite{segura}\emph{An algorithm for determining intersection segment-polygon in 3D}
+When doing the initialization, we check the four faces of the tet to test which face
+intersects with $\Vec{qp}$. This ray-triangle intersection check must be robust, 
+meaning that when the segment $\Vec{qp}$ goes exactly through an edge or vertex, it must also be detected.
+Again, we can use the orientation predicate from before to do this robustly.
+Let $\triangle uvw$ be a triangle in $\mathbb{R}^3$ and $q,p$ the two points
+that determine a line segment. If $u,v,w$ is ordered in the way
+that $\op{orientation}(q,u,v,w) > 0$, then the segment determined by $\Vec{qp}$
+cuts the triangle if and only if \cite{segura}:
+\begin{equation}\label{eq:checks}
+  \op{orient}(p,u,q,v) \ge 0 \land \op{orient}(p,w,v,q) \ge 0 \land \op{orient}(p,u,w,q) \ge 0 
+\end{equation}
+If $\op{orientation}(q,u,v,w) < 0$, then the orientation tests in Eq.~\ref{eq:checks}
+must be less or equal to zero.
+Before checking for intersection with Eq.~\ref{eq:checks}, we must ensure that 
+$p$ and $q$ lie on opposite sides of the triangle $\triangle uvw$, i.e.
+\begin{equation}\label{eq:sides}
+  (\op{orient}(q,u,v,w) < 0 \land \op{orient}(p,u,v,w) > 0)  \lor (\op{orient}(q,u,v,w) > 0 \land \op{orient}(p,u,v,w) < 0)  
+\end{equation}
 
-\subsection{Robustness}
+TODO: What to do when all 5 points are coplanar
+There is the possibility that the points $q,p,u,v,w$ are all coplanar (when Eq. \ref{eq:sides} are all equal zero).
 
+\subsection{Robustness}\label{subsec:degenerate}
+The $\op{tetFinder}$ algorithm is designed to be robust and exact.
+Exact means no logical decisions
+based on FP, because this can lead to unexpected and wrong behaviour.
+Exactness is handled already, because all decisions are made based on the orientation predicate,
+which is made exact through arbitrary precision arithmetic.
+Robust in our context means that it is able to handle degenerate cases, for example when
+the ray goes exactly through an edge or vertex of a tet.
+The first case to handle is when the starting point $q$ is in multiple tets.
+Since the tetmesh is not a disjoint union of tets as they share their boundaries,
+a point can be in multiple tets at once. This can lead to problems in the initialization:
+If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see fig.~\ref{fig:validstatefail}
+To fix this, we add all tets to a list that contain $q$ while searching for the start tet.
+While initializing, we go through the tets one by one until a valid configuration is found.
+\begin{figure}[htb]
+  \centering
+  \def\svgwidth{20em}
+  \input{figures/validstatefail.pdf_tex}
+  \caption{As $q$ is exactly on vertex and the chosen triangle (in bold blue) does
+  have an edge that intersects with $\Vec{qp}$,
+  it does not matter how $l$ and $r$ are chosen on this triangle, no valid state can be found.
+  The same thing happens in 3D, where no valid configuration for $u,v,w$ can be constructed given a bad tet.
+  }\label{fig:validstatefail}
+\end{figure}
+The cases where the ray lies exactly on a face or goes exactly through an edge are all handled similarly.
+The problem in these cases is that while walking, the next step (reassigning $u,v$ or $w$ to the next vertex) cannot
+make a valid state, e.g. $\triangle uvw$ do not intersect with $\Vec{qp}$ anymore.
+We detect this by checking if we are still in a valid state and that the end tet does not
+match with the currently visited tet before the next iteration of the walk.
+If the walk has not finished yet and we are not in a valid state, we reinitialize from the current tet and use the brute-force approach to search
+for a valid state again. When found, the walk can continue as normal.
+Because degenerate cases can lead to invalid states, faces that do not get intersected
+by $\Vec{qp}$ are highlighted by $\triangle uvw$ while walking.
+Thus, before adding the face $\triangle uvw$ to the list to calculate the intersection points,
+we quickly check if the face to be added actually intersects with the robust ray-triangle subroutine described above.
 
+\subsection{Formulation of algorithm}\label{subsec:tetfinder}
+The final algorithm is presented in pseudocode here. The algorithm is described using operations such as:
+\begin{itemize}
+  \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
+  \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
+  vertices are known
+  \item \texttt{intersection(ray, triangle)} returns the intersection point of the ray with the triangle calculated with FP arithmetic
+  \item \texttt{validState(q,p,u,v,w)} checks if the current configuration is valid according to Sec.~\ref{subsec:validstate}
+  \item \texttt{initialization(t,q,p,u,v,w)} tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in Sec.~\ref{subsec:validstate}. Returns \texttt{true} if successful
+  \item \texttt{locateTets(q)} returns all tets that contain $q$
+\end{itemize}
+Algorithm \ref{alg:tetFinder} contains $\op{tetFinder}$ in full.
 \begin{algo*}
   \vbox{
     \small
@@ -232,18 +298,30 @@ until the configuration is found, where the orientations are positive.
       \reset
       xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
       \textbf{Input} $(q,p)$ \label{}\\
-      \> $t = \op{LocateTet(q)}$ \label{}\\
-      \> $\op{initialization(t)}$ \label{}\\
+      \> $\str{starts} = \op{locateTets(q)}$ \label{}\\
+      \> $\str{lineSegments} = [~]$\label{}\\
+      \> $t = \str{Nil}$ // working variables\label{}\\
+      \> $u,v,w,s = \str{Nil}$ // working variables\label{}\\
+      \> \textbf{for} $\hat{t} \in \str{starts}$ \label{}\\
+      \> \> \textbf{if} ($p \in t$) //p in same tet as $q$, we are done \label{}\\
+      \> \> \> return $\str{lineSegments}.\op{add}([t, q, p])$ \label{}\\
+
+      \> \> \textbf{if} ($\op{initialization}(t, q,p,u,v,w)$) \label{}\\
+      \> \> \> $t = \hat{t}$  \label{}\\
       \\
       \> // $qp$ intersects triangle $uvw$ \label{}\\
       \> // $wvqp, vuqp, uwqp$ are positively oriented \label{}\\
-      \> $\str{lineSegments} = [~]$\label{}\\
+      
       \> $\str{prev} = q$\label{}\\
       \> $\str{curr} = \op{intersection}(qp, uvw)$\label{}\\
       \\
       \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
       \\
       \> \textbf{while} $orientation(u,w,v,p)>0$ \{ \label{}\\
+
+      \> \> \textbf{if} ($\op{validState(q,p,u,v,w)}$) // degenerate cases can lead to invalid states \label{}\\
+      \> \> \> $\op{initialization}(t, q,p,u,v,w)$ \label{}\\
+      \\
       \> \> $t$ = neighbor($t$ through $uvw$) \label{}\\
       \> \> $s$ = vertex of $t, s \neq u, s \neq v, s \neq w$ \label{}\\
       \> \> $\str{prev} = \str{curr}$ \label{}\\
@@ -257,8 +335,10 @@ until the configuration is found, where the orientations are positive.
       \> \> \> \> v = s \label{}\\
       \> \> \> \textbf{else} // $qp$ intersects triangle $vsw$ \label{}\\
       \> \> \> \> u = s \label{}\\
-      \> \> $\str{curr} = \op{intersection}(qp, uvw)$ \label{}\\
-      \> \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
+      \\
+      \> \> \textbf{if} ($\op{robustRayTriangle(q,p,u,v,w)}$)\label{}\\
+      \> \> \> $\str{curr} = \op{intersection}(qp, uvw)$ \label{}\\
+      \> \> \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
       \> \} // $t$ contains $p$ \label{}\\
       \> $\str{lineSegments}.\op{add}([t, \str{prev}, p])$ \label{}\\
     \end{numbertabbing}
@@ -266,13 +346,7 @@ until the configuration is found, where the orientations are positive.
   \caption{tetFinder}
   \label{alg:tetFinder}
 \end{algo*}
-The algorithm uses several subroutines which are described here:
-  \begin{itemize}
-    \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
-    \item \texttt{vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
-    vertices are known
-    \item \texttt{initialization()}
-  \end{itemize}
+  
 
 
 \end{document}
