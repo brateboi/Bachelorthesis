@@ -99,24 +99,24 @@
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="68.16468"
-       y="125.22301"
-       id="text3539"><tspan
-         sodipodi:role="line"
-         id="tspan3537"
-         style="stroke-width:0.264583"
-         x="68.16468"
-         y="125.22301">$q$</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="39.748287"
-       y="124.76256"
+       y="125.29173"
        id="text3543"><tspan
          sodipodi:role="line"
          id="tspan3541"
          style="stroke-width:0.264583"
          x="39.748287"
-         y="124.76256">$s$</tspan></text>
+         y="125.29173">$s$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="69.381645"
+       y="125.29173"
+       id="text3629"><tspan
+         sodipodi:role="line"
+         id="tspan3627"
+         style="stroke-width:0.264583"
+         x="69.381645"
+         y="125.29173">$q$</tspan></text>
   </g>
 </svg>

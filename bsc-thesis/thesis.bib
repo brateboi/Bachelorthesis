@@ -223,6 +223,25 @@ year = {1997},
   series    = {SIGGRAPH '17}
 }
 
+@article{Palmer,
+author = {Palmer, David and Bommes, David and Solomon, Justin},
+title = {Algebraic Representations for Volumetric Frame Fields},
+year = {2020},
+issue_date = {April 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {39},
+number = {2},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3366786},
+doi = {10.1145/3366786},
+abstract = {Field-guided parameterization methods have proven effective for quad meshing of surfaces; these methods compute smooth cross fields to guide the meshing process and then integrate the fields to construct a discrete mesh. A key challenge in extending these methods to three dimensions, however, is representation of field values. Whereas cross fields can be represented by tangent vector fields that form a linear space, the 3D analog—an octahedral frame field—takes values in a nonlinear manifold. In this work, we describe the space of octahedral frames in the language of differential and algebraic geometry. With this understanding, we develop geometry-aware tools for optimization of octahedral fields, namely geodesic stepping and exact projection via semidefinite relaxation. Our algebraic approach not only provides an elegant and mathematically sound description of the space of octahedral frames but also suggests a generalization to frames whose three axes scale independently, better capturing the singular behavior we expect to see in volumetric frame fields. These new odeco frames, so called as they are represented by orthogonally decomposable tensors, also admit a semidefinite program–based projection operator. Our description of the spaces of octahedral and odeco frames suggests computing frame fields via manifold-based optimization algorithms; we show that these algorithms efficiently produce high-quality fields while maintaining stability and smoothness.},
+journal = {ACM Trans. Graph.},
+month = {apr},
+articleno = {16},
+numpages = {17},
+keywords = {Hexahedral meshing, convex algebraic geometry, octahedral frame fields, convex relaxations}
+}
 
 @online{Marek,
   author = {Marek Teichmann},
