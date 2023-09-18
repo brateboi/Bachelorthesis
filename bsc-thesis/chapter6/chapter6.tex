@@ -43,17 +43,24 @@ of valid frames.
 
 Because the implementation for the adaptivity of the grid was not finished
 at the time of this thesis, the optimization is done on a regular grid where
-all voxels have the same size. Two parameters depth \texttt{d} and number of diffusion steps \texttt{n}
-are present. The depth $d$ is how many times the grid gets subdivided, with depth \texttt{0}
+all voxels have the same size. Two parameters depth $d$ and number of diffusion steps $n$
+are present. The depth $d$ is how many times the grid gets subdivided, with depth $0$
 corresponding to a cube that is subdivided once.
 The resulting frame fields are expected to be the same, it just does it slower.
 
 \section{Caching of coefficients}
+Without any optimization, the algorithms time complexity is exponential with the depth.
+At depth $n$, there are $8^{n+1}$ voxels making up the enclosing cube.
+For every voxel, 6 rotation coefficients are calculated from its neighbors to itself
+and diffused $d$ times.
+Because the underlying metric field does not change while optimizing,
+we can cache the rotation coefficients to not recalculate $R$ from scratch at every diffusion step.
+We initialize a list of length $8^{n+1}\cdot 6$ at depth $n$, which in the first run at each depth
+gets filled with the corresponding rotation coefficients.
+Afterwards, the corresponding rotation coefficient for the voxel can get
+looked up at each diffusion step.
 
-\begin{itemize}
-    \item Problem statement
-    \item Simone algorithm from a high level
-    \item Caching of coefficients
-\end{itemize}
+
+
 
 \end{document}
