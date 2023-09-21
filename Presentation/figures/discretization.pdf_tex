@@ -1,6 +1,6 @@
 %% Creator: Inkscape 1.2 (dc2aedaf03, 2022-05-15), www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'rotation.pdf' (pdf, eps, ps)
+%% Accompanies image file 'discretization.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{259.11410595bp}%
+    \setlength{\unitlength}{179.0616097bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,19 +50,12 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.67484771)%
+  \begin{picture}(1,0.5717892)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{figures/rotation.pdf}}%
-    \put(0.03661041,0.00776383){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q$\end{tabular}}}}%
-    \put(0.0858076,0.38318261){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$p$\end{tabular}}}}%
-    \put(0.6110207,0.31760123){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$p$\end{tabular}}}}%
-    \put(0.42704769,0.0109039){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q$\end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{figures/rotation.pdf}}%
-    \put(0.3095336,0.50176404){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\phi^{-1}$\end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=3]{figures/rotation.pdf}}%
-    \put(0.84636856,0.48051726){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$R_{qp}=\int_{\gamma}\omega$\end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=4]{figures/rotation.pdf}}%
-    \put(0.3095336,0.35125139){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\phi$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{discretization.pdf}}%
+    \put(0.44615577,0.42991558){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$p$\end{tabular}}}}%
+    \put(0.11291837,0.01123474){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{discretization.pdf}}%
   \end{picture}%
 \endgroup%
