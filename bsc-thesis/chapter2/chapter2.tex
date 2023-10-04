@@ -8,8 +8,7 @@ in this thesis work. This chapter serves as a primer to differential geometry an
 \section{Differential Geometry}
 We will make heavy use of differential geometry in chapter \autoref{ch:connection}.
 I introduce the basic concepts what we will use, but I refrain from
-giving any proofs. I will give definitions only as far as we need it. These definitions
-will by no means be exhaustive. The following is an incomplete summary of concepts that we need presented in
+giving any proofs. The following is an incomplete summary of concepts that we need presented in
 \emph{Introduction to smooth manifolds}\cite{Lee00}.
 
 \subsection{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
@@ -19,6 +18,7 @@ A manifold can be equipped with additional structure. For example, we can work o
 In simple terms, a manifold is \emph{smooth} if it is similar enough to $\mathbb{R}^n$ that we can do Calculus
 like differentiation or integration on it. For this, each point on the manifold must be
 locally \emph{diffeomorphic} to an open subset of $\mathbb{R}^n$ space.
+In this thesis, we will mostly work with 3-manifolds. For easier illustration, some examples are in 2 dimensions.
 
 \subsection{Tangent space, Tangent bundle} There are many equivalent definitions
 for the tangent space. One definition is for each point $p$ in the manifold $\mathcal{M}$,
@@ -36,21 +36,22 @@ Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
 $V^*$ is itself a vector space, with the same dimension as $V$ and operations like addition and scalar multiplication
 can be performed on its elements. Any element in a vector space can be expressed as 
-a finite linear combination of its basis. This basis is called the \emph{dual basis}.
+a finite linear combination of its basis. The basis of a dual space is called the \emph{dual basis}.
 Thus, we call the dual space of the vector space $T_p\mathcal{M}$ its \emph{cotangent space},
 denoted by $T^*_p\mathcal{M}$. As before, the disjoint union of $T^*_p\mathcal{M}$ forms the \emph{cotangent bundle}:
 $T^*\mathcal{M}=\sqcup _{p\in \mathcal{M}}T^*_p\mathcal{M}$. Defined analogously from above,
-sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}.
+sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}. The standard basis of $T_p^*\mathcal{M}$
+is given by $[dx,dy,dz]$.
 
 \subsection{Tensors}
 Before we can introduce differential forms in the next paragraph, we need to go a little bit into \emph{tensors}.
 In simple words, tensors are real-valued, multilinear functions.
 A map $F: V_1 \times \dots V_k \to W$ is multilinear, if $F$ is linear in each component.
-For example, the dot product in $\mathbb{R}^n$ is a tensor. It takes two vectors and is linear in each component - bilinear.
-Another example is the \emph{Tensor Product of Covectors}:
+For example, consider the \emph{Tensor Product of Covectors}:
 Let $V$ be a vector space and take two covectors $\omega, \eta \in V^*$.
 Define the new function $\omega \otimes \eta: V\times V \to \mathbb{R}$ by
 $\omega \otimes \eta (v_1,v_2) = \omega(v_1)\eta(v_2)$. It is multilinear, because $\omega$ and $\eta$ are linear.
+
 We look at a special class of tensors, the \emph{alternating tensors}.
 A tensor is alternating, if it changes sign whenever two arguments are interchanged,
 i.e. $\omega(v_1, v_2) = -\omega(v_2, v_1)$.

@@ -1,0 +1,11 @@
+Text auf folien minimieren.
+z.b. "why?" wegnehmen
+
+
+Measure smoothness with Dirichlet energy:
+
+
+
+
+------------
+Bildlegenden, referenz wegnehmen	

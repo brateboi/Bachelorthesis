@@ -24,6 +24,17 @@
 	aspectratio=169, % Uncomment to set the aspect ratio to a 16:9 ratio which matches the aspect ratio of 1080p and 4K screens and projectors
 ]{beamer}
 
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
 \graphicspath{{figures/}{./}} % Specifies where to look for included images (trailing slash required)
 
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule for better rules in tables
@@ -161,7 +172,7 @@
 
 \author[Florin Achermann]{Florin Achermann} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
 
-\institute[Unibe]{University of Berne } % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+\institute[Unibe]{University of Berne} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
 
 \date[\today]{Bachelor thesis \\ \today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
 
@@ -208,34 +219,33 @@
         \begin{subfigure}{0.45\textwidth}
             \centering
             \includegraphics[width=\linewidth]{spiral.png}
-            \caption{Hexahedral mesh of spring \textcopyright COMSOL}
+            \caption{Hexahedral mesh of spring [COMSOL]}
             \label{fig:sub1}
         \end{subfigure}%
         \begin{subfigure}{0.45\textwidth}
             \centering
             \includegraphics[width=\linewidth]{spring.png}
-            \caption{Stress simulation on spring \textcopyright ANSYS}
+            \caption{Stress simulation on spring [ANSYS]}
             \label{fig:sub2}
         \end{subfigure}%
 	\end{figure}
-    Meshes out of hexahedral elements are prefered in practice
+    Automatic good hexahedral mesh generation currently not robust
 \end{frame}
 
 %------------------------------------------------
 
-\subsection{Integer-Grid Maps}
+\subsection{Seamless Maps}
 \begin{frame}
-	\frametitle{Integer-Grid Maps}
-	% \framesubtitle{Bullet Points and Numbered Lists} % Optional subtitle
-	Key Idea: \\
-	Search for map $\phi : \mathcal{M} \subset \mathbb{R}^3 \to \mathbb{R}^3$
-	which maps the object to a 3D grid
+	\frametitle{Seamless Maps}
+	Research approach: \\
+	Search for seamless map $\phi : \mathcal{M} \subset \mathbb{R}^3 \to \mathbb{R}^3$
+	which maps the object smoothly into $\mathbb{R}^3$
 
 	\begin{figure}
 		\includegraphics[width=0.5\linewidth]{integer-grid-rough.png}
 		\caption{Integer-Grid map \cite{survey}}
 	\end{figure}
-	Direct search is infeasible $\rightarrow$ hard mixed-integer non-convex optimization problem	
+	Direct search for "good quality" map is infeasible $\rightarrow$ hard mixed-integer non-convex optimization problem
 \end{frame}
 % \begin{frame}
 	% \frametitle{Blocks of Highlighted Text}
@@ -261,7 +271,7 @@
 
 \subsection{Frame Fields}
 \begin{frame}
-	\frametitle{Search for Integer-Grid Maps}
+	\frametitle{Search for Seamless Maps}
 	We want:
 	$$\phi : \mathcal{M} \to \mathbb{R}^3$$
 	Idea: Take the Jacobian
@@ -275,18 +285,17 @@
 	\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 	
 		\begin{column}{0.6\textwidth} % Left column width
+			Goals for our frame field:
+			\begin{itemize}
+				\item Smoothness
+				\item Boundary Alignment: One column should match with surface normal
+			\end{itemize}
 			Think of $F$ as three vector fields $F_i : \mathbb{R}^3 \to \mathbb{R}^3$
 			$$F=\begin{pmatrix}
 				\vertbar & \vertbar & \vertbar \\
 				F_1 & F_2 & F_3 \\
 				\vertbar & \vertbar & \vertbar
 			\end{pmatrix}$$
-			Goals for our frame field:
-			\begin{itemize}
-				\item Smoothness
-				\item Boundary Alignment: One column should match with surface normal
-			\end{itemize}
-			Why?
 		\end{column}
 		\begin{column}{0.35\textwidth} % Right column width
 			\begin{figure}
@@ -300,7 +309,7 @@
 	\frametitle{Frame Fields}
 	\begin{figure}
 		\includegraphics[width=0.7\linewidth]{requirements.png}
-		\caption{Left: Missing Boundary Alignment, not smooth. Right: Smooth + Boundary Aligned \textcopyright CGG Bern, David Bommes}
+		\caption{Left: Missing Boundary Alignment, not smooth. Right: Smooth + Boundary Aligned \cite{bommes}}
 	\end{figure}
 \end{frame}
 
@@ -308,12 +317,10 @@
 	\frametitle{Optimization Approach}
 	\begin{itemize}
 		\item Goal: Smooth Frame Field + Boundary Aligned
-		\item How to measure smoothness? 
+		\item We measure smoothness with the Dirichlet Energy 
 	\end{itemize}
-
-	Dirichlet Energy
 	\begin{equation}
-		E(F) = \int_\mathcal{M} ||\nabla F||^2
+		E(F) = \int_\mathcal{M} ||\nabla F||^2dV
 	\end{equation}
 \end{frame}
 
@@ -331,6 +338,7 @@
 			\begin{itemize}
 				\item For orthonormal frame field $F^TF = \mathrm{Id}$, extracted elements are unit cubes
 				\item Add metric field $g$ for control of frames
+				$$g:\mathcal{M}\to \mathbb{R}^{3\times3}$$
 				\item $g$-orthonormality $F^TgF = \mathrm{Id}$
 			\end{itemize}
 		\end{column}
@@ -412,7 +420,7 @@
 				\input{figures/discretization.pdf_tex}
 				\label{fig:discretization}
 			\end{figure}
-			We cover the object with a tetrahedral mesh and store
+			We store the object with a tetrahedral mesh and store
 			the metrics at the vertices. Within the tet, we linearly interpolate with barycentric coordinates.
 		\end{column}
 		\begin{column}{0.35\textwidth} % Right column width
@@ -423,7 +431,7 @@
 				% \caption{}
 				\label{fig:tet}
 			\end{figure}
-			$g=\alpha g_1 + \beta g_2 + \gamma + g_3 + \delta g_4$ with $\alpha+\beta+\gamma+\delta=1$
+			$g=\alpha g_1 + \beta g_2 + \gamma g_3 + \delta g_4$ with $\alpha+\beta+\gamma+\delta=1$
 			and $\alpha,\beta,\gamma,\delta \ge 0$
 		\end{column}
 	\end{columns}
@@ -466,14 +474,17 @@
 		\item Store metric field at vertices
 		\item Minimize discretized Dirichlet energy with minimizer
 		\begin{equation}
-			E(F)=\int_{\mathcal{M}}||\nabla F||^2 \longrightarrow E(F)= \sum_{i,j} ||F_i-F_j||^2
+			E(F)=\int_{\mathcal{M}}||\nabla F||^2dV \longrightarrow E(F)= \sum_{i,j} w_{ij}||F_i-F_j||^2
 		\end{equation}
 		\item modify with rotation coefficient to align in new metric
 		\begin{equation}
-			E(F)= \sum_{q,p} ||[R_{qp}]F_q-F_p||^2
+			E(F)= \sum_{q,p} w_{ij}||R_{qp}F_q-F_p||^2
 		\end{equation}
 	\end{enumerate}
+
 \end{frame}
+
+\section{Experiments}
 
 \begin{frame}
 	\frametitle{Experiments}
@@ -505,7 +516,19 @@
 		\caption{Constant-linear-constant metric}
 	\end{figure}
 \end{frame}
-\frame
+\begin{frame}
+	\frametitle{Experiments}
+	\begin{equation}
+		g(z) = \begin{cases}
+			\mathrm{diag}(1,1,1) &0 < z < 1/3 \\
+			\mathrm{diag}(h(z), h(z), h(z)) &1/3 < z < 2/3 \\
+			\mathrm{diag}(10,10,10) &2/3 < z < 1 \\
+	\end{cases}\end{equation}
+	with $h(z)=27z-8$
+	\begin{figure}
+		\includegraphics[width=0.6\linewidth]{nonuniform.pdf}
+	\end{figure}
+\end{frame}
 
 %------------------------------------------------
 
@@ -524,6 +547,11 @@
 			Fang et al. (2023)
 			\newblock Metric-Driven 3D Frame Field Generation
 			\newblock \emph{IEEE Transactions on Visualization and Computer Graphics}.
+
+		\bibitem[Bommes, 2023]{bommes}
+			Bommes (2023)
+			\newblock Geometry Processing Lecture Research Outlook
+			\newblock \emph{Geometry Processing FS2023}.
 	\end{thebibliography}
 \end{frame}
 
