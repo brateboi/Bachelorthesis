@@ -519,12 +519,11 @@
 \begin{frame}
 	\frametitle{Experiments}
 	\begin{equation}
-		g(z) = \begin{cases}
-			\mathrm{diag}(1,1,1) &0 < z < 1/3 \\
-			\mathrm{diag}(h(z), h(z), h(z)) &1/3 < z < 2/3 \\
-			\mathrm{diag}(10,10,10) &2/3 < z < 1 \\
+		g(p) = \begin{cases}
+			\mathrm{diag}(1,1,1) &0 < ||p||_{\infty} < 1/3 \\
+			\mathrm{diag}(h(p), h(p), h(p)) &1/3 < ||p||_{\infty} < 2/3 \\
+			\mathrm{diag}(10,10,10) &2/3 < ||p||_{\infty} < 1 \\
 	\end{cases}\end{equation}
-	with $h(z)=27z-8$
 	\begin{figure}
 		\includegraphics[width=0.6\linewidth]{nonuniform.pdf}
 	\end{figure}

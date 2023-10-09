@@ -6,13 +6,13 @@
 In many applications of computer graphics or engineering, the geometry of objects
 has to be described in some way. Finite elements encode various information such as physical properties
 to be used in e.g. stress simulations.
-While it is possible for simple objects such as spheres or planes to describe them
-with analytical formulas, this is unfeasible for arbitrary objects of any shape.
+While it is possible for simple objects such as spheres or planes to be described by
+analytical formulas, this is unfeasible for arbitrary objects of any shape.
 To describe any geometric object, it is discretized and encoded as a mesh.
 Volumetric meshes are used to encode the surface and the interior of an object.
 The most common types of volumetric meshes are tetrahedral and hexahedral meshes.
 Hexahedral meshes, that is a decomposition into cube-like elements,
-are usually prefered due to their superior numerical accuracy and faster compute time.
+are usually prefered due to better numerical features.
 However, automatically generating high-quality meshes remains a hard challenge
 in computer graphics.
 A promising research direction is through the use of frame fields \cite{Hex22}.
@@ -31,29 +31,25 @@ where $\phi$ is a frame, and we measure how much these frames twist and rotate w
 To allow for non-uniform and anisotropic hex elements, we introduce
 \emph{metric fields}. Optimizing the frame field in this new metric (instead of the usual euclidean metric) then results
 in elements that are uniform and isotropic in this new metric.
-To this end, the expression for the Dirichlet energy must be changed.
-We will show how to calculate a special rotation matrix $R$, which describes
-how frames are aligned in the new metric.
+To this end, the expression for the Dirichlet energy must be changed, as euclidean derivatives
+assume non-curved space.
+We will show how to calculate a special rotation matrix $R$, with witch we can measure
+smoothness of frames in the new metric.
 
 
 In this thesis, we rederive how to pull back the metric with the rotation coefficient $R$ such that we can measure
 the Dirichlet energy in the usual cartesian coordinates as described in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
-The necessary mathematical background is introduced in Section \ref{ch:math-background}.
-In Section \ref{ch:connection}, by focusing on integrability of the frame field,
+The necessary mathematical background is introduced in section \ref{ch:math-background}.
+In section \ref{ch:connection}, by focusing on integrability of the frame field,
 we derive the connection $\omega$ under our new metric field and how to evaluate it.
-Section \ref{ch:calculation} discusses how the metric field is piecewise-linearly discretized as a tetrahedral
-mesh and how the rotation coefficient $R$ to align frames in the metric is calculated within a specific tetrahedron.
-Because in general, $R$ is needed between arbitrary points in the metric field, a robust tetrahedron finder algorithm is
-presented in Section \ref{ch:algorithm}.
-We briefly explain how the actual frame field optimization works in Section \ref{ch:optimization}.
-The whole frame field generation is tested with some experiments in Section \ref{ch:experiments}.
-We conclude in Section \ref{ch:conclusion}.
-% \begin{itemize}
-%   \item What are Frame Fields?
-%   \item Why are they important?
-%   \item How do \emph{we} generate them?
-% \end{itemize}
-
+section \ref{ch:calculation} discusses how the metric field is piecewise-linearly discretized on a tetrahedral
+mesh and how the rotation coefficient $R$ to align frames in the metric is calculated within a specific tetrahedron (\emph{short: tet}).
+Because in general, $R$ is needed between arbitrary points in the metric field and the metric field
+changes from one tet to another, a robust tet finder algorithm is
+presented in section \ref{ch:algorithm} to calculate $R$ with the correct field.
+We briefly explain how the actual frame field optimization works in section \ref{ch:optimization}.
+The whole frame field generation is tested with some experiments in section \ref{ch:experiments}.
+We conclude in section \ref{ch:conclusion}.
 
 
 \end{document}

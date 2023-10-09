@@ -28,8 +28,8 @@ where $F_i : \mathbb{R}^3 \to \mathbb{R}^3$ are vector fields.
 To achieve local integrability for $F^{-1}$, we therefore want
 $$\nabla \times F^{-1} \overset{!}{=}0$$
 where the curl is applied to each column.
-We can express this more naturally with the language of differential forms:
-The curl can be written as the exterior derivative $d$ of a one-form $\alpha$.
+We can express this more naturally with the language of differential forms by writing
+the curl as the exterior derivative $d$ of a one-form $\alpha$.
 A one-form (more generally, a differential form) is closed, if $d\alpha = 0$.
 We construct a vector-valued one-form out of our frame field,
 given $\bm{p}=(x,y,z)^{\top}$ in Euclidean coordinates
@@ -62,9 +62,11 @@ we differentiate the orthogonality condition of the rotation matrix $R$ (we assu
   \bm{0} &= (RdR^{\top})^{\top} + RdR^{\top} \\
   -(RdR^{\top})^{\top} &= RdR^{\top}
 \end{align*}
-The Lie algebra $\mathfrak{so}(3)$ consists of all antisymmetric 3x3 matrices and has manifold structure.
+The Lie algebra $\mathfrak{so}(3)$ consists of all antisymmetric $3\times3$ matrices.
 Elements of $\mathfrak{so}(3)$ are infinitesimal rotations, that is,
 they are tangent to the manifold $\mathrm{SO}(3)$ at the element $\Id$.
+Indeed, we characterised the elements of $\mathfrak{so}(3)$ by taking the derivative at $\Id$,
+which is one definition to get to the tangent space.
 Thus, we can use $\omega$ as a connection one-form to do the alignment of frames in
 the new metric $g$, i.e. the parallel transport is done with $\omega$ and then compared.
 
@@ -74,7 +76,7 @@ then try to match the $\omega$ with $R$. This can be expressed as
   \min_{R\in \mathrm{SO}(3)} ||RdR^{\top} - \omega ||^2,
 \end{equation}
 where $\omega$ is determined by $g$ through a system of linear equations (see \ref{sec:evaluation}).
-In general, Eq. \ref{eq:objective} cannot be minimised to zero, therefore we solve we solve
+In general, equation \ref{eq:objective} cannot be minimised to zero, therefore we solve we solve
 for the nearly integrable 3D rotation field $R$.
 
 \section{Smoothness measure}
@@ -82,16 +84,16 @@ Many frame field generation methods rely on maximising smoothness through
 the minimization of the Dirichlet energy.
 Here, we show that integrability through $\omega$ is closely related to the usual
 Dirichlet energy.
-We can take Eq. \ref{eq:objective} as a smoothness measure and reformulate, i.e.
+We can take equation \ref{eq:objective} as a smoothness measure and reformulate, i.e.
 \begin{equation}\label{eq:smoothness}
-  ||RdR^{\top}-\omega||^2 = ||-dRR^{\top} - \omega||^2 = \cdot||-dRR^{\top}R-\omega R||^2 = ||dR+ \omega R||^2.
+  ||RdR^{\top}-\omega||^2 = ||-dRR^{\top} - \omega||^2 = ||-dRR^{\top}R-\omega R||^2 = ||dR+ \omega R||^2.
 \end{equation}
 By defining
 \begin{equation}
   \mathcal{D}R \triangleq dR + \omega R,
 \end{equation}
 we can measure the smoothness and the integrability with a single energy $\int_{\mathcal{R}}||\mathcal{D}R||^2$.
-Now, when $g$ is constant in euclidean coordinates $(x,y,z)$, Eq. \ref{eq:oneform} tells us
+Now, when $g$ is constant in euclidean coordinates $(x,y,z)$, equation \ref{eq:oneform} tells us
 that $\omega = 0$, which reduces the smoothness measure $||\mathcal{D}R||$ to 
 $||dR||^2$, which corresponds to the usual Dirichlet energy.
 In fact, $\mathcal{D}R$ corresponds to the covariant derivative of $R$ under
@@ -102,7 +104,6 @@ covariant derivative $\mathcal{D}$ acts on each column of $R$ separately.
 We define 
 $$\mathcal{D}R_i \triangleq \nabla_{\dot{\gamma}(t)}R_i \triangleq dR_i + \omega R_i$$
 where $dR_i$ is the derivative of each entry with respect to the angle $\theta$ and $\gamma$ is some curve on the manifold.
-% The covariant derivative $\mathcal{D}R$ is given by 
 
 \section{Connection evaluation}\label{sec:evaluation}
 To find $\omega$, we use equation \ref{eq:oneform}
@@ -137,9 +138,9 @@ So e.g. for $\omega_{23}$ we get $$\omega_{23} = \begin{bmatrix}
 We also write $A = g^{1/2}= \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$.
-Starting with the first part of eq. \ref{eq:oneform}, we get
+Starting with the first part of equation \ref{eq:oneform}, we get
 \begin{align*}
-  \omega \wedge g^{1/2}dp &= 
+  \omega \wedge g^{1/2}d\bm{p} &= 
   \begin{bmatrix}
     0 & \omega_{12} & -\omega_{31} \\
     -\omega_{12} & 0 & \omega_{23} \\
@@ -195,7 +196,7 @@ We use the fact that $\begin{bmatrix}
 \end{bmatrix} = \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$ because $A$ is symmetric, and $W_1$ corresponds to $\omega_{23}$, $W_2$ to $\omega_{31}$ and $W_3$ to $\omega_{12}$.
-We continue with the second part of eq. \ref{eq:oneform}:
+We continue with the second part of equation \ref{eq:oneform}:
 \begin{align*}
   d(g^{1/2}d\bm{p})= d(Ad\bm{p}) = d\left(\begin{bmatrix}
     A^1_1 & A^2_1 & A^3_1 \\
@@ -247,9 +248,9 @@ Finally, we can put everything together:
     dy \wedge dz \\ dz \wedge dx \\ dx \wedge dy
   \end{bmatrix}
 \end{align*}
-Take the curl to the other side and switch order on the left-hand side to cancel the $-1$.
+We take the curl to the other side and switch order on the left-hand side to cancel the $-1$.
 As we are only interested in the 9 components of $W$, we omit the
-two-form basis and transform into a 9x9 linear system for $W$.
+two-form basis and transform into a $9\times9$ linear system for $W$.
 We define $A_{\times}$ and $\vecop(\cdot)$ as
 $$A_{\times} = \begin{bmatrix}
   0 & -A^3_{\times} & A^2_{\times} \\
@@ -267,9 +268,11 @@ $$A^i_{\times} = \begin{bmatrix}
   0 & -A^i_3 & A^i_2 \\
   A^i_3 & 0 & -A^i_1 \\
   -A^i_2 & A^i_1 & 0
-\end{bmatrix}$$ and $\vecop(\cdot)$ turns a 3x3-matrix into a 9x1-vector by stacking the columns.
+\end{bmatrix}$$ and $\vecop(\cdot)$ turns a $3\times3$-matrix into a $9\times1$-vector by stacking the columns.
 With these two definitions, we can transform the above equality into a linear system
-$$A_{\times} \vecop(W) = \vecop (\nabla \times A)$$
+\begin{equation}
+  A_{\times} \vecop(W) = \vecop (\nabla \times A)
+\end{equation}\label{eq:linearsystem}
 where $\nabla \times A$ is just the curl applied to each column. This transformation can be checked by laboriously plugging in the definitions and comparing the coefficients.
 With tedious brute-force calculations, one can show that $\det(A_{\times})=-2\det(A)^3=-2\det(g)^{3/2}<0$, which
 means this is a linear system that is solvable and can be used to calculate $W$ at a point.

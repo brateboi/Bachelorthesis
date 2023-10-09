@@ -4,12 +4,12 @@
 \chapter{Mathematical Background}\label{ch:math-background}
 
 A solid mathematical introduction is key to understanding how and why the approach
-in this thesis work. This chapter serves as a primer to differential geometry and frame fields.
+in this thesis works. This chapter serves as a primer to differential geometry and frame fields.
 \section{Differential Geometry}
-We will make heavy use of differential geometry in chapter \autoref{ch:connection}.
+We will make heavy use of differential geometry in chapter \ref{ch:connection}.
 I introduce the basic concepts what we will use, but I refrain from
 giving any proofs. The following is an incomplete summary of concepts that we need presented in
-\emph{Introduction to smooth manifolds}\cite{Lee00}.
+\emph{Introduction to smooth manifolds}\cite{LeeManifold}.
 
 \subsection{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
 More exactly, a $n$-manifold is a topological space, where each point on the manifold has an open neighborhood
@@ -22,7 +22,7 @@ In this thesis, we will mostly work with 3-manifolds. For easier illustration, s
 
 \subsection{Tangent space, Tangent bundle} There are many equivalent definitions
 for the tangent space. One definition is for each point $p$ in the manifold $\mathcal{M}$,
-the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths $\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}$
+the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths $\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}, \varepsilon > 0$
 with $p = \gamma(0)$. The tangent space is a vector space which has the same dimension as its manifold,
 which is 3 in our case. These tangent spaces can be ``glued'' together to form the
 \emph{tangent bundle} $T\mathcal{M} = \sqcup _{p \in \mathcal{M}}T_p\mathcal{M}$, which itself
@@ -35,13 +35,13 @@ Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 \subsection{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
 $V^*$ is itself a vector space, with the same dimension as $V$ and operations like addition and scalar multiplication
-can be performed on its elements. Any element in a vector space can be expressed as 
+can be performed on its elements. Any element in a finite vector space can be expressed as 
 a finite linear combination of its basis. The basis of a dual space is called the \emph{dual basis}.
 Thus, we call the dual space of the vector space $T_p\mathcal{M}$ its \emph{cotangent space},
 denoted by $T^*_p\mathcal{M}$. As before, the disjoint union of $T^*_p\mathcal{M}$ forms the \emph{cotangent bundle}:
 $T^*\mathcal{M}=\sqcup _{p\in \mathcal{M}}T^*_p\mathcal{M}$. Defined analogously from above,
 sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}. The standard basis of $T_p^*\mathcal{M}$
-is given by $[dx,dy,dz]$.
+is given by $\mathbb{E}^3=[dx,dy,dz]$.
 
 \subsection{Tensors}
 Before we can introduce differential forms in the next paragraph, we need to go a little bit into \emph{tensors}.
@@ -61,7 +61,7 @@ An alternating tensor field is called a \emph{differential form}.
 
 \subsection{Differential Forms, Exterior Derivative}
 Recall that a section from $T^*\mathcal{M}$ is called a differential 1-form, or just 1-form.
-Define the \emph{wedge product} (or \emph{exterior product}) between two 1-forms:
+We define the \emph{wedge product} (or \emph{exterior product}) between two 1-forms:
 $$(\omega \wedge \eta)_p = \omega_p \wedge \eta_p$$
 Notice the similarity to the \emph{Tensor Product of Covectors}: We get a new map, (a 2-form):
 $$\omega \wedge \eta: T\mathcal{M} \times T\mathcal{M} \to \mathbb{R}$$
@@ -73,21 +73,22 @@ and has the the following properties:
 \begin{itemize}
   \item $df$ is the ordinary differential of a smooth function $f$. Smooth functions are 0-forms.
   \item $d(d\alpha) = 0$
-  \item $d(\alpha \wedge \beta) = (d\alpha \wedge \beta) + (-1)^k(\alpha \wedge d\beta)$ for a $k$-form $\alpha$. (Leibnitz Rule)
+  \item $d(\alpha \wedge \beta) = (d\alpha \wedge \beta) + (-1)^k(\alpha \wedge d\beta)$ for a $k$-form $\alpha$ (Leibnitz Rule).
 \end{itemize}
 In section \ref{ch:connection} we will need what $d\omega$ is for some smooth 1-form $\omega$, the calculation
 will be done there. For now, just note that 
-any arbitrary smooth 1-form can be written as $\omega = Fdx+Gdy+Hdz$ for some appropriate smooth functions $F,G,H$.
+any smooth 1-form can be written as $\omega = Fdx+Gdy+Hdz$ for some appropriate smooth functions $F,G,H$
+with the standard basis $\mathbb{E}^3$.
 
 
 \subsection{Riemannian metric, $g$-orthonormality}
-Inner products are examples of symmetric tensors. They allow us to define lengths and angles
+Inner products $\langle \cdot , \cdot \rangle$ are examples of symmetric tensors. They allow us to define lengths and angles
 between vectors. We can apply this idea to manifolds.
 A Riemannian metric $g$ is a symmetric positive-definite tensor field at each point.
 If $\mathcal{M}$ is a manifold, the pair $(\mathcal{M},g)$ is called a \emph{Riemannian manifold}.
 Let $g$ be the Riemannian metric on $\mathcal{M}$ and $p\in \mathcal{M}$,
 then $g_p$ is an inner product on $T_p\mathcal{M}$. We write $\langle \cdot, \cdot\rangle_g$ to denote this inner product.
-Any Riemannian metric can be written as positive-definite symmetric matrix, which allows for this simple form: $\langle v,w\rangle_g = v^{\top}gw$.
+Any Riemannian metric can be written as positive-definite symmetric matrix $g$, which allows for this simple form: $\langle v,w\rangle_g = v^{\top}gw$.
 
 Such a new metric allows for the definition of \emph{$g$-orthonormality}:
 A basis $[e_1, e_2, e_3]$ of $T_p\mathcal{M}$ is $g$-orthonormal if $\langle e_i, e_j \rangle_g = \delta_{ij}$.
@@ -121,67 +122,42 @@ See figure \ref{fig:vectorfield} for an illustration in 2D.
   \label{fig:vectorfield}
 \end{figure}
  
-
-
-% \newpage
-% A frame $F$ is a set of 6 vectors $\{\pm F_0, \pm F_1, \pm F_2 \}$.
-% We can represent such a frame F as a $3\times3$ matrix F, where the $i$th-column is $F_i$.
-% A frame field then maps to every point in 3D-space such a frame, i.e. $F: \mathbb{R}^3 \to \mathbb{R}^{3\times3}$.
-% Usually, we work on a 3-manifold $\mathcal{M}$ and a positively oriented frame field, i.e.
-% $F\vert_{\mathcal{M}}: \mathcal{M} \to \mathbb{R}^{3\times3}$, where $\det(F)>0$.
-% To allow for anisotropic, nonuniform meshes, we generalize orthonormality of frames to
-% $g$-orthonormal frames. Orthonormality is measured in some metric $g$, and a frame F satifisfies the condition
-% $\langle F_i, F_j \rangle _g = \delta_{ij}$.
-% Any frame field with $\det(F)>0$ naturally defines a metric $g= (FF^{\top})^{-1}$, where $F$ is $g$-orthonormal
-% $$F^{\top}gF = Id.$$
-% We can factor the frame field F into a symmetric part $g^{1/2}$ and a rotational part $R$
-% $$F = g^{-1/2}R$$
-% The symmetric part $g^{-1/2}$ keeps $F$ $g$-orthonormal
-% $$ \implies F^{\top}gF = (g^{-1/2}R)^{\top}gg^{-1/2}R)=R^{\top}g^{-1/2}gg^{-1/2}R =Id.$$
-% and $R$ represents a rotational field $R: \mathcal{M} \to SO(3)$.
-% The requirements for our frame field are:
-% \begin{itemize}
-%   \item Smoothness
-%   \item Integrability
-%   \item Metric consistency: $g = (FF^{\top})^{-1}$
-% \end{itemize}
-
-
 \section{Frame fields}
 Recall from the introduction that we are trying to find a hexahedral mesh
 for some geometric object. In the following sections, the key idea to
-tackle this problem through \emph{integer-grid maps} is discussed and
-how the problem is relaxed through \emph{frame fields}.
+tackle this problem through \emph{seamless maps} and \emph{integer-grid maps} is discussed and
+how the problem of finding such maps is relaxed through \emph{frame fields}.
 \subsection{Integer-grid maps}
 
-In 2D, integer-grid maps have proven to be reliable
+In 2D, Integer-Grid maps have proven to be reliable
 in generating the analogue of hexahedral meshes, quad meshes \cite{integer-grid}.
 The goal is to use the same approach, but in three dimensions.
-The objective is to find a parametrization
-$\phi : \mathcal{M} \to \mathbb{R}^3$, which embeds the $3$-dimensional object
-to be meshed
-onto a $3$-dimensional voxel grid, where the inverse $\phi^{-1}$ maps the deformed
-grid back onto the object to recover a shape-aligned hexahedral mesh, see figure \ref{fig:integer-grid} for an illustration.
+The objective is to find a seamless map
+$\phi : \mathcal{M} \to \mathbb{R}^3$, which smoothly maps the $3$-dimensional object
+to be meshed into $\mathbb{R}^3$.
+In a later step, after finding a good seamless map $\phi$, it is quantized to get an
+Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=20em]{figures/integer-grid-rough}
   \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from \cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
-This is called an integer-grid map and by minimizing distortion and satisfying boundary alignment,
-a hexahedral mesh could be extracted.
-However, this is a hard mixed-integer and non-convex optimization problem for which no current
+Directly searching for good Integer-Grid maps that minimize distortion and satisfy boundary alignment
+condition is a hard mixed-integer and non-convex optimization problem, for which no current
 optimization technique is available that would result in an acceptable solution.
 
 \subsection{Frame fields as a relaxation}
-By taking the Jacobian of the parametrization, $\nabla \phi$, we get a mapping
+By taking the Jacobian of the seamless map, $\nabla \phi$, we get a mapping
 $\nabla \phi : \mathcal{M} \to \mathbb{R}^{3\times3}$ of \emph{frames}, a \emph{frame field}.
-The idea of frame fields is then to search for an approximation of $\nabla \phi$.
+The idea of frame fields is to then search for an approximation of $\nabla \phi$.
 If $F: \mathcal{M} \to \mathbb{R}^{3\times3}$ is the approximation of $\nabla \phi$, we can
 solve for $\phi : \mathcal{M} \to \mathbb{R}^3$ with
-$$\min \limits_{\phi} \int \limits_{\mathcal{M}} ||\nabla \phi F - \Id||^2$$
+\begin{equation}
+  \min \limits_{\phi} \int \limits_{\mathcal{M}} ||\nabla \phi F - \Id||^2
+\end{equation}\label{eq:poisson}
 where $||\cdot||$ is the Frobenius norm. If this is sufficiently small, then $F^{-1} \approx \nabla \phi$ and 
-the extracted hexahedral mesh closely follow the integer-grid isolines.
+the extracted hexahedral mesh closely follow the integer isolines.
 A frame locally represents the edges of a deformed cube.
 We can think of a frame field as the composition of three vector fields
 and as a relaxation of the original problem. However, frame fields
@@ -211,7 +187,7 @@ since rotations only exhibit 3 degrees of freedom.
 While optimizing the frame field, some kind of ``average'' of two frames will be done.
 This averaging makes sense in the spherical harmonics space, but the result may be outside the valid
 space of frames. A projection from the spherical
-harmonics space back to the valid space of frames will be needed, see fig. \ref{fig:projection} \cite{Ray}.
+harmonics space back to the valid space of frames will be needed, see figure \ref{fig:projection} \cite{Ray}.
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -228,7 +204,6 @@ $$F^{-1}gF = \Id$$
 holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
 (akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$,
 see figure \ref{fig:factorization}.
-
 \begin{figure}[htb]
   \centering
   \includegraphics[width=25em]{figures/factorization}
@@ -236,16 +211,11 @@ see figure \ref{fig:factorization}.
   (Figure from \cite{Fang23}).}
   \label{fig:factorization}
 \end{figure}
-
-TODO:
-Frame field goals
-
+Requirements for a frame field are usually formulated as
 \begin{itemize}
-  \item Dirichlet energy, what are we optimizing
-  \item Requirements for the frame field -> integrability + boundary alignment
+  \item Smoothness: by minimizing the Dirichlet energy $E(F)=\int_{\mathcal{M}}||\nabla F||^2 dV $, the smoothness within the frame field is maximized which minimizes distortion of the seamless map;
+  \item Boundary alignment: one of the columns of the frame field should match with the surface normal such that the hex elements accurately trace the surface of the object;
+  \item Integrability: to find $\phi$ with equation \ref{eq:poisson}, the frame field must be as close to integrable as possible.
 \end{itemize}
-
-
-
 
 \end{document}

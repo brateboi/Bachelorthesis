@@ -4,11 +4,14 @@ In 2d, we always have a "valid" configuration of left right, in
 3d we always have a "valid" configuration by positive negative orientation with orientation predicate.
 Edges turn to Faces, 2 orientation tests instead of 1.
 
-Why not geodesic: -> There are infinite amount of geodesics with respect to the connection $\omega$,
-so why not take the straight line for easier integration.
-parallel transport is only path independent if metric is flat,
-so it allows isometric embedding into R3. We assume that
-our metric field is flat everywhere away from singularities. Which follows from local integrability.
+Why not geodesic: ->
+In general parallel transport is path dependent.
+However, when the metric is flat, if it allows isometric embedding into euclidean 3d space, we get path independence 
+of the parallel transport.
+So then, why not take the straight line for easier intergration.
+This still doesn't fully answer your question, because of course in general the metric doesnt have to be flat.
+But this wouldn't allow for isometric embedding into euclidean 3d space.
+So we solve a weaker problem, we assume that the metric is flat away from singularities, so then it doesn't matter again which path you take. This follows from local integrability.
 
 Why these artefacts in the singularities. Its because of numerical imprecision. Need to run optimizer to higher depths, but runtime is exponential because the implementation that is not yet adaptive.
 

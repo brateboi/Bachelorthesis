@@ -115,7 +115,7 @@
   the user-defined metric such that already available, euclidean metric frame field
   optimization techniques can be applied. The metric field is
   piece-wise linearly discretized, for which an exact and robust algorithm
-  is formulated that finds all intersected tetrahedrons between two points in space.
+  is formulated that finds all intersected tetrahedra between two points in space.
   We test the optimization of frame field on some custom metric fields
   on cubes, where the resulting frame fields exhibit the expected singularity structure.
 
@@ -155,9 +155,9 @@ linearly discretized the metric field. This is an improvement compared
 to the constant discretization done in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
 To calculate the rotation coefficients on the piece-wise linear metric field,
 an exact and robust algorithm was needed to locate all tets between two points.
-The formulation relies only on exact, arbitrary precision arithmetic to make decisions
-and handles degeneracies, unlike the algorithm described in \emph{Walking on a Triangulation}\cite{Devillers}.
-This is an original contribution.
+The formulation relies only on exact, arbitrary precision arithmetic to make decisions.
+It fully handles degeneracies, unlike the algorithm described in \emph{Walking on a Triangulation}\cite{Devillers}.
+% This is an original contribution.
 To calculate the rotation coefficient, points are sampled recursively
 until there is no noticable improvement.
 There are minor things that impact speed but not

@@ -4,21 +4,11 @@
 % These macros are only used for the pseudo-code example.
 \newcommand{\str}[1]{\textsc{#1}}
 \newcommand{\var}[1]{\textit{#1}}
-\def \ifempty#1{\def\temp{#1} \ifx\temp\empty }
-\newcommand{\msg}[2]{\ensuremath{\ifempty{#2} [\str{#1}] \else [\str{#1}, {#2}] \fi}}
-\newcommand{\tup}[1]{\ensuremath{\langle #1 \rangle}}
-\newcommand{\nil}{\ensuremath{\bot}}
-\newcommand{\false}{\textsc{false}\xspace}
-\newcommand{\true}{\textsc{true}\xspace}
 
-\newcommand\ts{\var{ts}\xspace}
-\newcommand{\CK}{\ensuremath{\mathcal{K}}\xspace}
-\newcommand{\CP}{\ensuremath{\mathcal{P}}\xspace}
-\newcommand{\CQ}{\ensuremath{\mathcal{Q}}\xspace}
 
 \chapter{Algorithm for $R$ between two arbitrary points in a mesh}
 \label{ch:algorithm}
-To measure the Dirichlet energy, we need to calculate the rotation coefficient $R$
+To measure the modified Dirichlet energy from equation \ref{eq:dirichlet}, we need to calculate the rotation coefficient $R_{qp}$
 between two arbitrary points $q$ and $p$ that do not necessarily lie within the same 
 tetrahedron. Since the metric and curl is different in each tet, we need to be
 able to efficiently determine all tets that get intersected by the straight
@@ -49,20 +39,21 @@ that get intersected. One possibility would be to use ray-triangle intersection 
 test against the whole mesh, but this is not practical, as we have have local information
 that we can exploit.
 
-We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which relies only on
+We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which we modify and relies only on
 so called \emph{orientation tests} to determine which triangles we traverse.
 This chapter covers how the $\op{tetFinder}$ algorithm works, how it is made robust
 against degenerate cases
 and a full description of the algorithm is given, more than what is described in the reference.
 \section{Framework}
 \label{sec:framework}
-
-Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that is convex.
+Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that, for simplicity, is convex.
+In principle, the domain does not need to be convex. It suffices that for all requested paths from $q$ to $p$
+it is contained in $\Omega$.
 The straight walk traverses all triangles that get intersected by the line segment
 from $q$ to $p$. The algorithm first makes an initialization step to get into a valid state, 
 then the straight walk can start.
 To get a feeling how the algorithm works, let us go through an example in 2D.
-If the algorithm was in a valid state before, the line from $q$ to $p$
+If the algorithm starts in a valid state, the line from $q$ to $p$
 intersects with some edge $\vec{lr}$. Two triangles share this edge.
 We test on which side point $p$ lies of this edge to decide whether the walk continues.
 If the walk continues, we jump through the edge to hop from the old triangle to a new one.
@@ -70,49 +61,47 @@ This triangle is defined by three vertices $(l,r,s)$. We decide if
 the new candidate point $s$ lies on the left side or right side of the line from $q$ to $p$.
 If $s$ lies on the left, point $l$ is moved, else point $r$ is moved.
 A new edge intersected with the ray $\vec{qp}$ is found and the walk repeats.
-This process is illustrated in Figure \ref{fig:straight-walk-2d}
+This process is illustrated in figure \ref{fig:straight-walk-2d}
 \begin{figure}[htb]
   \centering
   \def\svgwidth{35em}
   \input{figures/illustration.pdf_tex}
   \caption{Straight walk step}\label{fig:straight-walk-2d}        
 \end{figure}
-
 Notice how the ray $\vec{qp}$ always intersects the edge $\vec{lr}$ at each update step.
 We can use this observation to add each edge at each update step to a list.
-When the algorithm terminates, we can just iterate over this list, find
+When the algorithm terminates, we can iterate over this list, find
 the intersection point of the ray $\vec{qp}$ with the edge and calculate the rotation
 coefficient for this segment.
-The straight walk in 3d works similarly. The initialization step consists of finding a starting tet $t$
+The straight walk in 3D works similarly, but edges are now faces and triangles are tets. The initialization step consists of finding a starting tet $t$
 where $q$ is contained. Then, we find the face of the tet $t$ that gets intersected by the ray
 $\vec{qp}$. Again, at each step, we know that the ray goes out of our current tet $t$ through some
 face $e$ defined by vertices $uvw$. We decide if the walk continues by checking on which side $p$ lies relative to $e$.
-If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two orientation tests
+If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two 3D orientation tests
 we decide which of the vertices $u, v, w$ gets moved to the new candidate point $s$. This defines
-a new face $e_{new}$ where our ray intersects and the walk repeats.
+a new face $e_{new}$ with which our ray intersects and the walk repeats.
 Degenerate cases such as when the ray $\vec{qp}$ goes exactly through a vertex or
-when the ray lies within a face, the algorithm may get into
+when the ray lies within a face may get the algorithm into
 an invalid state, where the algorithm may then traverse through
 cells that do not get intersected by the ray. We need to detect and escape those degenerate cases
-through some additional checks. These are not described in the paper\cite{Devillers}.
-How we handle these degenerate cases is described in Sec.~\ref{subsec:degenerate}.
-% In most cases, a simple reinitialization is enough when the invalid state is detected.
+through some additional checks.
+How we handle these degenerate cases is described in section \ref{subsec:degenerate}.
 
 \subsection{A note on orientation tests}
 To determine on which side some point $s$ lies relative to two other points $q$ and $p$ (that represent a line) in 2D, the geometric \emph{orientation} predicate is used.
 It corresponds to evaluating the sign of a determinant. Analogously in 3D, the orientation predicate
 tests whether a fourth point lies above or below a plane defined by three other points.
 How ``above'' the plane is defined depends on the ordering within the determinant. In the case here,
-it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise (see figure \ref{fig:orient2d}).
+it is above if point $a$ sees the triangle $bcd$ in counterclockwise order, see figure \ref{fig:orient2d}.
 \begin{align*}
-  orientation(\alpha, \beta, \gamma) &= 
+  \mathrm{orientation}(\alpha, \beta, \gamma) &= 
   sign\left(
   \begin{vmatrix}
     \beta_x -\alpha_x & \gamma_x - \alpha_x \\
     \beta_y -\alpha_y & \gamma_y - \alpha_y 
   \end{vmatrix}\right)
   \\
-  orientation(\alpha, \beta, \gamma, \delta) &= 
+  \mathrm{orientation}(\alpha, \beta, \gamma, \delta) &= 
   sign\left(
   \begin{vmatrix}
     \beta_x -\alpha_x & \gamma_x - \alpha_x & \delta_x - \alpha_x \\
@@ -120,7 +109,6 @@ it is above if point $a$ sees the triangle $bcd$ when turning counterclockwise (
     \beta_z -\alpha_z & \gamma_z - \alpha_z & \delta_z - \alpha_z
   \end{vmatrix}\right)
 \end{align*}
-
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -132,31 +120,31 @@ It is important that the sign of the determinant is evaluated exactly.
 If geometric predicates are implemented with floating point arithmetic,
 the answers may be inconsistent and wrong.
 Because of the finite mantissa in floating point representation, many numbers cannot be represented exactly.
-The machine needs to round a number $x$ to its nearest number that is exactly representable.
-Many times, roundoff errors occur and the result is not exact. A famous example of this phenomenon is $0.1 + 0.2 = 0.30000000000000004$.
+The machine needs to round a number $x$ to its nearest number that is exactly representable
+and roundoff errors occurs. A famous example of this phenomenon is ${0.1 + 0.2 = 0.30000000000000004}$.
 We call the distance between two exactly representable floating point numbers \emph{machine epsilon} $\varepsilon$.
 See figure \ref{fig:floatingpoint} for how this machine epsilon can cause trouble (Example from \cite{Marek}).
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
   \input{figures/floatingpointerror.pdf_tex}
-  \caption{The orientation predicate implemented with floating point arithmetic cannot distinguish these two cases.
+  \caption{The orientation predicate implemented with floating point arithmetic cannot correctly distinguish these two cases.
   The orientation test calculates $(a+\varepsilon)-a$. If $a=0$, the orientation test is strictly positive.
   If $a=1$, then the result is $0$, because during the calculation the machine had to round.
   }\label{fig:floatingpoint}
 \end{figure}
 Because of the imprecision of floating-point arithmetic (FP), logical decisions
 based on FP should be avoided.
-To fix this issue, we make use of exact predicates that are implemented with arbitrary precision \cite{RichardShewchuk1997}.
-It is assumed that inputs to the orientation test subroutines are exact, and during the calculation,
-precision is extended as needed such that
+To fix this issue, we make use of exact predicates that are implemented with arbitrary precision~\cite{RichardShewchuk1997}.
+It is assumed that inputs to the orientation test subroutines are exact and during the calculation,
+precision of the number representation is extended as needed such that
 we can be sure that the result has the correct sign.
 
 
 \section{Algorithm $\op{tetFinder}$}
 As described in section \ref{sec:framework}, the straight walk needs different
 components to work. These components are described in the following subsections.
-The final algorithm to find all intersected tetrahedra between two points is in Sec. \ref{subsec:tetfinder}.
+The final algorithm to find all intersected tetrahedra between two points is in section \ref{subsec:tetfinder}.
 
 \subsection{Starting tet}\label{subsec:starttet}
 To start, the algorithm needs to know in which tet the starting point $q$ is located.
@@ -181,8 +169,8 @@ $$q \in \mathcal{T} \iff \substack{
   \op{sameSign}(\op{orientation}(b,c,d,a), \op{orientation}(b,c,d,q)) \&\& \\
   \op{sameSign}(\op{orientation}(c,d,a,b), \op{orientation}(c,d,a,q)) \&\& \\
   \op{sameSign}(\op{orientation}(d,a,b,c), \op{orientation}(d,a,b,q))
-}$$
-By checking for each plane of the tet, we check if the point $q$ is on the same side of the plane 
+}.$$
+We check for each plane of the tet if the point $q$ is on the same side of the plane
 (characterised by the same orientation sign) as the remaining vertex.
 \subsection{Valid state and initialization}\label{subsec:validstate}
 To walk in the tet mesh, the algorithm needs to be in a state where everything is as expected.
@@ -197,11 +185,11 @@ the valid configuration will be preserved and all edges intersected are
 traversed. 
 Analogously in 3D, we define the valid state such that
 \begin{itemize}
-  \item the line $\Vec{qp}$ intersects the triangle defined by vertices $\triangle uvw$
+  \item the line $\Vec{qp}$ intersects the face/triangle defined by vertices $\triangle uvw$
   \item vertices of the triangle $\triangle uvw$ are ordered in the way that
   $$\op{orientation}(w,v,q,p)>0, \op{orientation}(v,u,q,p)>0, \op{orientation}(u,w,q,p)>0$$
 \end{itemize}
-Again, by starting in this configuration, all triangles $\triangle uvw$
+Again, by starting in this configuration, all faces $\triangle uvw$
 traversed get intersected by $\Vec{qp}$. Then, we find each
 intersection point with the ray, add the intersection points to a list
 with the current tet $t$ and finally use this as input for
@@ -211,8 +199,8 @@ In \emph{Walking in a triangulation}\cite{Devillers}, they assume that
 $q$ is a vertex in the tet mesh. Thus, their approach of turning around $q$
 is not applicable in our case.
 
-We solve this problem with a brute-force approach.
-First, we find which tet $t$ contains $q$ as described in \ref{subsec:starttet}.
+For simplicity, we solve this problem with a brute-force approach.
+First, we find which tet $t$ contains $q$ as described in section \ref{subsec:starttet}.
 From there, we go through the four faces of the tet and check which
 one gets intersected by the ray $\Vec{qp}$.
 When the face which gets intersected was found,
@@ -231,16 +219,18 @@ cuts the triangle if and only if \cite{segura}:
 \begin{equation}\label{eq:checks}
   \op{orient}(p,u,q,v) \ge 0 \land \op{orient}(p,w,v,q) \ge 0 \land \op{orient}(p,u,w,q) \ge 0 
 \end{equation}
-If $\op{orientation}(q,u,v,w) < 0$, then the orientation tests in Eq.~\ref{eq:checks}
+If $\op{orientation}(q,u,v,w) < 0$, then the orientation tests in equation \ref{eq:checks}
 must be less or equal to zero.
-Before checking for intersection with Eq.~\ref{eq:checks}, we must ensure that 
+Before checking for intersection with equation \ref{eq:checks}, we must ensure that 
 $p$ and $q$ lie on opposite sides of the triangle $\triangle uvw$, i.e.
 \begin{equation}\label{eq:sides}
   (\op{orient}(q,u,v,w) < 0 \land \op{orient}(p,u,v,w) > 0)  \lor (\op{orient}(q,u,v,w) > 0 \land \op{orient}(p,u,v,w) < 0)  
 \end{equation}
-
-TODO: What to do when all 5 points are coplanar
-There is the possibility that the points $q,p,u,v,w$ are all coplanar (when Eq. \ref{eq:sides} are all equal zero).
+If all 5 points are coplanar, then the ray-triangle intersection reduces to a 2D case.
+However, this case is given the default value of $\str{NoIntersection}$, as the
+intersection point can be calculated by the other faces of the tet. 
+% TODO: What to do when all 5 points are coplanar
+% There is the possibility that the points $q,p,u,v,w$ are all coplanar (when Eq. \ref{eq:sides} are all equal zero).
 
 \subsection{Robustness}\label{subsec:degenerate}
 The $\op{tetFinder}$ algorithm is designed to be robust and exact.
@@ -258,15 +248,15 @@ To fix this, we add all tets to a list that contain $q$ while searching for the 
 While initializing, we go through the tets one by one until a valid configuration is found.
 \begin{figure}[htb]
   \centering
-  \def\svgwidth{20em}
+  \def\svgwidth{15em}
   \input{figures/validstatefail.pdf_tex}
-  \caption{As $q$ is exactly on vertex and the chosen triangle (in bold blue) does
+  \caption{As $q$ is exactly on a vertex and the chosen triangle (in bold blue) does
   have an edge that intersects with $\Vec{qp}$,
   it does not matter how $l$ and $r$ are chosen on this triangle, no valid state can be found.
   The same thing happens in 3D, where no valid configuration for $u,v,w$ can be constructed given a bad tet.
   }\label{fig:validstatefail}
 \end{figure}
-The cases where the ray lies exactly on a face or goes exactly through an edge are all handled similarly.
+The next degenerate case where the ray lies exactly on a face or goes exactly through an edge are all handled similarly.
 The problem in these cases is that while walking, the next step (reassigning $u,v$ or $w$ to the next vertex) cannot
 make a valid state, e.g. $\triangle uvw$ do not intersect with $\Vec{qp}$ anymore.
 We detect this by checking if we are still in a valid state and that the end tet does not
@@ -276,20 +266,19 @@ for a valid state again. When found, the walk can continue as normal.
 Because degenerate cases can lead to invalid states, faces that do not get intersected
 by $\Vec{qp}$ are highlighted by $\triangle uvw$ while walking.
 Thus, before adding the face $\triangle uvw$ to the list to calculate the intersection points,
-we quickly check if the face to be added actually intersects with the robust ray-triangle subroutine described above.
+we quickly check if the face to be added actually intersects with the robust ray-triangle subroutine described before.
 
 \subsection{Formulation of algorithm}\label{subsec:tetfinder}
-The final algorithm is presented in pseudocode here. The algorithm is described using operations such as:
+The final algorithm $\op{tetFinder}$ is presented in pseudocode here. The algorithm is described using operations such as:
 \begin{itemize}
   \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
   \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
   vertices are known
   \item \texttt{intersection(ray, triangle)} returns the intersection point of the ray with the triangle calculated with FP arithmetic
-  \item \texttt{validState(q,p,u,v,w)} checks if the current configuration is valid according to Sec.~\ref{subsec:validstate}
-  \item \texttt{initialization(t,q,p,u,v,w)} tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in Sec.~\ref{subsec:validstate}. Returns \texttt{true} if successful
+  \item \texttt{validState(q,p,u,v,w)} checks if the current configuration is valid as in section \ref{subsec:validstate}
+  \item \texttt{initialization(t,q,p,u,v,w)} tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in section \ref{subsec:validstate}. Returns \texttt{true} if successful
   \item \texttt{locateTets(q)} returns all tets that contain $q$
 \end{itemize}
-Algorithm \ref{alg:tetFinder} contains $\op{tetFinder}$ in full.
 \begin{algo*}
   \vbox{
     \small
@@ -307,20 +296,20 @@ Algorithm \ref{alg:tetFinder} contains $\op{tetFinder}$ in full.
 
       \> \> \textbf{if} ($\op{initialization}(t, q,p,u,v,w)$) \label{}\\
       \> \> \> $t = \hat{t}$  \label{}\\
-      \\
+      % \\
       \> // $qp$ intersects triangle $uvw$ \label{}\\
       \> // $wvqp, vuqp, uwqp$ are positively oriented \label{}\\
       
       \> $\str{prev} = q$\label{}\\
       \> $\str{curr} = \op{intersection}(qp, uvw)$\label{}\\
-      \\
+      % \\
       \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
-      \\
+      % \\
       \> \textbf{while} $orientation(u,w,v,p)>0$ \{ \label{}\\
 
       \> \> \textbf{if} ($\op{validState(q,p,u,v,w)}$) // degenerate cases can lead to invalid states \label{}\\
       \> \> \> $\op{initialization}(t, q,p,u,v,w)$ \label{}\\
-      \\
+      % \\
       \> \> $t$ = neighbor($t$ through $uvw$) \label{}\\
       \> \> $s$ = vertex of $t, s \neq u, s \neq v, s \neq w$ \label{}\\
       \> \> $\str{prev} = \str{curr}$ \label{}\\
@@ -334,7 +323,7 @@ Algorithm \ref{alg:tetFinder} contains $\op{tetFinder}$ in full.
       \> \> \> \> v = s \label{}\\
       \> \> \> \textbf{else} // $qp$ intersects triangle $vsw$ \label{}\\
       \> \> \> \> u = s \label{}\\
-      \\
+      % \\
       \> \> \textbf{if} ($\op{robustRayTriangle(q,p,u,v,w)}$)\label{}\\
       \> \> \> $\str{curr} = \op{intersection}(qp, uvw)$ \label{}\\
       \> \> \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\

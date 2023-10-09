@@ -41,7 +41,7 @@ the Dirichlet energy in Euclidean coordinates.
 The smoothness measure $\mathcal{D}R$ is zero if all frames are parallel
 to each other under the connection $\omega$, i.e., if all frames
 are the same if parallel transported to the same point.
-This is deliberately kept vague as parallel transport is path
+This is deliberately kept vague as the parallel transport is path
 dependent in general (parallel transport is path independent if the metric is flat).
 To get a feeling for the problem statement, see figure \ref{fig:rotation}.
 
@@ -90,8 +90,8 @@ which corresponds to the parallel transport under the connection $\omega$
 of the frame along $\ell$.
 Discretization of the covariant based Dirichlet energy is then given by
 \begin{equation}
-  ||R_{qp}R(q)-R(p)||^2.
-\end{equation}
+  ||\mathcal{D}R||_{\mathrm{discretized}}=||R_{qp}R(q)-R(p)||^2.
+\end{equation}\label{eq:dirichlet}
 We parametrize the path by $\ell(0)=a, \ell(1)=b$.
 We resort to numerical integration for $R_{ab}$ and cut the path into $n$ small segments, i.e.
 $$R_{ab}= R_nR_{n-1} \dotsb R_1$$
@@ -104,7 +104,7 @@ $$\exp(u_{\times}) = \Id + \sin(\theta) \hat{u}_{\times} + (1-\cos(\theta)) \hat
 where $\theta = ||u||_2$ is the rotation angle and $\hat{u}= u/\theta$ is the rotation axis.
 We use the trapezoidal rule to evaluate the short interval of the integral of $W$, which is given by
 $$R_{ab}=\exp \left( \left(\frac{1}{2}(W_a + W_b)^{\top}(b-a)\right)_{\times}\right)$$
-where $W_a, W_b$ is solved for by the 9x9 linear system given by $A_{\times}$ and $\nabla \times A$.
+where $W_a, W_b$ are solved for by the $9\times9$ linear system given by $A_{\times}$ and $\nabla \times A$ from equation \ref{eq:linearsystem}.
 
 
 \section{Piecewise linear discretization}
@@ -135,7 +135,7 @@ $$\underbrace{\begin{pmatrix}
   x \\ y \\ z \\ 1 
 \end{pmatrix}}_{p}
 \iff
-T^{-1}\lambda = p \iff  \lambda = Tp
+T^{-1}\bm{\lambda} = \bm{p} \iff  \bm{\lambda} = T\bm{p}.
 $$
 $T$ always exists because $v_1, \dots , v_4$ are linearly independent,
 else it would not be a valid tetrahedron.
@@ -203,13 +203,13 @@ The algorithm for this simple recursive scheme is shown in below.
       \reset
       xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=xxxx\=MMMMMMMMMMMMMMMMMMM\=\kill
       \textbf{recursiveDivide} $(a,b)$ \label{}\\
-      \> $R_1 = \op{Rotation(a,b)}$ \label{}\\
-      \> $\ell = \op{length}(a-b)$ \label{}\\
-      \> midpoint = $\frac{a+b}{2}$\label{}\\
-      \> \textbf{if} $\frac{||R_1 - Rotation(a,midpoint)\cdot Rotation(midpoint,b)||^2_2}{\ell^2} < \varepsilon$ \label{}\\
+      \> $R_1 \gets \op{Rotation(a,b)}$ \label{}\\
+      \> $\ell \gets \op{length}(a-b)$ \label{}\\
+      \> midpoint $\gets \frac{a+b}{2}$\label{}\\
+      \> \textbf{if} $\frac{||R_1 - \mathrm{Rotation}(a,\mathrm{midpoint})\cdot \mathrm{Rotation}(\mathrm{midpoint},b)||^2_2}{\ell^2} < \varepsilon$ \label{}\\
       \> \> return $R_1$ \label{}\\
       \> \textbf{else} \label{}\\
-      \> \> return $\op{recursiveDivide}(a,midpoint) \cdot \op{recursiveDivide}(midpoint, b)$ \label{}\\
+      \> \> return $\op{recursiveDivide}(a,\mathrm{midpoint}) \cdot \op{recursiveDivide}(\mathrm{midpoint}, b)$ \label{}\\
     \end{numbertabbing}
   }
   \caption{Recursive Subdivision}
