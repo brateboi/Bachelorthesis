@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="202.03157mm"
-   height="137.33354mm"
-   viewBox="0 0 202.03156 137.33355"
+   width="286.30084mm"
+   height="151.22978mm"
+   viewBox="0 0 286.30083 151.22979"
    version="1.1"
    id="svg5"
    inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.69130191"
-     inkscape:cx="312.45393"
-     inkscape:cy="176.47861"
+     inkscape:cx="258.93173"
+     inkscape:cy="337.04522"
      inkscape:window-width="1920"
      inkscape:window-height="974"
      inkscape:window-x="-11"
@@ -59,44 +59,44 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(13.255812,-75.067411)">
+     transform="translate(47.845133,-69.55516)">
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M -12.508156,122.10936 C -19.0319,155.795 81.193575,230.55054 140.89976,207.96935 200.60595,185.38817 188.76319,125.80482 185.04994,104.65096 180.32395,77.727682 112.60552,69.056939 66.707461,79.805246 21.29369,90.440142 -17.912211,107.75235 -12.508156,122.10936 Z"
+       style="fill:none;stroke:#000000;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M -47.365331,129.64063 C -53.889075,163.32627 80.428111,238.97064 140.1343,216.38945 199.84049,193.80827 188.76319,125.80482 185.04994,104.65096 180.32395,77.727682 112.1803,68.046364 65.083667,70.062481 12.633454,72.307774 -43.583819,110.69084 -47.365331,129.64063 Z"
        id="path199"
        sodipodi:nodetypes="csssc" />
     <path
-       style="fill:#000000;fill-opacity:0.101329;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="m 69.465849,132.23389 c 0,0 -12.630155,29.66173 14.926545,40.37822 27.556706,10.7165 53.391106,2.87049 55.687506,-5.93234 2.29639,-8.80284 11.67332,-33.48905 -16.84021,-40.18686 -28.513531,-6.6978 -46.501932,-11.29059 -53.773841,5.74098 z"
+       style="fill:#000000;fill-opacity:0.101329;stroke:#000000;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 50.066839,119.58845 c 0,0 -20.820865,48.50266 24.606474,66.02621 45.427347,17.52356 88.015477,4.6938 91.801107,-9.70052 3.7856,-14.39436 19.24351,-54.76109 -27.76117,-65.7133 C 91.708576,99.248638 62.054613,91.738524 50.066839,119.58845 Z"
        id="path756"
        sodipodi:nodetypes="csssc" />
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="74.965157"
-       y="119.07823"
+       x="186.64304"
+       y="193.82246"
        id="text1066"><tspan
          sodipodi:role="line"
          id="tspan1064"
          style="stroke-width:0.264583"
-         x="74.965157"
-         y="119.07823">Space of valid frames</tspan></text>
+         x="186.64304"
+         y="193.82246">Space of valid frames</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="129.97008"
-       y="93.232849"
+       x="164.94128"
+       y="78.619316"
        id="text1846"><tspan
          sodipodi:role="line"
          id="tspan1844"
          style="stroke-width:0.264583"
-         x="129.97008"
-         y="93.232849">Space of spherical harmonics</tspan></text>
+         x="164.94128"
+         y="78.619316">Space of spherical harmonics</tspan></text>
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle43046"
-       cx="-87.955521"
-       cy="152.50133"
+       cx="-82.251076"
+       cy="121.59951"
        r="1.2178456"
        inkscape:transform-center-x="-10.825301"
        inkscape:transform-center-y="-2.4356837"
@@ -104,8 +104,8 @@
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle43046-62"
-       cx="-98.780807"
-       cy="176.72293"
+       cx="-46.537895"
+       cy="132.13466"
        r="1.2178456"
        inkscape:transform-center-x="-10.825301"
        inkscape:transform-center-y="-2.4356837"
@@ -113,8 +113,8 @@
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle3549"
-       cx="-121.64925"
-       cy="152.77196"
+       cx="-78.974632"
+       cy="159.46977"
        r="1.2178456"
        inkscape:transform-center-x="-10.825301"
        inkscape:transform-center-y="-2.4356837"
@@ -122,60 +122,69 @@
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="85.058197"
-       y="146.80821"
+       x="78.971024"
+       y="116.09776"
        id="text3555"><tspan
          sodipodi:role="line"
          id="tspan3553"
          style="stroke-width:0.264583"
-         x="85.058197"
-         y="146.80821">$F_u$</tspan></text>
+         x="78.971024"
+         y="116.09776">$F_u$</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="119.60209"
-       y="148.06334"
+       x="77.569794"
+       y="171.72607"
        id="text3559"><tspan
          sodipodi:role="line"
          id="tspan3557"
          style="stroke-width:0.264583"
-         x="119.60209"
-         y="148.06334">$F_v$</tspan></text>
+         x="77.569794"
+         y="171.72607">$F_v$</tspan></text>
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle43046-6"
-       cx="-95.252419"
-       cy="197.92027"
+       cx="1.3874018"
+       cy="127.01917"
        r="1.2178456"
        inkscape:transform-center-x="-10.825301"
        inkscape:transform-center-y="-2.4356837"
        transform="scale(-1,1)" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
-       d="m 95.215359,197.8293 2.758195,-17.21508"
+       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
+       d="M -0.14163186,127.16882 42.810902,131.59169"
        id="path3583"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="86.27182"
-       y="205.96548"
+       x="-0.76641297"
+       y="120.12196"
        id="text3587"><tspan
          sodipodi:role="line"
          id="tspan3585"
          style="stroke-width:0.264583"
-         x="86.27182"
-         y="205.96548">$F_{u+v}$</tspan></text>
+         x="-0.76641297"
+         y="120.12196">$F_{u+v}$</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="93.055077"
-       y="172.18784"
+       x="-3.3617179"
+       y="152.62511"
        id="text3591"><tspan
          sodipodi:role="line"
          id="tspan3589"
          style="stroke-width:0.264583"
-         x="93.055077"
-         y="172.18784">proj$(F_{u+v})$</tspan></text>
+         x="-3.3617179"
+         y="152.62511">proj$(F_{u+v})$</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 146.19997,172.12733 c 0,0 23.34664,20.66752 36.74226,21.43298"
+       id="path830"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 24.007759,147.09133 c 0,0 7.442391,-9.2015 22.327169,-15.15541"
+       id="path962" />
   </g>
 </svg>
