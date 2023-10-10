@@ -230,13 +230,28 @@ which leaves $24$ equivalent frames.
 Equivalence of frames is then defined as
 $$F_u \sim F_v \iff \exists R \in \mathcal{O} : F_u=RF_v$$
 where $\mathcal{O}$ is the \emph{chiral cubical symmetry group}\cite{Nieser}.
-These symmetries make the optimization for frame fields more complicated.
-To handle these symmetries, we use the spherical harmonics based representation \cite{Huang}.
-The idea is to use the polynomial $x^4+y^4+z^4$ to express the frames as rotations.
-Under the restriction of the polynomial to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$, the octahedral frames
-are invariant under the chiral cubical symmetry group. However, the spherical harmonics
-manifold is 9-dimensional, so not all vectors in the spherical harmonics represent valid frames,
-since rotations only exhibit 3 degrees of freedom.
+These symmetries complicate the optimization process for frame fields.
+When optimizing the smoothness of a frame field, frames have to be compared.
+To compare frames, we need to check if the vectors making up
+the frames point in the same direction or if they have to be rotated
+by some matrix $M \in \mathrm{SO}(3)$ first, to make them point in the same direction.
+But now, the mentioned symmetry of representing the frames in $\mathbb{R}^3$
+make $M$ ambiguous.
+Therefore, we instead use the spherical harmonics based representation to represent frames \cite{Huang}.
+The idea is to represent frames as rotations of the polynomial $\mathbb{P}=x^4+y^4+z^4$,
+and these rotations of the polynomial are naturally invariant under $\mathcal{O}$.
+Under the restriction of the 4th degree polynomials to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$,
+the polynomials form a 9D vector space and the spherical harmonics of the 4th band form a basis.
+For example, the axis-aligned frame $F=(e_1,e_2,e_3)$ corresponds
+to $\mathbb{P}$, as $\mathbb{P}$ under the restriction to the sphere takes its maxima at $\pm e_i$.
+
+
+The action of rotating 4th degree polynomials can be represented by so called $9\times9$ \emph{Wigner D-matrices}.
+These Wigner D-matrices and rotations matrices in $\mathbb{R}^3$ both represent the
+same elements of the group $\mathrm{SO}(3)$, just act on different vector spaces.
+It is clear that this is a relaxation: Since rotations in 3D only exhibit 3 degrees of freedom not all 9D vectors are valid rotations
+of $x^4+y^4+z^4$.
+
 While optimizing the frame field, some kind of ``average'' of two frames will be done.
 This averaging makes sense in the spherical harmonics space, but the result may be outside the valid
 space of frames. A projection from the spherical
@@ -253,7 +268,7 @@ harmonics space back to the valid space of frames will be needed, see figure \re
 When a frame $F$ has orthonormal columns, the resulting hex elements look like unit cubes.
 By introducing a metric $g$, we can control the size and shear of the cubes by
 relaxing the orthonormality constraint to $g$-orthonormality when
-$$F^{-1}gF = \Id$$
+$F^{-1}gF = \Id$
 holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
 (akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$,
 see figure \ref{fig:factorization}.
