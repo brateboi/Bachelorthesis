@@ -31,6 +31,13 @@ as $(p,v)$ with $p \in \mathcal{M}$ and $v \in T_p\mathcal{M}$. This admits a na
 which sends each vector $v \in T_p\mathcal{M}$ to the point $p$ where it is tangent: $\pi(p,v)=p$.
 A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuos map, with $\pi \circ \sigma = \Id_{\mathcal{M}}$.
 Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
+An ordered $k$-tuple $(X_1, \dots, X_k)$ of vector fields is linearly independent,
+if at each point $p$, the $k$-tuple $(X_1|_p, \dots, X_k|_p)$ is linearly independent.
+A \emph{local frame for $\mathcal{M}$} is an ordered $n$-tuple of vector fields $(E_1, ..., E_n)$
+that spans the tangent bundle $T\mathcal{M}$. Thus, $(E_1|_p,\dots, E_n|_p)$ form
+a basis for $T_p\mathcal{M}$ for each point $p\in \mathcal{M}$.
+A $frame$ is called \emph{smooth} if the underlying vector fields are smooth.
+
 
 \subsection{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
@@ -42,6 +49,16 @@ denoted by $T^*_p\mathcal{M}$. As before, the disjoint union of $T^*_p\mathcal{M
 $T^*\mathcal{M}=\sqcup _{p\in \mathcal{M}}T^*_p\mathcal{M}$. Defined analogously from above,
 sections $\sigma$ on $T^*\mathcal{M}$ define \emph{covector fields} or \emph{1-forms}. The standard basis of $T_p^*\mathcal{M}$
 is given by $\mathbb{E}^3=[dx,dy,dz]$.
+A \emph{local coframe for $\mathcal{M}$} is an ordered $n$-tuple of covector fields
+$(\mathcal{E}^1,\dots, \mathcal{E}^n)$ such that $(\mathcal{E}^i|_p)$ form a basis
+of $T^*_p\mathcal{M}$ at each point $p \in \mathcal{M}$. This definition is analogous from
+before.
+For each local frame $(E_1, \dots, E_n)$ for $T\mathcal{M}$, we get a uniquely
+determined local coframe $(\mathcal{E}^1, \dots, \mathcal{E}^n)$ such that
+$\mathcal{E}^i(E_j)=\delta^i_j$, where $\delta^i_j$ is the Kronecker delta.
+We call this coframe the \emph{dual coframe to $(E_i)$}.
+
+
 
 \subsection{Tensors}
 Before we can introduce differential forms in the next paragraph, we need to go a little bit into \emph{tensors}.
@@ -96,8 +113,8 @@ A basis $[e_1, e_2, e_3]$ of $T_p\mathcal{M}$ is $g$-orthonormal if $\langle e_i
 \subsection{Connection, Covariant derivative, Parallel transport}
 A connection defines how two different tangent spaces are connected to each other, such that tangent vector fields
 can be differentiated. There is an infinite amount of connections on a manifold.
-An \emph{affine connection} $\nabla$ is a bilinear map that takes two tangent vector fields $X,Y$ and maps it
-to a new tangent vector field $\nabla_XY$ on $\mathcal{M}$ such that
+An \emph{affine connection} $\nabla$ is a bilinear map that takes two tangent vector fields $X,Y \in \mathcal{T}(\mathcal{M})$ and maps it
+to a new tangent vector field $\nabla_XY \in \mathcal{T}(\mathcal{M})$ such that
 \begin{itemize}
   \item $\nabla_{fX}Y = f \nabla_XY$, where $f\in C^{\infty}(\mathcal{M}, \mathbb{R})$
   \item $\nabla_X(fY) = f\nabla_XY + (Xf)Y$ for $f\in C^{\infty}(\mathcal{M}, \mathbb{R})$, it satisfies the Leibnitz rule in the second variable
@@ -121,7 +138,43 @@ See figure \ref{fig:vectorfield} for an illustration in 2D.
   $\nabla_{\dot{\gamma}(t)}V(t) = 0$, so each vector that is drawn is parallel to each other.}
   \label{fig:vectorfield}
 \end{figure}
- 
+
+In the following, we show how a connection can be written as a matrix one-form:
+Let $(E_1, E_2, E_3)$ be a smooth local frame for $T\mathcal{M}$ and
+$(\mathcal{E}^1, \mathcal{E}^2, \mathcal{E}^3)$ its dual coframe for
+$T^*\mathcal{M}$ (i.e. $\mathcal{E}^i(E_j)=\delta^i_j$).
+Using the definition of an affine connection, we can write
+vector fields $X,Y \in \mathcal{T}(\mathcal{M})$ with the local frames, i.e.
+\begin{equation}\label{eq:rewrite}
+  \nabla_XY = \nabla_{X^iE_i}(Y^iE_j) = X^i\nabla_{E_i}(Y^iE_j)
+  = \underbrace{X^iY^j}_{\in C^{\infty}(\mathcal{M}, \mathbb{R})} \cdot \underbrace{\nabla_{E_i}E_j}_{\in \mathcal{T}(\mathcal{M})} + \underbrace{X^iE_i(Y^j)}_{\in C^{\infty}(\mathcal{M}, \mathbb{R})}\cdot \underbrace{E_j}_{\in \mathcal{T}(\mathcal{M})} \in \mathcal{T}(\mathcal{M})
+\end{equation}
+Because $\nabla_{E_i}E_j \in \mathcal{T}(\mathcal{M})$, we can also write this in the local frame $(E_1, E_2, E_3)$,
+that is, for all pairs of indices $i,j \in \{1,2,3\}$, we write
+$$\nabla_{E_i}E_j = \Gamma_{ij}^kE_k$$
+The $\Gamma_{ij}^k$ are called \emph{Christoffel symbols} or \emph{connection coefficients}.
+With these coefficients, we can rewrite equation \ref{eq:rewrite} to 
+\begin{equation}
+  \nabla_XY = X^iY^j \Gamma_{ij}^kE_k + X^iE_i(Y^j) E_j = X^i(X^iY^j\Gamma_{ij}^k + E_i(Y^k))E_k
+\end{equation}
+where the dummy index $j$ was renamed to $k$ in the last term (we are using Einstein summation convention, so the indices are independent).
+This derivation shows that the choice of $\Gamma_{ij}^k$ fully determine the connection $\nabla$.
+We can now define another connection $\Hat{\nabla}$ with one-forms:
+\begin{equation}
+  \Hat{\nabla}_X (Y^jE_j) \triangleq X(Y^j)E_j + Y^j \Hat{\nabla}_X E_j \qquad \text{where } \Hat{\nabla}_XE_j = \omega_j^k(X)E_k
+\end{equation}
+and $\omega_j^k$ are one-forms. It thus satisfies the Leibnitz rule in the second variable.
+To show that it is indeed a connection, it must also satisfy $C^{\infty}$ linearity in the direction of $X$, i.e.
+\begin{equation}
+  \Hat{\nabla}_XE_j = \Hat{\nabla}_{X^iE_i}E_j = \omega_j^k(X^iE_i)E_k = X^i\omega_j^k(E_i)E_k = X^i \Hat{\nabla}_{E_i}E_j
+\end{equation}
+where we used $C^{\infty}$ linearity of one-forms. Notice the relation between
+the Christoffel symbols and the $\omega$ one-form:
+$$\Hat{\nabla}_{E_i}E_j = \omega_j^k(E_i)E_j = \Gamma_{ij}^kE_k \qquad \text{with }\Gamma_{ij}^k=\omega_j^k(E_i)$$
+Thus, the $3\times3$ one-forms $\omega_j^k$ define a connection and are
+are called a connection one-form, or a matrix-valued connection one-form. In the coframe, these are written as $\omega_j^k = \Gamma_{ij}^k \mathcal{E}^i$.
+
+
 \section{Frame fields}
 Recall from the introduction that we are trying to find a hexahedral mesh
 for some geometric object. In the following sections, the key idea to
@@ -153,9 +206,9 @@ $\nabla \phi : \mathcal{M} \to \mathbb{R}^{3\times3}$ of \emph{frames}, a \emph{
 The idea of frame fields is to then search for an approximation of $\nabla \phi$.
 If $F: \mathcal{M} \to \mathbb{R}^{3\times3}$ is the approximation of $\nabla \phi$, we can
 solve for $\phi : \mathcal{M} \to \mathbb{R}^3$ with
-\begin{equation}
+\begin{equation}\label{eq:poisson}
   \min \limits_{\phi} \int \limits_{\mathcal{M}} ||\nabla \phi F - \Id||^2
-\end{equation}\label{eq:poisson}
+\end{equation}
 where $||\cdot||$ is the Frobenius norm. If this is sufficiently small, then $F^{-1} \approx \nabla \phi$ and 
 the extracted hexahedral mesh closely follow the integer isolines.
 A frame locally represents the edges of a deformed cube.
@@ -190,7 +243,7 @@ space of frames. A projection from the spherical
 harmonics space back to the valid space of frames will be needed, see figure \ref{fig:projection} \cite{Ray}.
 \begin{figure}[htb]
   \centering
-  \def\svgwidth{20em}
+  \def\svgwidth{30em}
   \input{figures/projection.pdf_tex}
   \caption{Combination of two valid frames leads to a resulting frame outside the valid frames. A projection to the nearest valid frame is done.}
   \label{fig:projection}

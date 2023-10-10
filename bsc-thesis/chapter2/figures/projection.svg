@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="165.94489mm"
-   height="160.55766mm"
-   viewBox="0 0 165.94488 160.55767"
+   width="202.03157mm"
+   height="137.33354mm"
+   viewBox="0 0 202.03156 137.33355"
    version="1.1"
    id="svg5"
    inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.97764853"
-     inkscape:cx="162.63513"
-     inkscape:cy="356.979"
+     inkscape:zoom="0.69130191"
+     inkscape:cx="312.45393"
+     inkscape:cy="176.47861"
      inkscape:window-width="1920"
      inkscape:window-height="974"
      inkscape:window-x="-11"
@@ -59,10 +59,10 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-19.314721,-76.570141)">
+     transform="translate(13.255812,-75.067411)">
     <path
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M 21.050257,150.79639 C 50.520618,233.46649 75.780928,250.3067 135.48711,227.72551 195.1933,205.14433 190.38098,116.43075 175.03654,101.40337 166.52021,93.063021 110.2268,64.298969 66.978093,83.052834 23.729381,101.8067 15.646202,136.43938 21.050257,150.79639 Z"
+       d="M -12.508156,122.10936 C -19.0319,155.795 81.193575,230.55054 140.89976,207.96935 200.60595,185.38817 188.76319,125.80482 185.04994,104.65096 180.32395,77.727682 112.60552,69.056939 66.707461,79.805246 21.29369,90.440142 -17.912211,107.75235 -12.508156,122.10936 Z"
        id="path199"
        sodipodi:nodetypes="csssc" />
     <path
@@ -84,14 +84,14 @@
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="52.90863"
-       y="99.45739"
+       x="129.97008"
+       y="93.232849"
        id="text1846"><tspan
          sodipodi:role="line"
          id="tspan1844"
          style="stroke-width:0.264583"
-         x="52.90863"
-         y="99.45739">Space of spherical harmonics</tspan></text>
+         x="129.97008"
+         y="93.232849">Space of spherical harmonics</tspan></text>
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle43046"
@@ -144,28 +144,28 @@
     <circle
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264999;stroke-linecap:round"
        id="circle43046-6"
-       cx="-92.238403"
-       cy="209.73712"
+       cx="-95.252419"
+       cy="197.92027"
        r="1.2178456"
        inkscape:transform-center-x="-10.825301"
        inkscape:transform-center-y="-2.4356837"
        transform="scale(-1,1)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
-       d="m 92.238403,209.73712 5.735151,-29.1229"
+       d="m 95.215359,197.8293 2.758195,-17.21508"
        id="path3583"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="85.730553"
-       y="220.85027"
+       x="86.27182"
+       y="205.96548"
        id="text3587"><tspan
          sodipodi:role="line"
          id="tspan3585"
          style="stroke-width:0.264583"
-         x="85.730553"
-         y="220.85027">$F_{u+v}$</tspan></text>
+         x="86.27182"
+         y="205.96548">$F_{u+v}$</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52777px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
