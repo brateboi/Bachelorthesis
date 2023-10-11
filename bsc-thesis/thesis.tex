@@ -29,8 +29,8 @@
 \newcommand{\thesistitle}{3D Metric Fields}
 \newcommand{\thesisauthor}{Florin Achermann}
 \newcommand{\thesisauthororigin}{Bern, Switzerland}
-\newcommand{\thesisleiter}{Prof.\ David Bommes}
-% \newcommand{\thesisasst}{Denis Kalmykov}
+\newcommand{\thesisleiter}{Prof.\ Dr.\ David Bommes}
+\newcommand{\thesisasst}{Denis Kalmykov}
 \newcommand{\thesisurl}{http://cgg.unibe.ch/}
 \newcommand{\thesissubtitle}{Optimizing Frame Fields in a new Metric}
 \newcommand{\thesisdate}{15. September 2023}
@@ -93,7 +93,7 @@
     \vspace*{\fill}
     {\Large
       \thesisleiter\\
-      % \thesisasst\\
+      \thesisasst\\
       Computer Graphics Group\\
       Institute of Computer Science\\
       University of Bern, Switzerland\\}
@@ -112,7 +112,7 @@
   in this new metric, more control of the frame field is achieved.
   In this work, it is shown how to optimize a frame field in a
   new, user-defined metric. A full explanation is given of how to pull back
-  the user-defined metric such that already available, euclidean metric frame field
+  the user-defined metric such that already available, Euclidean metric frame field
   optimization techniques can be applied. The metric field is
   piece-wise linearly discretized, for which an exact and robust algorithm
   is formulated that finds all intersected tetrahedra between two points in space.
@@ -145,19 +145,22 @@
 In this work, we showed how smoothness measured with covariant Dirichlet
 energy is directly related to local integrability. In fact, we showed
 that when the underlying metric field is flat, that local integrability
-is actually equivalent to zero covariant derivative. This justifies
-the application of metric fields to the optimization.
+is actually equivalent to zero covariant derivative under the connection
+induced by the metric field. This justifies
+the application of metric fields to the frame field optimization.
+A beneficial aspect of the metric change approach through the rotation coefficients is that it
+is independent of the Dirichlet energy minimizer, which makes it an
+independent building block to control the size and shear of hexahedral elements. 
 The approach is tested on cubes, where the resulting frame fields
 look as expected.
 
 To store the metric field, we used a tetrahedral mesh and piece-wise
-linearly discretized the metric field. This is an improvement compared
+linearly discretized the metric field. This is different compared
 to the constant discretization done in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
 To calculate the rotation coefficients on the piece-wise linear metric field,
 an exact and robust algorithm was needed to locate all tets between two points.
 The formulation relies only on exact, arbitrary precision arithmetic to make decisions.
 It fully handles degeneracies, unlike the algorithm described in \emph{Walking on a Triangulation}\cite{Devillers}.
-% This is an original contribution.
 To calculate the rotation coefficient, points are sampled recursively
 until there is no noticable improvement.
 There are minor things that impact speed but not
@@ -182,7 +185,7 @@ Currently, the metric fields have to be designed by hand and defined at
 all vertices of the covering tetrahedral mesh everywhere.
 This is a tedious process and not easy to do.
 An automatic metric field design process where the user only inputs some
-intuitive metric constraints at some vertices (e.g. ``larger'' metric at boundary, smaller metric
+intuitive metric constraints at some vertices (e.g. ``larger'' metric at boundary, ``smaller'' metric
 in the interior) and the vertices where no metric is defined would get
 automatically assigned a metric that makes the metric field as easy to
 optimize as possible would be of practical use.
@@ -195,29 +198,6 @@ constant discretization \cite{Fang23}
 and linear discretization would paint a clearer picture if the extra
 effort is worth it. 
 
- 
-
-
-
-\begin{itemize}
-  \item we showed how smoothness is equivalent to local integrability
-  when the metric is flat.
-  \item we showed how to discretize linearly
-  \item new exact and robust tetFinder algorithm
-  \item improvement: higher depth, need to run optimization deeper
-  \item improvement: speed and storage: the algorithms are currently
-  formulated for correctness and simplicity. They could be improved by
-  faster pointLocation. Storage of recursiveSubdivision coefficients
-
-  Future work
-  \item metric field generation (needs to be done by hand currently)
-  \item investigation of linear discretization, how much better than piecewise constant
-  \item how to store rotation coefficients in an octree
-\end{itemize}
-
-
-The conclusion looks back at the entire work, gives a critical look,
-summarizes, and discusses extensions and future work.
 
 % The bibliography appears after any appendix.
 

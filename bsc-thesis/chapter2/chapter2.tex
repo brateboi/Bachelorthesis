@@ -21,10 +21,12 @@ locally \emph{diffeomorphic} to an open subset of $\mathbb{R}^n$ space.
 In this thesis, we will mostly work with 3-manifolds. For easier illustration, some examples are in 2 dimensions.
 
 \subsection{Tangent space, Tangent bundle} There are many equivalent definitions
-for the tangent space. One definition is for each point $p$ in the manifold $\mathcal{M}$,
-the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths $\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}, \varepsilon > 0$
-with $p = \gamma(0)$. The tangent space is a vector space which has the same dimension as its manifold,
-which is 3 in our case. These tangent spaces can be ``glued'' together to form the
+for the tangent space. The tangent space is a vector space which has the same dimension as its manifold,
+which is 3 in our case.
+One definition is for each point $p$ in the manifold $\mathcal{M}$,
+the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths ${\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}, \varepsilon > 0}$
+with $p = \gamma(0)$.
+These tangent spaces can be ``glued'' together to form the
 \emph{tangent bundle} $T\mathcal{M} = \sqcup _{p \in \mathcal{M}}T_p\mathcal{M}$, which itself
 is a manifold of dimension $2n$. An element of $T\mathcal{M}$ can be written
 as $(p,v)$ with $p \in \mathcal{M}$ and $v \in T_p\mathcal{M}$. This admits a natural projection $\pi : T\mathcal{M} \to \mathcal{M}$,
@@ -34,10 +36,10 @@ Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 An ordered $k$-tuple $(X_1, \dots, X_k)$ of vector fields is linearly independent,
 if at each point $p$, the $k$-tuple $(X_1|_p, \dots, X_k|_p)$ is linearly independent.
 A \emph{local frame for $\mathcal{M}$} is an ordered $n$-tuple of vector fields $(E_1, ..., E_n)$
+defined on an open subset $U\subseteq \mathcal{M}$
 that spans the tangent bundle $T\mathcal{M}$. Thus, $(E_1|_p,\dots, E_n|_p)$ form
 a basis for $T_p\mathcal{M}$ for each point $p\in \mathcal{M}$.
-A $frame$ is called \emph{smooth} if the underlying vector fields are smooth.
-
+A $frame$ is called \emph{smooth} if the underlying vector fields are smooth and global if $U = \mathcal{M}$.
 
 \subsection{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
@@ -139,7 +141,7 @@ See figure \ref{fig:vectorfield} for an illustration in 2D.
   \label{fig:vectorfield}
 \end{figure}
 
-In the following, we show how a connection can be written as a matrix one-form:
+In the following, we show how a connection can be written as a matrix 1-form:
 Let $(E_1, E_2, E_3)$ be a smooth local frame for $T\mathcal{M}$ and
 $(\mathcal{E}^1, \mathcal{E}^2, \mathcal{E}^3)$ its dual coframe for
 $T^*\mathcal{M}$ (i.e. $\mathcal{E}^i(E_j)=\delta^i_j$).
@@ -159,20 +161,20 @@ With these coefficients, we can rewrite equation \ref{eq:rewrite} to
 \end{equation}
 where the dummy index $j$ was renamed to $k$ in the last term (we are using Einstein summation convention, so the indices are independent).
 This derivation shows that the choice of $\Gamma_{ij}^k$ fully determine the connection $\nabla$.
-We can now define another connection $\Hat{\nabla}$ with one-forms:
+We can now define another connection $\Hat{\nabla}$ with 1-forms:
 \begin{equation}
   \Hat{\nabla}_X (Y^jE_j) \triangleq X(Y^j)E_j + Y^j \Hat{\nabla}_X E_j \qquad \text{where } \Hat{\nabla}_XE_j = \omega_j^k(X)E_k
 \end{equation}
-and $\omega_j^k$ are one-forms. It thus satisfies the Leibnitz rule in the second variable.
+and $\omega_j^k$ are 1-forms. It thus satisfies the Leibnitz rule in the second variable.
 To show that it is indeed a connection, it must also satisfy $C^{\infty}$ linearity in the direction of $X$, i.e.
 \begin{equation}
   \Hat{\nabla}_XE_j = \Hat{\nabla}_{X^iE_i}E_j = \omega_j^k(X^iE_i)E_k = X^i\omega_j^k(E_i)E_k = X^i \Hat{\nabla}_{E_i}E_j
 \end{equation}
-where we used $C^{\infty}$ linearity of one-forms. Notice the relation between
-the Christoffel symbols and the $\omega$ one-form:
+where we used $C^{\infty}$ linearity of 1-forms. Notice the relation between
+the Christoffel symbols and the $\omega$ 1-form:
 $$\Hat{\nabla}_{E_i}E_j = \omega_j^k(E_i)E_j = \Gamma_{ij}^kE_k \qquad \text{with }\Gamma_{ij}^k=\omega_j^k(E_i)$$
-Thus, the $3\times3$ one-forms $\omega_j^k$ define a connection and are
-are called a connection one-form, or a matrix-valued connection one-form. In the coframe, these are written as $\omega_j^k = \Gamma_{ij}^k \mathcal{E}^i$.
+Thus, the $3\times3$ 1-forms $\omega_j^k$ define a connection and are
+are called a connection 1-form, or a matrix-valued connection 1-form. In the coframe, these are written as $\omega_j^k = \Gamma_{ij}^k \mathcal{E}^i$.
 
 
 \section{Frame fields}
@@ -192,7 +194,7 @@ In a later step, after finding a good seamless map $\phi$, it is quantized to ge
 Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=20em]{figures/integer-grid-rough}
+  \includegraphics[width=30em]{figures/integer-grid-rough}
   \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from \cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
@@ -236,7 +238,7 @@ To compare frames, we need to check if the vectors making up
 the frames point in the same direction or if they have to be rotated
 by some matrix $M \in \mathrm{SO}(3)$ first, to make them point in the same direction.
 But now, the mentioned symmetry of representing the frames in $\mathbb{R}^3$
-make $M$ ambiguous.
+make $M$ ambiguous (${M_1 \sim RM_2, R \in \mathcal{O}}$).
 Therefore, we instead use the spherical harmonics based representation to represent frames \cite{Huang}.
 The idea is to represent frames as rotations of the polynomial $\mathbb{P}=x^4+y^4+z^4$,
 and these rotations of the polynomial are naturally invariant under $\mathcal{O}$.
@@ -247,9 +249,9 @@ to $\mathbb{P}$, as $\mathbb{P}$ under the restriction to the sphere takes its m
 
 
 The action of rotating 4th degree polynomials can be represented by so called $9\times9$ \emph{Wigner D-matrices}.
-These Wigner D-matrices and rotations matrices in $\mathbb{R}^3$ both represent the
+These Wigner D-matrices and rotation matrices in $\mathbb{R}^3$ both represent the
 same elements of the group $\mathrm{SO}(3)$, just act on different vector spaces.
-It is clear that this is a relaxation: Since rotations in 3D only exhibit 3 degrees of freedom not all 9D vectors are valid rotations
+It is clear that this is a relaxation: Since rotations in 3D only exhibit 3 degrees of freedom, not all 9D spherical harmonic vectors are valid rotations
 of $x^4+y^4+z^4$.
 
 While optimizing the frame field, some kind of ``average'' of two frames will be done.
