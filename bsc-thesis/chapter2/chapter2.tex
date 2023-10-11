@@ -23,7 +23,7 @@ In this thesis, we will mostly work with 3-manifolds. For easier illustration, s
 \subsection{Tangent space, Tangent bundle} There are many equivalent definitions
 for the tangent space. The tangent space is a vector space which has the same dimension as its manifold,
 which is 3 in our case.
-One definition is for each point $p$ in the manifold $\mathcal{M}$,
+One definition is for each point $p$ in the mani-fold $\mathcal{M}$,
 the tangent space $T_p\mathcal{M}$ consists of $\gamma'(0)$ for all differentiable paths ${\gamma: (-\varepsilon, \varepsilon) \to \mathcal{M}, \varepsilon > 0}$
 with $p = \gamma(0)$.
 These tangent spaces can be ``glued'' together to form the
@@ -31,7 +31,7 @@ These tangent spaces can be ``glued'' together to form the
 is a manifold of dimension $2n$. An element of $T\mathcal{M}$ can be written
 as $(p,v)$ with $p \in \mathcal{M}$ and $v \in T_p\mathcal{M}$. This admits a natural projection $\pi : T\mathcal{M} \to \mathcal{M}$,
 which sends each vector $v \in T_p\mathcal{M}$ to the point $p$ where it is tangent: $\pi(p,v)=p$.
-A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuos map, with $\pi \circ \sigma = \Id_{\mathcal{M}}$.
+A \emph{section} $\sigma: \mathcal{M} \to T\mathcal{M}$ is a continuous map, with $\pi \circ \sigma = \Id_{\mathcal{M}}$.
 Sections of $T\mathcal{M}$ are tangent vector fields on $\mathcal{M}$.
 An ordered $k$-tuple $(X_1, \dots, X_k)$ of vector fields is linearly independent,
 if at each point $p$, the $k$-tuple $(X_1|_p, \dots, X_k|_p)$ is linearly independent.
@@ -39,7 +39,7 @@ A \emph{local frame for $\mathcal{M}$} is an ordered $n$-tuple of vector fields 
 defined on an open subset $U\subseteq \mathcal{M}$
 that spans the tangent bundle $T\mathcal{M}$. Thus, $(E_1|_p,\dots, E_n|_p)$ form
 a basis for $T_p\mathcal{M}$ for each point $p\in \mathcal{M}$.
-A $frame$ is called \emph{smooth} if the underlying vector fields are smooth and global if $U = \mathcal{M}$.
+A \emph{frame} is called \emph{smooth} if the underlying vector fields are smooth and \emph{global} if $U = \mathcal{M}$.
 
 \subsection{Cotangent space, Cotangent bundle} The dual space $V^*$ of a vector space $V$
 consists of all linear maps $\omega: V \to \mathbb{R}$. We call these functionals \emph{covectors} on $V$.
@@ -144,7 +144,7 @@ See figure \ref{fig:vectorfield} for an illustration in 2D.
 In the following, we show how a connection can be written as a matrix 1-form:
 Let $(E_1, E_2, E_3)$ be a smooth local frame for $T\mathcal{M}$ and
 $(\mathcal{E}^1, \mathcal{E}^2, \mathcal{E}^3)$ its dual coframe for
-$T^*\mathcal{M}$ (i.e. $\mathcal{E}^i(E_j)=\delta^i_j$).
+$T^*\mathcal{M}$ i.e. $\mathcal{E}^i(E_j)=\delta^i_j$.
 Using the definition of an affine connection, we can write
 vector fields $X,Y \in \mathcal{T}(\mathcal{M})$ with the local frames, i.e.
 \begin{equation}\label{eq:rewrite}
@@ -198,7 +198,7 @@ Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see 
   \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from \cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
-Directly searching for good Integer-Grid maps that minimize distortion and satisfy boundary alignment
+Directly searching for good Integer-Grid maps that minimize distortion and satisfy the boundary alignment
 condition is a hard mixed-integer and non-convex optimization problem, for which no current
 optimization technique is available that would result in an acceptable solution.
 
@@ -238,7 +238,7 @@ To compare frames, we need to check if the vectors making up
 the frames point in the same direction or if they have to be rotated
 by some matrix $M \in \mathrm{SO}(3)$ first, to make them point in the same direction.
 But now, the mentioned symmetry of representing the frames in $\mathbb{R}^3$
-make $M$ ambiguous (${M_1 \sim RM_2, R \in \mathcal{O}}$).
+make $M$ ambiguous (${M_1 = RM_2, R \in \mathcal{O}}$).
 Therefore, we instead use the spherical harmonics based representation to represent frames \cite{Huang}.
 The idea is to represent frames as rotations of the polynomial $\mathbb{P}=x^4+y^4+z^4$,
 and these rotations of the polynomial are naturally invariant under $\mathcal{O}$.
@@ -267,7 +267,7 @@ harmonics space back to the valid space of frames will be needed, see figure \re
 \end{figure}
 
 
-When a frame $F$ has orthonormal columns, the resulting hex elements look like unit cubes.
+When a frame $F$ has orthonormal columns, the resulting hex elements resemble unit cubes.
 By introducing a metric $g$, we can control the size and shear of the cubes by
 relaxing the orthonormality constraint to $g$-orthonormality when
 $F^{-1}gF = \Id$

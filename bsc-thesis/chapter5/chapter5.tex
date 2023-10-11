@@ -243,7 +243,7 @@ the ray goes exactly through an edge or vertex of a tet.
 The first case to handle is when the starting point $q$ is in multiple tets.
 Since the tetmesh is not a disjoint union of tets as they share their boundaries,
 a point can be in multiple tets at once. This can lead to problems in the initialization:
-If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see fig.~\ref{fig:validstatefail}
+If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see figure \ref{fig:validstatefail}.
 To fix this, we add all tets to a list that contain $q$ while searching for the start tet.
 While initializing, we go through the tets one by one until a valid configuration is found.
 \begin{figure}[htb]
@@ -256,7 +256,7 @@ While initializing, we go through the tets one by one until a valid configuratio
   The same thing happens in 3D, where no valid configuration for $u,v,w$ can be constructed given a bad tet.
   }\label{fig:validstatefail}
 \end{figure}
-The next degenerate case where the ray lies exactly on a face or goes exactly through an edge are all handled similarly.
+The degenerate cases where the ray lies exactly on a face or goes exactly through an edge are all handled similarly.
 The problem in these cases is that while walking, the next step (reassigning $u,v$ or $w$ to the next vertex) cannot
 make a valid state, e.g. $\triangle uvw$ do not intersect with $\Vec{qp}$ anymore.
 We detect this by checking if we are still in a valid state and that the end tet does not
@@ -264,17 +264,17 @@ match with the currently visited tet before the next iteration of the walk.
 If the walk has not finished yet and we are not in a valid state, we reinitialize from the current tet and use the brute-force approach to search
 for a valid state again. When found, the walk can continue as normal.
 Because degenerate cases can lead to invalid states, faces that do not get intersected
-by $\Vec{qp}$ are highlighted by $\triangle uvw$ while walking.
+by $\Vec{qp}$ may be highlighted by $\triangle uvw$ while walking.
 Thus, before adding the face $\triangle uvw$ to the list to calculate the intersection points,
 we quickly check if the face to be added actually intersects with the robust ray-triangle subroutine described before.
 
 \subsection{Formulation of algorithm}\label{subsec:tetfinder}
-The final algorithm $\op{tetFinder}$ is presented in pseudocode here. The algorithm is described using operations such as:
+The final algorithm $\op{tetFinder}$ is presented in pseudocode and uses operations such as:
 \begin{itemize}
   \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
   \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
   vertices are known
-  \item \texttt{intersection(ray, triangle)} returns the intersection point of the ray with the triangle calculated with FP arithmetic
+  \item \texttt{intersection(ray, triangle)} returns the intersection point of the ray with the triangle %calculated with FP arithmetic
   \item \texttt{validState(q,p,u,v,w)} checks if the current configuration is valid as in section \ref{subsec:validstate}
   \item \texttt{initialization(t,q,p,u,v,w)} tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in section \ref{subsec:validstate}. Returns \texttt{true} if successful
   \item \texttt{locateTets(q)} returns all tets that contain $q$

@@ -26,12 +26,12 @@ We divide the cube along
 the $z$-axis into three equally sized parts.
 Then, the metric varies only in the $x,z$-dimension.
 The function to attach the metric to the vertices is defined as
-\begin{equation}
+\begin{equation}\label{eq:metric}
 g^{1/2}(z) = \begin{cases}
     \mathrm{diag}(1,1,1) &0 < z < 1/3 \\
     \mathrm{diag}(h_k(z),1,h_k(z)) &1/3 < z < 2/3 \\
     \mathrm{diag}(k,1,k) &2/3 < z < 1 \\
-\end{cases}\end{equation}\label{eq:metric}
+\end{cases}\end{equation}
 with $h_k(z)=3z(k-1)-k+2$.
 The metric is constant in the $y$-axis and constant-linear-constant in the $x,z$-axis.
 Thus, the rotation coefficients are only of the form
@@ -64,12 +64,12 @@ These results match with what previous works have done in 2D.
 The third experiment shows how important higher depths (more subdivision of voxels) are.
 Again, we divide the cube into three parts along the $z$-axis.
 This time, we isotropically scale the metric, i.e. the metric is defined as
-\begin{equation}
+\begin{equation}\label{eq:isotropic} 
 g^{1/2}(z) = \begin{cases}
     \mathrm{diag}(1,1,1) &0 < z < 1/3 \\
     \mathrm{diag}(h_k(z), h_k(z), h_k(z)) &1/3 < z < 2/3 \\
     \mathrm{diag}(k,k,k) &2/3 < z < 1 \\
-\end{cases}.\end{equation}\label{eq:isotropic} 
+\end{cases}.\end{equation}
 We expect rotational symmetry (because the metric field is symmetric around the $z$-axis) of the singularity graph around the $z$-axis,
 with the singularity structure going from side to side of the surface. We run the frame field optimization to different
 depths, the result is pictured in figure \ref{fig:isotropic}. At depth 3 the singularities

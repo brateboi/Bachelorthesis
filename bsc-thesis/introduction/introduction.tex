@@ -13,23 +13,23 @@ Volumetric meshes are used to encode the surface and the interior of an object.
 The most common types of volumetric meshes are tetrahedral and hexahedral meshes.
 Hexahedral meshes, that is a decomposition into cube-like elements,
 are usually prefered due to better numerical features.
-However, automatically generating high-quality meshes remains a hard challenge
+However, automatically generating high-quality hexahedral meshes remains a hard challenge
 in computer graphics.
 A promising research direction is through the use of frame fields \cite{Hex22}.
 
 A \emph{frame field} can be seen as a generalization of vector fields.
-They prescribe a \emph{frame} to each point on an object, that is, three linearly-independent
+They prescribe a \emph{frame} to each point on an object, that is, three linearly independent
 vectors. Each frame locally represents the orientation and deformation of a cube.
-Consequently, frame fields must be so called boundary-aligned:
+Consequently, frame fields must be so called boundary aligned:
 At the boundary of an object, one vector of the frame must be aligned with the surface normal
-as hexahedral elements (\emph{short: hex element}) should align at the boundary.
+as hexahedral elements (\emph{short: hex elements}) should align at the boundary.
 Then, the objective is to find the ``best'' frame field.
 Usually, ``best'' is measured in the smoothness of the frame field.
 Smoothness is measured with the Dirichlet energy $\int_{\Omega}||\nabla \phi||^2dx$,
 where $\phi$ is a frame, and we measure how much these frames twist and rotate within the object.
 
 To allow for non-uniform and anisotropic hex elements, we introduce
-\emph{metric fields}. Optimizing the frame field in this new metric (instead of the usual euclidean metric) then results
+\emph{metric fields}. Optimizing the frame field under another metric (instead of the usual Euclidean metric) then results
 in elements that are uniform and isotropic in this new metric.
 To this end, the expression for the Dirichlet energy must be changed, as euclidean derivatives
 assume non-curved space.
@@ -41,12 +41,12 @@ In this thesis, we rederive how to pull back the metric with the rotation coeffi
 the Dirichlet energy in the usual cartesian coordinates as described in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
 The necessary mathematical background is introduced in section \ref{ch:math-background}.
 In section \ref{ch:connection}, by focusing on integrability of the frame field,
-we derive the connection $\omega$ under our new metric field and how to evaluate it.
-section \ref{ch:calculation} discusses how the metric field is piecewise-linearly discretized on a tetrahedral
+we derive the connection $\omega$ induced by the metric field and how to evaluate it.
+Section \ref{ch:calculation} discusses how the metric field is piecewise-linearly discretized on a tetrahedral
 mesh and how the rotation coefficient $R$ to align frames in the metric is calculated within a specific tetrahedron (\emph{short: tet}).
 Because in general, $R$ is needed between arbitrary points in the metric field and the metric field
 changes from one tet to another, a robust tet finder algorithm is
-presented in section \ref{ch:algorithm} to calculate $R$ with the correct field.
+presented in section \ref{ch:algorithm} to calculate $R$ in the correct metric field.
 We briefly explain how the actual frame field optimization works in section \ref{ch:optimization}.
 The whole frame field generation is tested with some experiments in section \ref{ch:experiments}.
 We conclude in section \ref{ch:conclusion}.

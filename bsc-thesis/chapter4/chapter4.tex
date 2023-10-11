@@ -25,7 +25,7 @@
 \newcommand{\CQ}{\ensuremath{\mathcal{Q}}\xspace}
 
 
-\chapter{Calculation of rotation coefficient}
+\chapter{Alignment of frames}
 \label{ch:calculation}
 When the metric $g$ is globally flat with no additional constraints like
 boundary alignment, a globally integrable frame field is achievable
@@ -39,7 +39,7 @@ and minimize as if we were minimizing
 the Dirichlet energy in Euclidean coordinates.
 
 The smoothness measure $\mathcal{D}R$ is zero if all frames are parallel
-to each other under the connection $\omega$, i.e., if all frames
+to each other under the connection $\omega$, i.e. if all frames
 are the same if parallel transported to the same point.
 This is deliberately kept vague as the parallel transport is path
 dependent in general (parallel transport is path independent if the metric is flat).
@@ -80,8 +80,8 @@ for which a general closed form solution is hard to find.
 However, when $\omega$ and its integral $\int_0^t-\omega(\ell(s))ds$ commute, the general solution
 $\bm{\alpha}(t)= e^{\int_0^t \bm{A}(s)ds}\bm{\alpha}(0)$ exists,
 which is the case when $\omega$ along $\ell$ rotate around the same axis
-(the same way rotation matrices commute when they rotate around the same axis).
-Plugging in values $0$ and $1$ for $t$ and assuming $\omega$ commutes with its integral gives us the solution
+(the same way rotation matrices in 3D only commute when they rotate around the same axis).
+Plugging in values $0$ and $1$ for $t$ and assuming $\omega$ commutes with its integral gives the solution
 $$\bm{\alpha}(1) = R(\ell(1)) = R(p) = e^{\int_0^1\bm{A}(s)ds}R(\ell(0))= e^{\int_0^1\bm{A}(s)ds}R(q),$$
 which shows that we can 
 align frames with a single rotation matrix $R_{qp}$, i.e.
@@ -89,9 +89,9 @@ $$R(p)= R_{qp}R(q)$$
 which corresponds to the parallel transport under the connection $\omega$
 of the frame along $\ell$.
 Discretization of the covariant based Dirichlet energy is then given by
-\begin{equation}
+\begin{equation}\label{eq:dirichlet}
   ||\mathcal{D}R||_{\mathrm{discretized}}=||R_{qp}R(q)-R(p)||^2.
-\end{equation}\label{eq:dirichlet}
+\end{equation}
 We parametrize the path by $\ell(0)=a, \ell(1)=b$.
 We resort to numerical integration for $R_{ab}$ and cut the path into $n$ small segments, i.e.
 $$R_{ab}= R_nR_{n-1} \dotsb R_1$$
@@ -151,7 +151,7 @@ $$A(x,y,z) = \alpha A_1 + \beta A_2 + \gamma A_3 + \delta A_4$$
 is the metric prescribed in the tet. To find $\nabla \times A$, let
 $A = (A^1, A^2, A^3)$. We will need the derivatives for the curl, so let
 $$(A^i_j)_x \triangleq \frac{\partial A^i_j}{\partial x}$$ be the derivative with respect to $x$ of entry $i,j$.
-E.g. $(A^i_j)_x$ is given by
+For example, $(A^i_j)_x$ is given by
 $$(A^i_j)_x = \alpha_x (A_1)^i_j + \beta_x (A_2)^i_j + \gamma_x (A_3)^i_j + \delta_x (A_4)^i_j = t_{11}(A_1)^i_j + t_{21}(A_2)^i_j + t_{31}(A_3)^i_j + t_{41}(A_4)^i_j$$
 If we write $T= (T^1, T^2, T^3, T^4)$ and collect $(A_k)^i_j$ into a vector
 $$\bar{A^i_j}=\begin{pmatrix}

@@ -10,7 +10,7 @@ the difference between $\nabla \phi$ and $F^{-1}$.
 For this, $F^{-1}$ needs to stay as close to being locally integrable
 as possible. 
 In this chapter, by starting from the local integrability condition,
-we formulate a connection one-form $\omega$ which is used to
+we formulate a connection 1-form $\omega$ which is used to
 measure the Dirichlet energy in the new metric $g$, such that
 the frames stay close to being $g$-orthonormal ($F^{-1}gF= \Id$).
 We follow the steps in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
@@ -29,12 +29,12 @@ To achieve local integrability for $F^{-1}$, we therefore want
 $$\nabla \times F^{-1} \overset{!}{=}0$$
 where the curl is applied to each column.
 We can express this more naturally with the language of differential forms by writing
-the curl as the exterior derivative $d$ of a one-form $\alpha$.
-A one-form (more generally, a differential form) is closed, if $d\alpha = 0$.
-We construct a vector-valued one-form out of our frame field,
+the curl as the exterior derivative $d$ of a 1-form $\alpha$.
+A 1-form (more generally, a differential form) is closed, if $d\alpha = 0$.
+We construct a vector-valued 1-form out of our frame field,
 given $\bm{p}=(x,y,z)^{\top}$ in Euclidean coordinates
 $$\alpha \triangleq F^{-1}d\bm{p} = R^{\top}g^{1/2}d\bm{p}$$
-where $d\bm{p} = (dx,dy,dz)^{\top}$ is the common orthonormal one-form basis.
+where $d\bm{p} = (dx,dy,dz)^{\top}$ is the common orthonormal 1-form basis $\mathbb{E}^3$.
 Local integrability of $F^{-1}$ is then formulated as the closedness of $\alpha$, i.e.
 $$F^{-1} \text{ locally integrable} \iff \bm{0} = d\alpha$$
 Some reformulations yield:
@@ -45,15 +45,15 @@ Some reformulations yield:
 \end{align*}
 which we can simplify to
 \begin{equation}\label{eq:oneform}
-  \bm{0} = \omega \wedge (g^{1/2}dp)+ d(g^{1/2}dp)
+  \bm{0} = \omega \wedge (g^{1/2}d\bm{p})+ d(g^{1/2}d\bm{p})
 \end{equation}
 where the Leibnitz Rule for the exterior derivative is applied
-and $\wedge$ is the exterior product between a matrix-valued one-form and a vector-valued one-form,
-i.e. one-forms in each component and the matrix vector product uses $\wedge$
+and $\wedge$ is the exterior product between a matrix-valued 1-form and a vector-valued 1-form,
+i.e. 1-forms in each component and the matrix vector product uses $\wedge$
 as the multiplication, see section \ref{sec:evaluation} for the evaluation.
 We further define
 $$\omega = RdR^{\top} \in \mathfrak{so}(3)$$
-which is an antisymmetric matrix-valued one-form. To see this, 
+which is an antisymmetric matrix-valued 1-form. To see this, 
 we differentiate the orthogonality condition of the rotation matrix $R$ (we assume $R$ rotates about the axis $a$ with angle $\theta$):
 \begin{align*}
   \Id &= RR^{\top} \\
@@ -67,10 +67,10 @@ Elements of $\mathfrak{so}(3)$ are infinitesimal rotations, that is,
 they are tangent to the manifold $\mathrm{SO}(3)$ at the element $\Id$.
 Indeed, we characterised the elements of $\mathfrak{so}(3)$ by taking the derivative at $\Id$,
 which is one definition to get to the tangent space.
-Thus, we can use $\omega$ as a connection one-form to do the alignment of frames in
+Thus, we can use $\omega$ as a connection 1-form to do the alignment of frames in
 the new metric $g$, i.e. the parallel transport is done with $\omega$ and then compared.
 
-To solve for local integrability, we find $\omega$ such that the one-form $\alpha$ is closed,
+To solve for local integrability, we find $\omega$ such that the 1-form $\alpha$ is closed,
 then try to match the $\omega$ with $R$. This can be expressed as
 \begin{equation}\label{eq:objective}
   \min_{R\in \mathrm{SO}(3)} ||RdR^{\top} - \omega ||^2,
@@ -109,7 +109,7 @@ where $dR_i$ is the derivative of each entry with respect to the angle $\theta$ 
 To find $\omega$, we use equation \ref{eq:oneform}
 $$\bm{0} = \omega \wedge (g^{1/2}d\bm{p})+ d(g^{1/2}d\bm{p})$$
 and reformulate into a linear system.
-We represent the antisymmetric matrix-valued one-form $\omega$
+We represent the antisymmetric matrix-valued 1-form $\omega$
 $$\omega = \begin{bmatrix}
  0 & \omega_{12} & -\omega_{31} \\
  -\omega_{12} & 0 & \omega_{23} \\
@@ -123,12 +123,12 @@ by $
   dx & dy & dz
 \end{bmatrix} W$. We write $W=\begin{bmatrix}
   W_1,W_2,W_3
-\end{bmatrix}$, $W_i \in \mathbb{R}^3$. That is, $W$ is the matrix with the coefficients for the one-forms, e.g.
+\end{bmatrix}$, $W_i \in \mathbb{R}^3$. That is, $W$ is the matrix with the coefficients for the 1-forms, e.g.
 $W_1 = \begin{bmatrix}
   (\omega^{23})_1, (\omega^{23})_2, (\omega^{23})_3
 \end{bmatrix}^{\top}$
 .
-Recall, a one-form can be expressed as
+Recall, a 1-form can be expressed as
 $$
 \omega_{ij}= (\omega^{ij})_1dx + (\omega^{ij})_2dy + (\omega^{ij})_3dz
 $$
