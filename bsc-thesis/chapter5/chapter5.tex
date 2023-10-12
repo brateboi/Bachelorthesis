@@ -10,9 +10,9 @@
 \label{ch:algorithm}
 To measure the modified Dirichlet energy from equation \ref{eq:dirichlet}, we need to calculate the rotation coefficient $R_{qp}$
 between two arbitrary points $q$ and $p$ that do not necessarily lie within the same 
-tetrahedron. Since the metric and curl is different in each tet, we need to be
+tetrahedron. Since the metric and curl are different in each tet, we need to be
 able to efficiently determine all tets that get intersected by the straight
-line from $q$ to $p$, and use the correct metric for each corresponding
+line from $q$ to $p$ and use the correct metric for each corresponding
 line segment.
 The calculation for the coefficient then works in the following way:
 \begin{algo*}
@@ -36,23 +36,23 @@ The calculation for the coefficient then works in the following way:
 
 The missing component here is how to efficiently find all tetrahedra
 that get intersected. One possibility would be to use ray-triangle intersection and
-test against the whole mesh, but this is not practical, as we have have local information
+test against the whole mesh, but this is not practical, as we have local information
 that we can exploit.
 
-We use the idea of the straight walk from \emph{Walking in a Triangulation}\cite{Devillers}, which we modify and relies only on
+We use the idea of the straight walk from \emph{Walking in a Triangulation}~\cite{Devillers}, which we modify and relies only on
 so called \emph{orientation tests} to determine which triangles we traverse.
 This chapter covers how the $\op{tetFinder}$ algorithm works, how it is made robust
-against degenerate cases
+against degenerate cases,
 and a full description of the algorithm is given, more than what is described in the reference.
 \section{Framework}
 \label{sec:framework}
 Let $\mathcal{T}$ be a triangulation of a domain $\Omega$ that, for simplicity, is convex.
-In principle, the domain does not need to be convex. It suffices that for all requested paths from $q$ to $p$
+In principle, the domain does not need to be convex. It suffices that for all requested paths from $q$ to $p$,
 it is contained in $\Omega$.
 The straight walk traverses all triangles that get intersected by the line segment
 from $q$ to $p$. The algorithm first makes an initialization step to get into a valid state, 
 then the straight walk can start.
-To get a feeling how the algorithm works, let us go through an example in 2D.
+To get a feeling of how the algorithm works, let us go through an example in 2D.
 If the algorithm starts in a valid state, the line from $q$ to $p$
 intersects with some edge $\vec{lr}$. Two triangles share this edge.
 We test on which side point $p$ lies of this edge to decide whether the walk continues.
@@ -61,7 +61,7 @@ This triangle is defined by three vertices $(l,r,s)$. We decide if
 the new candidate point $s$ lies on the left side or right side of the line from $q$ to $p$.
 If $s$ lies on the left, point $l$ is moved, else point $r$ is moved.
 A new edge intersected with the ray $\vec{qp}$ is found and the walk repeats.
-This process is illustrated in figure \ref{fig:straight-walk-2d}
+This process is illustrated in Figure \ref{fig:straight-walk-2d}
 \begin{figure}[htb]
   \centering
   \def\svgwidth{35em}
@@ -71,13 +71,13 @@ This process is illustrated in figure \ref{fig:straight-walk-2d}
 Notice how the ray $\vec{qp}$ always intersects the edge $\vec{lr}$ at each update step.
 We can use this observation to add each edge at each update step to a list.
 When the algorithm terminates, we can iterate over this list, find
-the intersection point of the ray $\vec{qp}$ with the edge and calculate the rotation
+the intersection point of the ray $\vec{qp}$ with the edge, and calculate the rotation
 coefficient for this segment.
 The straight walk in 3D works similarly, but edges are now faces and triangles are tets. The initialization step consists of finding a starting tet $t$
 where $q$ is contained. Then, we find the face of the tet $t$ that gets intersected by the ray
 $\vec{qp}$. Again, at each step, we know that the ray goes out of our current tet $t$ through some
 face $e$ defined by vertices $uvw$. We decide if the walk continues by checking on which side $p$ lies relative to $e$.
-If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two 3D orientation tests
+If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two 3D orientation tests,
 we decide which of the vertices $u, v, w$ gets moved to the new candidate point $s$. This defines
 a new face $e_{new}$ with which our ray intersects and the walk repeats.
 Degenerate cases such as when the ray $\vec{qp}$ goes exactly through a vertex or
@@ -92,7 +92,7 @@ To determine on which side some point $s$ lies relative to two other points $q$ 
 It corresponds to evaluating the sign of a determinant. Analogously in 3D, the orientation predicate
 tests whether a fourth point lies above or below a plane defined by three other points.
 How ``above'' the plane is defined depends on the ordering within the determinant. In the case here,
-it is above if point $a$ sees the triangle $bcd$ in counterclockwise order, see figure \ref{fig:orient2d}.
+it is above if point $a$ sees the triangle $bcd$ in counterclockwise order, see Figure \ref{fig:orient2d}.
 \begin{align*}
   \mathrm{orientation}(\alpha, \beta, \gamma) &= 
   sign\left(
@@ -123,7 +123,7 @@ Because of the finite mantissa in floating point representation, many numbers ca
 The machine needs to round a number $x$ to its nearest number that is exactly representable
 and roundoff errors occurs. A famous example of this phenomenon is ${0.1 + 0.2 = 0.30000000000000004}$.
 We call the distance between two exactly representable floating point numbers \emph{machine epsilon} $\varepsilon$.
-See figure \ref{fig:floatingpoint} for how this machine epsilon can cause trouble (Example from \cite{Marek}).
+See Figure \ref{fig:floatingpoint} for how this machine epsilon can cause trouble (Example from~\cite{Marek}).
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -195,7 +195,7 @@ intersection point with the ray, add the intersection points to a list
 with the current tet $t$ and finally use this as input for
 calculating the rotation coefficient as described in chapter \ref{ch:calculation}.
 To get into a valid state, an initialization needs to be performed.
-In \emph{Walking in a triangulation}\cite{Devillers}, they assume that
+In \emph{Walking in a triangulation}~\cite{Devillers}, they assume that
 $q$ is a vertex in the tet mesh. Thus, their approach of turning around $q$
 is not applicable in our case.
 
@@ -215,7 +215,7 @@ Again, we can use the orientation predicate from before to do this robustly.
 Let $\triangle uvw$ be a triangle in $\mathbb{R}^3$ and $q,p$ the two points
 that determine a line segment. If $u,v,w$ is ordered in the way
 that $\op{orientation}(q,u,v,w) > 0$, then the segment determined by $\Vec{qp}$
-cuts the triangle if and only if \cite{segura}:
+cuts the triangle if and only if~\cite{segura}:
 \begin{equation}\label{eq:checks}
   \op{orient}(p,u,q,v) \ge 0 \land \op{orient}(p,w,v,q) \ge 0 \land \op{orient}(p,u,w,q) \ge 0 
 \end{equation}
@@ -243,7 +243,7 @@ the ray goes exactly through an edge or vertex of a tet.
 The first case to handle is when the starting point $q$ is in multiple tets.
 Since the tetmesh is not a disjoint union of tets as they share their boundaries,
 a point can be in multiple tets at once. This can lead to problems in the initialization:
-If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see figure \ref{fig:validstatefail}.
+If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see Figure \ref{fig:validstatefail}.
 To fix this, we add all tets to a list that contain $q$ while searching for the start tet.
 While initializing, we go through the tets one by one until a valid configuration is found.
 \begin{figure}[htb]
@@ -307,7 +307,7 @@ The final algorithm $\op{tetFinder}$ is presented in pseudocode and uses operati
       % \\
       \> \textbf{while} $orientation(u,w,v,p)>0$ \{ \label{}\\
 
-      \> \> \textbf{if} ($\op{validState(q,p,u,v,w)}$) // degenerate cases can lead to invalid states \label{}\\
+      \> \> \textbf{if} ($\op{!validState(q,p,u,v,w)}$) // degenerate cases can lead to invalid states \label{}\\
       \> \> \> $\op{initialization}(t, q,p,u,v,w)$ \label{}\\
       % \\
       \> \> $t$ = neighbor($t$ through $uvw$) \label{}\\
@@ -328,7 +328,7 @@ The final algorithm $\op{tetFinder}$ is presented in pseudocode and uses operati
       \> \> \> $\str{curr} = \op{intersection}(qp, uvw)$ \label{}\\
       \> \> \> $\str{lineSegments}.\op{add}([t, \str{prev}, \str{curr}])$ \label{}\\
       \> \} // $t$ contains $p$ \label{}\\
-      \> $\str{lineSegments}.\op{add}([t, \str{prev}, p])$ \label{}\\
+      \> return $\str{lineSegments}.\op{add}([t, \str{prev}, p])$ \label{}\\
     \end{numbertabbing}
   }
   \caption{tetFinder}

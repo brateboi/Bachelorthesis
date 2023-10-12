@@ -7,9 +7,9 @@ A solid mathematical introduction is key to understanding how and why the approa
 in this thesis works. This chapter serves as a primer to differential geometry and frame fields.
 \section{Differential Geometry}
 We will make heavy use of differential geometry in chapter \ref{ch:connection}.
-I introduce the basic concepts what we will use, but I refrain from
+I introduce the basic concepts that we will use, but I refrain from
 giving any proofs. The following is an incomplete summary of concepts that we need presented in
-\emph{Introduction to smooth manifolds}\cite{LeeManifold}.
+\emph{Introduction to Smooth Manifolds}~\cite{LeeManifold}.
 
 \subsection{Manifold} A manifold $\mathcal{M}$ is a space that locally looks like Euclidean space.
 More exactly, a $n$-manifold is a topological space, where each point on the manifold has an open neighborhood
@@ -125,13 +125,13 @@ We call $\nabla_XY$ the \emph{covariant derivative of $Y$ in the direction of $X
 A connection $\nabla$ defines the parallel transport
 of a vector along a curve. Given a curve $\gamma: [0,1] \to \mathcal{M}$ and
 a vector $v_0 \in T_{\gamma(0)}\mathcal{M}$, there exists a unique parallel vector field $V: [0,1] \to T\mathcal{M}$ along $\gamma$
-such that $V(0) = v_0$ \cite{LeeCurvature}.
+such that $V(0) = v_0$~\cite{LeeCurvature}.
 Recall: a vector field $V$ along $\gamma$ means $\pi(V(t))=\gamma(t)$.
 The uniqueness and existence is a consequence of the vector field $V$ being the solution
 of $\nabla_{\dot{\gamma}(t)}V(t) = 0$ defining a linear ordinary differential equation with initial condition
 $V(0)=v_0$. This vector field $V(t)$ is called the \emph{parallel transport} of $v_0$ along $\gamma$.
 It is ``parallel'' in the sense that the transported vector does not change within the tangent space.
-See figure \ref{fig:vectorfield} for an illustration in 2D.
+See Figure \ref{fig:vectorfield} for an illustration in 2D.
 \begin{figure}[htb]
   \centering
   \def\svgwidth{20em}
@@ -180,22 +180,22 @@ are called a connection 1-form, or a matrix-valued connection 1-form. In the cof
 \section{Frame fields}
 Recall from the introduction that we are trying to find a hexahedral mesh
 for some geometric object. In the following sections, the key idea to
-tackle this problem through \emph{seamless maps} and \emph{integer-grid maps} is discussed and
+tackle this problem through \emph{seamless maps} and \emph{integer-grid maps} is discussed, and
 how the problem of finding such maps is relaxed through \emph{frame fields}.
 \subsection{Integer-grid maps}
 
 In 2D, Integer-Grid maps have proven to be reliable
-in generating the analogue of hexahedral meshes, quad meshes \cite{integer-grid}.
+in generating the analogue of hexahedral meshes, quad meshes~\cite{integer-grid}.
 The goal is to use the same approach, but in three dimensions.
 The objective is to find a seamless map
 $\phi : \mathcal{M} \to \mathbb{R}^3$, which smoothly maps the $3$-dimensional object
 to be meshed into $\mathbb{R}^3$.
 In a later step, after finding a good seamless map $\phi$, it is quantized to get an
-Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see figure \ref{fig:integer-grid} for an illustration.
+Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see Figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=30em]{figures/integer-grid-rough}
-  \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from \cite{Hex22})}
+  \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from~\cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
 Directly searching for good Integer-Grid maps that minimize distortion and satisfy the boundary alignment
@@ -216,8 +216,8 @@ the extracted hexahedral mesh closely follow the integer isolines.
 A frame locally represents the edges of a deformed cube.
 We can think of a frame field as the composition of three vector fields
 and as a relaxation of the original problem. However, frame fields
-can contain singularities that the underlying vector fields do not contain \cite{Nieser}
-and contain types of singularities that cannot appear in hex meshes \cite{Liu}.
+can contain singularities that the underlying vector fields do not contain~\cite{Nieser}
+and contain types of singularities that cannot appear in hex meshes~\cite{Liu}.
 These singularities are said to be non-meshable.
 The problem of non-meshability is not discussed further here, but it
 is something to be aware of.
@@ -231,7 +231,7 @@ Since we want non-degenerate frames and the same orientation through the grid, t
 which leaves $24$ equivalent frames.
 Equivalence of frames is then defined as
 $$F_u \sim F_v \iff \exists R \in \mathcal{O} : F_u=RF_v$$
-where $\mathcal{O}$ is the \emph{chiral cubical symmetry group}\cite{Nieser}.
+where $\mathcal{O}$ is the \emph{chiral cubical symmetry group}~\cite{Nieser}.
 These symmetries complicate the optimization process for frame fields.
 When optimizing the smoothness of a frame field, frames have to be compared.
 To compare frames, we need to check if the vectors making up
@@ -239,15 +239,13 @@ the frames point in the same direction or if they have to be rotated
 by some matrix $M \in \mathrm{SO}(3)$ first, to make them point in the same direction.
 But now, the mentioned symmetry of representing the frames in $\mathbb{R}^3$
 make $M$ ambiguous (${M_1 = RM_2, R \in \mathcal{O}}$).
-Therefore, we instead use the spherical harmonics based representation to represent frames \cite{Huang}.
+Therefore, we instead use the spherical harmonics based approach to represent frames~\cite{Huang}.
 The idea is to represent frames as rotations of the polynomial $\mathbb{P}=x^4+y^4+z^4$,
 and these rotations of the polynomial are naturally invariant under $\mathcal{O}$.
 Under the restriction of the 4th degree polynomials to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$,
-the polynomials form a 9D vector space and the spherical harmonics of the 4th band form a basis.
+the rotated polynomials are lifted to a 9D vector and expressed in the spherical harmonics basis.
 For example, the axis-aligned frame $F=(e_1,e_2,e_3)$ corresponds
 to $\mathbb{P}$, as $\mathbb{P}$ under the restriction to the sphere takes its maxima at $\pm e_i$.
-
-
 The action of rotating 4th degree polynomials can be represented by so called $9\times9$ \emph{Wigner D-matrices}.
 These Wigner D-matrices and rotation matrices in $\mathbb{R}^3$ both represent the
 same elements of the group $\mathrm{SO}(3)$, just act on different vector spaces.
@@ -257,7 +255,7 @@ of $x^4+y^4+z^4$.
 While optimizing the frame field, some kind of ``average'' of two frames will be done.
 This averaging makes sense in the spherical harmonics space, but the result may be outside the valid
 space of frames. A projection from the spherical
-harmonics space back to the valid space of frames will be needed, see figure \ref{fig:projection} \cite{Ray}.
+harmonics space back to the valid space of frames will be needed, see Figure \ref{fig:projection}~\cite{Ray}.
 \begin{figure}[htb]
   \centering
   \def\svgwidth{30em}
@@ -272,13 +270,13 @@ By introducing a metric $g$, we can control the size and shear of the cubes by
 relaxing the orthonormality constraint to $g$-orthonormality when
 $F^{-1}gF = \Id$
 holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
-(akin to the polar decomposition of linear transformations)\cite{Panozzo}, that is $F = g^{-1/2}R$,
-see figure \ref{fig:factorization}.
+(akin to the polar decomposition of linear transformations)~\cite{Panozzo}, that is $F = g^{-1/2}R$,
+see Figure \ref{fig:factorization}.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=25em]{figures/factorization}
   \caption{Factorization of a $g$-orthogonal frame field into a symmetric metric part $g^{-1/2}$ and a rotational part $R$
-  (Figure from \cite{Fang23}).}
+  (Figure from~\cite{Fang23}).}
   \label{fig:factorization}
 \end{figure}
 Requirements for a frame field are usually formulated as

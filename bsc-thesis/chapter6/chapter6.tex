@@ -7,7 +7,7 @@ Until now, we have only covered how we measure the Dirichlet energy $||\mathcal{
 the new metric $g$.
 This chapter covers how we minimize
 $$E(\mathcal{M})=\int_{\mathcal{M}}||DR||^2.$$
-We use an unpublished scheme from \emph{[Simone Raimondi]} based
+We use an optimization scheme based on the PhD work of Simone Raimondi\footnote{\texttt{https://cgg.unibe.ch/person/1105/ - Simone Raimondi}}, which in turn is based
 on the Merriman-Bence-Osher (MBO) algorithm.
 In principle, any frame field optimization scheme that works based on
 optimizing the Dirichlet energy (or its discretized version $||R(q)-R(p)||^2$) can be
@@ -15,7 +15,7 @@ modified with the rotation coefficient $R_{qp}$ to optimize in a new metric.
 \section{Optimization Algorithm}
 The algorithm works by dividing the manifold into cubes,
 and optimizing the frames per cube. The algorithm works based on an adaptive
-grid, refining the grid and optimizing where more resolution is needed, see figure \ref{fig:grid} 
+grid, refining the grid and optimizing where more resolution is needed, see Figure \ref{fig:grid} 
 \begin{figure}[htb]
     \centering
     \def\svgwidth{20em}
@@ -30,13 +30,13 @@ are calculated from their neighbors $v_n=(x\pm 1,y\pm 1,z\pm 1)$ to $v$,
 i.e. $$||[R_{v_n\leadsto v}]v_n - v||^2.$$
 The MBO algorithm is based on repeated diffusion in the spherical harmonics (as averaging frames
 makes sense in the spherical harmonics), with a projection back to the manifold
-of valid frames (see figure \ref{fig:diffusionprojection}).
+of valid frames (see Figure \ref{fig:diffusionprojection}).
 \begin{figure}[htb]
     \centering
     \def\svgwidth{20em}
     \input{figures/diffusionprojection.pdf_tex}
     \caption{Repeated diffusion of frames in spherical harmonics with a projection back to the
-    valid space of frames is used to minimize the energy. Figure inspired from \cite{Palmer} }
+    valid space of frames is used to minimize the energy. Figure inspired from~\cite{Palmer} }
     \label{fig:diffusionprojection}
 \end{figure}
 

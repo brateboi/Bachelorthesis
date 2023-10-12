@@ -105,16 +105,16 @@
 \begin{quote}\noindent
   Automatic generation of volumetric hexahedral meshes continues
   to be a hard challenge. Directly optimizing for a decomposition 
-  of an object into cube-like elements is unfeasible with todays
+  of an object into cube-like elements is infeasible with today's
   available optimization techniques. Thus, this optimization problem is
   often relaxed through frame fields. By adding a covering
   metric field on the object to mesh and optimizing the frame field
   in this new metric, more control of the frame field is achieved.
   In this work, it is shown how to optimize a frame field in a
   new, user-defined metric. A full explanation is given of how to pull back
-  the user-defined metric such that already available, Euclidean metric frame field
+  the user-defined metric such that already available Euclidean metric frame field
   optimization techniques can be applied. The metric field is
-  piece-wise linearly discretized, for which an exact and robust algorithm
+  piecewise linearly discretized, for which an exact and robust algorithm
   is formulated that finds all intersected tetrahedra between two points in space.
   We test the generation of frame fields on some custom metric fields
   on cubes, where the resulting frame fields exhibit the expected singularity structure.
@@ -154,13 +154,13 @@ independent building block to control the size and shear of hexahedral elements.
 The approach is tested on cubes, where the resulting frame fields
 look as expected.
 
-To store the metric field, we used a tetrahedral mesh and piece-wise
+To store the metric field, we used a tetrahedral mesh and piecewise
 linearly discretized the metric field. This is different compared
-to the constant discretization done in \emph{Metric-Driven 3D Frame Field Generation}\cite{Fang23}.
-To calculate the rotation coefficients on the piece-wise linear metric field,
+to the constant discretization done in \emph{Metric-Driven 3D Frame Field Generation}~\cite{Fang23}.
+To calculate the rotation coefficients on the piecewise linear metric field,
 an exact and robust algorithm was needed to locate all tets between two points.
 The formulation relies only on exact, arbitrary precision arithmetic to make decisions.
-It fully handles degeneracies, unlike the algorithm described in \emph{Walking on a Triangulation}\cite{Devillers}.
+It fully handles degeneracies, unlike the algorithm described in \emph{Walking on a Triangulation}~\cite{Devillers}.
 To calculate the rotation coefficient, points are sampled recursively
 until there is no noticable improvement.
 There are minor things that impact speed but not
@@ -190,11 +190,11 @@ in the interior) and the vertices where no metric is defined would get
 automatically assigned a metric that makes the metric field as easy to
 optimize as possible would be of practical use.
 
-Lastly, it is still unknown how much the piece-wise linear
+Lastly, it is still unknown how much the piecewise linear
 discretization improved the accuracy of the computation of the rotation
 coefficients.
 A thorough comparison of results on the same models between the
-constant discretization \cite{Fang23}
+constant discretization~\cite{Fang23}
 and linear discretization would paint a clearer picture if the extra
 effort is worth it. 
 
