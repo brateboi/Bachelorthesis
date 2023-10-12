@@ -182,23 +182,23 @@ Recall from the introduction that we are trying to find a hexahedral mesh
 for some geometric object. In the following sections, the key idea to
 tackle this problem through \emph{seamless maps} and \emph{integer-grid maps} is discussed, and
 how the problem of finding such maps is relaxed through \emph{frame fields}.
-\subsection{Integer-grid maps}
+\subsection{Integer-Grid Maps}
 
-In 2D, Integer-Grid maps have proven to be reliable
+In 2D, Integer-Grid Maps have proven to be reliable
 in generating the analogue of hexahedral meshes, quad meshes~\cite{integer-grid}.
 The goal is to use the same approach, but in three dimensions.
 The objective is to find a seamless map
 $\phi : \mathcal{M} \to \mathbb{R}^3$, which smoothly maps the $3$-dimensional object
 to be meshed into $\mathbb{R}^3$.
 In a later step, after finding a good seamless map $\phi$, it is quantized to get an
-Integer-Grid map $f$, where the hexahedral elements can be extracted from,  see Figure \ref{fig:integer-grid} for an illustration.
+Integer-Grid Map $f$, where the hexahedral elements can be extracted from,  see Figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
   \includegraphics[width=30em]{figures/integer-grid-rough}
-  \caption{Idea of quadrangulation with integer-grid maps in 2D (Figure from~\cite{Hex22})}
+  \caption{Idea of quadrangulation with Integer-Grid Maps in 2D (Figure from~\cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
-Directly searching for good Integer-Grid maps that minimize distortion and satisfy the boundary alignment
+Directly searching for good Integer-Grid Maps that minimize distortion and satisfy the boundary alignment
 condition is a hard mixed-integer and non-convex optimization problem, for which no current
 optimization technique is available that would result in an acceptable solution.
 
@@ -217,14 +217,14 @@ A frame locally represents the edges of a deformed cube.
 We can think of a frame field as the composition of three vector fields
 and as a relaxation of the original problem. However, frame fields
 can contain singularities that the underlying vector fields do not contain~\cite{Nieser}
-and contain types of singularities that cannot appear in hex meshes~\cite{Liu}.
-These singularities are said to be non-meshable.
+and contain types of singularities that cannot appear in hex meshes and are non-meshable~\cite{Liu}.
 The problem of non-meshability is not discussed further here, but it
 is something to be aware of.
 
 We treat a frame $F$ as a set of 3 linearly independent vectors $\{F_1,F_2,F_3 \}$ which we can
 collect into a matrix $F=(F_1,F_2,F_3) \in \mathbb{R}^{3\times 3}$.
-Notice that many of these frames are equivalent.
+Notice that many of these frames are equivalent. For example, the frames $(F_1, F_2, F_3) \sim (-F_1, F_2, F_3) \sim (F_2, F_1, F_3)$
+all represent the same frame.
 There are $2^3$ choices of the sign, and $3!$ possible permutations, which
 gives $2^3\cdot 3! = 48$ equivalent frames.
 Since we want non-degenerate frames and the same orientation through the grid, the constraint $\det(F)>0$ is imposed,
