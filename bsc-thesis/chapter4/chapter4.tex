@@ -39,8 +39,8 @@ and minimize as if we were minimizing
 the Dirichlet energy in Euclidean coordinates.
 
 The smoothness measure $\mathcal{D}R$ is zero if all frames are parallel
-to each other under the connection $\omega$, i.e., if all frames
-are the same if parallel transported to the same point.
+to each other under the connection $\omega$, that is, if all frames
+are the same when parallel transported to the same point.
 This is deliberately kept vague as the parallel transport is path
 dependent in general (parallel transport is path independent if the metric is flat).
 To get a feeling for the problem statement, see Figure \ref{fig:rotation}.
@@ -79,7 +79,7 @@ This differential equation has the form of a \emph{matrix differential equation}
 for which a general closed form solution is hard to find.
 However, when $\omega$ and its integral $\int_0^t-\omega(\ell(s))ds$ commute, the general solution
 $\bm{\alpha}(t)= e^{\int_0^t \bm{A}(s)ds}\bm{\alpha}(0)$ exists,
-which is the case when $\omega$ along $\ell$ rotate around the same axis
+which is the case when $\omega$ along $\ell$ rotates around the same axis
 (the same way rotation matrices in 3D only commute when they rotate around the same axis).
 Plugging in values $0$ and $1$ for $t$ and assuming $\omega$ commutes with its integral gives the solution
 $$\bm{\alpha}(1) = R(\ell(1)) = R(p) = e^{\int_0^1\bm{A}(s)ds}R(\ell(0))= e^{\int_0^1\bm{A}(s)ds}R(q),$$
@@ -92,8 +92,8 @@ Discretization of the covariant based Dirichlet energy is then given by
 \begin{equation}\label{eq:dirichlet}
   ||\mathcal{D}R||_{\mathrm{discretized}}=||R_{qp}R(q)-R(p)||^2.
 \end{equation}
-We parametrize the path by $\ell(0)=a, \ell(1)=b$.
-We resort to numerical integration for $R_{ab}$ and cut the path into $n$ small segments, i.e.
+We parametrize the path by $\ell(0)=a, \ell(1)=b$
+and use numerical integration for $R_{ab}$. For this, the path is cut into $n$ small segments, i.e.
 $$R_{ab}= R_nR_{n-1} \dotsb R_1$$
 where $R_i = \exp(-\omega (\dot{\ell}(i\gamma))\gamma)$, $\gamma$ is the length of a segment and $\dot{\ell}(s)=\frac{\partial \ell}{\partial s}(s)$.
 By cutting up the path into small segments, $\omega$ should rotate around the same axis along $\ell$, which as described above
@@ -137,7 +137,7 @@ $$\underbrace{\begin{pmatrix}
 \iff
 T^{-1}\bm{\lambda} = \bm{p} \iff  \bm{\lambda} = T\bm{p}.
 $$
-$T$ always exists because $v_1, \dots , v_4$ are linearly independent,
+The matrix $T$ always exists because $v_1, \dots , v_4$ are linearly independent,
 else it would not be a valid tetrahedron.
 By denoting $T= \{ t_{ij} \}_{i,j \in \{ 1,\dots, 4\} }$, we can write our barycentric functions as
 \begin{align*}
@@ -181,7 +181,7 @@ are needed such that $R_{qp}$ accurately describes how the frame rotates along $
 We apply a recursive subdivision scheme to recursively sample more points on $\ell$ only where is needed
 until sampling more points leads to no noticable improvement anymore (see Figure \ref{fig:recursiveSubdivision}).
 We begin by calculating $R_{ab}$ with just the endpoints. This coefficient is then compared to the result if the midpoint was sampled aswell,
-so i.e. if
+so if
 $$\frac{||R_{ab} - R_{am}\cdot R_{mb}||^2_2}{\ell^2}< \varepsilon$$
 then no measurable improvement happened. We divide by the length $\ell = ||a-b||_2$ of the segment $\vec{ab}$, because the segments get smaller
 and we want the tolerance $\varepsilon$ to remain the same.

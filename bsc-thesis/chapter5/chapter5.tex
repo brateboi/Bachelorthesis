@@ -36,7 +36,7 @@ The calculation for the coefficient then works in the following way:
 
 The missing component here is how to efficiently find all tetrahedra
 that get intersected. One possibility would be to use ray-triangle intersection and
-test against the whole mesh, but this is not practical, as we have local information
+test against the whole mesh, but this is not practical as we have local information
 that we can exploit.
 
 We use the idea of the straight walk from \emph{Walking in a Triangulation}~\cite{Devillers}, which we modify and relies only on
@@ -69,7 +69,7 @@ This process is illustrated in Figure \ref{fig:straight-walk-2d}
   \caption{Straight walk step}\label{fig:straight-walk-2d}        
 \end{figure}
 Notice how the ray $\vec{qp}$ always intersects the edge $\vec{lr}$ at each update step.
-We can use this observation to add each edge at each update step to a list.
+We can use this observation to add each edge at every update step to a list.
 When the algorithm terminates, we can iterate over this list, find
 the intersection point of the ray $\vec{qp}$ with the edge, and calculate the rotation
 coefficient for this segment.
@@ -271,13 +271,13 @@ we quickly check if the face to be added actually intersects with the robust ray
 \subsection{Formulation of algorithm}\label{subsec:tetfinder}
 The final algorithm $\op{tetFinder}$ is presented in pseudocode and uses operations such as:
 \begin{itemize}
-  \item \texttt{neighbor(t through $uvw$)} returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
-  \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$} returns the remaining vertex of a tetrahedron whose other three
+  \item \texttt{neighbor(t through $uvw$)}, returns the tetrahedron sharing face $uvw$ with tetrahedron $t$
+  \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$}, returns the remaining vertex of a tetrahedron whose other three
   vertices are known
-  \item \texttt{intersection(ray, triangle)} returns the intersection point of the ray with the triangle %calculated with FP arithmetic
-  \item \texttt{validState(q,p,u,v,w)} checks if the current configuration is valid as in section \ref{subsec:validstate}
-  \item \texttt{initialization(t,q,p,u,v,w)} tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in section \ref{subsec:validstate}. Returns \texttt{true} if successful
-  \item \texttt{locateTets(q)} returns all tets that contain $q$
+  \item \texttt{intersection(ray, triangle)}, returns the intersection point of the ray with the triangle %calculated with FP arithmetic
+  \item \texttt{validState(q,p,u,v,w)}, checks if the current configuration is valid as in section \ref{subsec:validstate}
+  \item \texttt{initialization(t,q,p,u,v,w)}, tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in section \ref{subsec:validstate}. Returns \texttt{true} if successful
+  \item \texttt{locateTets(q)}, returns all tets that contain $q$
 \end{itemize}
 \begin{algo*}
   \vbox{
