@@ -241,7 +241,7 @@ which is made exact through arbitrary precision arithmetic.
 Robust in our context means that it is able to handle degenerate cases, for example when
 the ray goes exactly through an edge or vertex of a tet.
 The first case to handle is when the starting point $q$ is in multiple tets.
-Since the tetmesh is not a disjoint union of tets as they share their boundaries,
+Since the mesh is not a disjoint union of tets as they share their boundaries,
 a point can be in multiple tets at once. This can lead to problems in the initialization:
 If a random tet which contains $q$ is chosen, a valid state must not necessarily be found, see Figure \ref{fig:validstatefail}.
 To fix this, we add all tets to a list that contain $q$ while searching for the start tet.
