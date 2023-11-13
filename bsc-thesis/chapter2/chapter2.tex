@@ -6,7 +6,7 @@
 A solid mathematical introduction is key to understanding how and why the approach
 in this thesis works. This chapter serves as a primer to differential geometry and frame fields.
 \section{Differential Geometry}
-We will make heavy use of differential geometry in chapter \ref{ch:connection}.
+We will make heavy use of differential geometry in Chapter \ref{ch:connection}.
 I introduce the basic concepts that we will use, but I refrain from
 giving any proofs. The following is an incomplete summary of concepts that we need presented in
 \emph{Introduction to Smooth Manifolds}~\cite{LeeManifold}.
@@ -94,7 +94,7 @@ and has the following properties:
   \item $d(d\alpha) = 0$
   \item $d(\alpha \wedge \beta) = (d\alpha \wedge \beta) + (-1)^k(\alpha \wedge d\beta)$ for a $k$-form $\alpha$ (Leibnitz Rule).
 \end{itemize}
-In section \ref{ch:connection} we will need what $d\omega$ is for some smooth 1-form $\omega$, the calculation
+In Section \ref{ch:connection} we will need what $d\omega$ is for some smooth 1-form $\omega$, the calculation
 will be done there. For now, just note that 
 any smooth 1-form can be written as $\omega = Fdx+Gdy+Hdz$ for some appropriate smooth functions $F,G,H$
 with the standard basis $\mathbb{E}^3$.
@@ -155,7 +155,7 @@ Because $\nabla_{E_i}E_j \in \mathcal{T}(\mathcal{M})$, we can also write this i
 that is, for all pairs of indices $i,j \in \{1,2,3\}$, we write
 $$\nabla_{E_i}E_j = \Gamma_{ij}^kE_k$$
 The $\Gamma_{ij}^k$ are called \emph{Christoffel symbols} or \emph{connection coefficients}.
-With these coefficients, we can rewrite equation \ref{eq:rewrite} to 
+With these coefficients, we can rewrite Equation \ref{eq:rewrite} to 
 \begin{equation}
   \nabla_XY = X^iY^j \Gamma_{ij}^kE_k + X^iE_i(Y^j) E_j = X^i(X^iY^j\Gamma_{ij}^k + E_i(Y^k))E_k
 \end{equation}
@@ -173,7 +173,7 @@ To show that it is indeed a connection, it must also satisfy $C^{\infty}$ linear
 where we used $C^{\infty}$ linearity of 1-forms. Notice the relation between
 the Christoffel symbols and the $\omega$ 1-form:
 $$\Hat{\nabla}_{E_i}E_j = \omega_j^k(E_i)E_j = \Gamma_{ij}^kE_k \qquad \text{with }\Gamma_{ij}^k=\omega_j^k(E_i)$$
-Thus, the $3\times3$ 1-forms $\omega_j^k$ define a connection and are
+Thus, the $3\times3$ 1-forms $\omega_j^k$ define a connection and
 are called a connection 1-form, or a matrix-valued connection 1-form. In the coframe, these are written as $\omega_j^k = \Gamma_{ij}^k \mathcal{E}^i$.
 
 
@@ -194,7 +194,8 @@ In a later step, after finding a good seamless map $\phi$, it is quantized to ge
 Integer-Grid Map $f$, where the hexahedral elements can be extracted from,  see Figure \ref{fig:integer-grid} for an illustration.
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=30em]{figures/integer-grid-rough}
+  \def\svgwidth{30em}
+  \input{figures/seamlessmap.pdf_tex}
   \caption{Idea of quadrangulation with Integer-Grid Maps in 2D (Figure from~\cite{Hex22})}
   \label{fig:integer-grid}
 \end{figure}
@@ -217,7 +218,7 @@ A frame locally represents the edges of a deformed cube.
 We can think of a frame field as the composition of three vector fields
 and as a relaxation of the original problem. However, frame fields
 can contain singularities that the underlying vector fields do not contain~\cite{Nieser}
-and contain types of singularities that cannot appear in hex meshes and are non-meshable~\cite{Liu}.
+and contain types of singularities that cannot appear in hex meshes and are non-meshable~\cite{Liu,locallymeshable}.
 The problem of non-meshability is not discussed further here, but it
 is something to be aware of.
 
@@ -230,7 +231,7 @@ gives $2^3\cdot 3! = 48$ equivalent frames.
 Since we want non-degenerate frames and the same orientation through the grid, the constraint $\det(F)>0$ is imposed,
 which leaves $24$ equivalent frames.
 Equivalence of frames is then defined as
-$$F_u \sim F_v \iff \exists R \in \mathcal{O} : F_u=RF_v$$
+$$F_u \sim F_v \iff \exists R \in \mathcal{O} : F_u=F_vR$$
 where $\mathcal{O}$ is the \emph{chiral cubical symmetry group}~\cite{Nieser}.
 These symmetries complicate the optimization process for frame fields.
 When optimizing the smoothness of a frame field, frames have to be compared.
@@ -238,7 +239,7 @@ To compare frames, we need to check if the vectors making up
 the frames point in the same direction or if they have to be rotated
 by some matrix $M \in \mathrm{SO}(3)$ first, to make them point in the same direction.
 But now, the mentioned symmetry of representing the frames in $\mathbb{R}^3$
-make $M$ ambiguous (${M_1 = RM_2, R \in \mathcal{O}}$).
+make $M$ ambiguous (${M_1 = M_2R, R \in \mathcal{O}}$).
 Therefore, we instead use the spherical harmonics based approach to represent frames~\cite{Huang}.
 The idea is to represent frames as rotations of the polynomial $\mathbb{P}=x^4+y^4+z^4$.
 Under the restriction of the 4th degree polynomials to the sphere, that is $\mathbb{S}^2\to \mathbb{R}$,
@@ -268,7 +269,7 @@ harmonics space back to the valid space of frames will be needed, see Figure \re
 When a frame $F$ has orthonormal columns, the resulting hex elements resemble unit cubes.
 By introducing a metric $g$, we can control the size and shear of the cubes by
 relaxing the orthonormality constraint to $g$-orthonormality when
-$F^{-1}gF = \Id$
+$F^{\top}gF = \Id$
 holds. We can decompose the frame field $F$ into a rotational part $R : \mathcal{M} \to \text{SO}(3)$ and a symmetric metric part $g^{-1/2}$
 (akin to the polar decomposition of linear transformations)~\cite{Panozzo}, that is $F = g^{-1/2}R$,
 see Figure \ref{fig:factorization}.
@@ -283,7 +284,7 @@ Requirements for a frame field are usually formulated as
 \begin{itemize}
   \item Smoothness: by minimizing the Dirichlet energy $E(F)=\int_{\mathcal{M}}||\nabla F||^2 dV $, the smoothness within the frame field is maximized which minimizes distortion of the seamless map;
   \item Boundary alignment: one of the columns of the frame field should match with the surface normal such that the hex elements accurately trace the surface of the object;
-  \item Integrability: to find $\phi$ with equation \ref{eq:poisson}, the frame field must be as close to integrable as possible.
+  \item Integrability: to find $\phi$ with Equation \ref{eq:poisson}, the frame field must be as close to integrable as possible.
 \end{itemize}
 
 \end{document}

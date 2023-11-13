@@ -129,6 +129,34 @@ year = {1997},
   keywords   = {singularity graph, hexahedral meshing, octahedral fields, integer-grid maps}
 }
 
+@article{locallymeshable,
+author = {Liu, Heng and Bommes, David},
+title = {Locally Meshable Frame Fields},
+year = {2023},
+issue_date = {August 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {42},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3592457},
+doi = {10.1145/3592457},
+abstract = {The main robustness issue of state-of-the-art frame field based hexahedral mesh generation algorithms originates from non-meshable topological configurations, which do not admit the construction of an integer-grid map but frequently occur in smooth frame fields. In this article, we investigate the topology of frame fields and derive conditions on their meshability, which are the basis for a novel algorithm to automatically turn a given non-meshable frame field into a similar but locally meshable one. Despite local meshability is only a necessary but not sufficient condition for the stronger requirement of meshability, our algorithm increases the 2\% success rate of generating valid integer-grid maps with state-of-the-art methods to 58\%, when compared on the challenging HexMe dataset [Beaufort et al. 2022]. The source code of our implementation and the data of our experiments are available at https://lib.algohex.eu.},
+journal = {ACM Trans. Graph.},
+month = {jul},
+articleno = {112},
+numpages = {20},
+keywords = {integer-grid maps, singularity graph, meshability, frame fields, hexahedral meshing}
+}
+
+@online{Marek,
+  author = {Marek Teichmann},
+  title = {Robust Predicates and Degeneracy},
+  year = 2009,
+  url = {https://groups.csail.mit.edu/graphics/classes/6.838/S98/meetings/m12/pred/m12.html},
+  urldate = {2023-09-12}
+}
+
 @article{Nieser,
   author   = {Nieser, M. and Reitebuch, U. and Polthier, K.},
   title    = {CubeCover- Parameterization of 3D Volumes},
@@ -142,6 +170,26 @@ year = {1997},
   eprint   = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-8659.2011.02014.x},
   abstract = {Abstract Despite the success of quad-based 2D surface parameterization methods, effective parameterization algorithms for 3D volumes with cubes, i.e. hexahedral elements, are still missing. CubeCover is a first approach for generating a hexahedral tessellation of a given volume with boundary aligned cubes which are guided by a frame field. The input of CubeCover is a tetrahedral volume mesh. First, a frame field is designed with manual input from the designer. It guides the interior and boundary layout of the parameterization. Then, the parameterization and the hexahedral mesh are computed so as to align with the given frame field. CubeCover has similarities to the QuadCover algorithm and extends it from 2D surfaces to 3D volumes. The paper also provides theoretical results for 3D hexahedral parameterizations and analyses topological properties of the appropriate function space.},
   year     = {2011}
+}
+
+@article{Palmer,
+author = {Palmer, David and Bommes, David and Solomon, Justin},
+title = {Algebraic Representations for Volumetric Frame Fields},
+year = {2020},
+issue_date = {April 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {39},
+number = {2},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3366786},
+doi = {10.1145/3366786},
+abstract = {Field-guided parameterization methods have proven effective for quad meshing of surfaces; these methods compute smooth cross fields to guide the meshing process and then integrate the fields to construct a discrete mesh. A key challenge in extending these methods to three dimensions, however, is representation of field values. Whereas cross fields can be represented by tangent vector fields that form a linear space, the 3D analog—an octahedral frame field—takes values in a nonlinear manifold. In this work, we describe the space of octahedral frames in the language of differential and algebraic geometry. With this understanding, we develop geometry-aware tools for optimization of octahedral fields, namely geodesic stepping and exact projection via semidefinite relaxation. Our algebraic approach not only provides an elegant and mathematically sound description of the space of octahedral frames but also suggests a generalization to frames whose three axes scale independently, better capturing the singular behavior we expect to see in volumetric frame fields. These new odeco frames, so called as they are represented by orthogonally decomposable tensors, also admit a semidefinite program–based projection operator. Our description of the spaces of octahedral and odeco frames suggests computing frame fields via manifold-based optimization algorithms; we show that these algorithms efficiently produce high-quality fields while maintaining stability and smoothness.},
+journal = {ACM Trans. Graph.},
+month = {apr},
+articleno = {16},
+numpages = {17},
+keywords = {Hexahedral meshing, convex algebraic geometry, octahedral frame fields, convex relaxations}
 }
 
 @article{Panozzo,
@@ -206,6 +254,22 @@ year = {1997},
   url      = {https://doi.org/10.1007/PL00009321}
 }
 
+
+@article{segura,
+title = {An algorithm for determining intersection segment-polygon in 3D},
+journal = {Computers \& Graphics},
+volume = {22},
+number = {5},
+pages = {587-592},
+year = {1998},
+issn = {0097-8493},
+doi = {https://doi.org/10.1016/S0097-8493-98-00064-8},
+url = {https://www.sciencedirect.com/science/article/pii/S0097849398000648},
+author = {Rafael J. Segura and Francisco R. Feito},
+keywords = {computer graphics, intersection, solid modelling, computational geometry, ray-casting, computer graphics and OOP},
+abstract = {In the fields related to geometric modelling, it is fundamental to count on robust. In this work we present a new algorithm for testing the intersection between a segment and a polygon in 3D space. This algorithm is robust and efficient, and it is the basis of most operations developed in geometric modelling. After, we will apply this algorithm to a classic problem in computer graphics: determining the hidden faces of a scene using the ray-casting algorithm. To solve the problem, an object-oriented approach will be used.}
+}
+
 @inproceedings{Vaxman17,
   author    = {Vaxman, Amir and Campen, Marcel and Diamanti, Olga and Bommes, David and Hildebrandt, Klaus and Technion, Mirela Ben-Chen and Panozzo, Daniele},
   title     = {Directional Field Synthesis, Design, and Processing},
@@ -221,48 +285,4 @@ year = {1997},
   numpages  = {30},
   location  = {Los Angeles, California},
   series    = {SIGGRAPH '17}
-}
-
-@article{Palmer,
-author = {Palmer, David and Bommes, David and Solomon, Justin},
-title = {Algebraic Representations for Volumetric Frame Fields},
-year = {2020},
-issue_date = {April 2020},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {39},
-number = {2},
-issn = {0730-0301},
-url = {https://doi.org/10.1145/3366786},
-doi = {10.1145/3366786},
-abstract = {Field-guided parameterization methods have proven effective for quad meshing of surfaces; these methods compute smooth cross fields to guide the meshing process and then integrate the fields to construct a discrete mesh. A key challenge in extending these methods to three dimensions, however, is representation of field values. Whereas cross fields can be represented by tangent vector fields that form a linear space, the 3D analog—an octahedral frame field—takes values in a nonlinear manifold. In this work, we describe the space of octahedral frames in the language of differential and algebraic geometry. With this understanding, we develop geometry-aware tools for optimization of octahedral fields, namely geodesic stepping and exact projection via semidefinite relaxation. Our algebraic approach not only provides an elegant and mathematically sound description of the space of octahedral frames but also suggests a generalization to frames whose three axes scale independently, better capturing the singular behavior we expect to see in volumetric frame fields. These new odeco frames, so called as they are represented by orthogonally decomposable tensors, also admit a semidefinite program–based projection operator. Our description of the spaces of octahedral and odeco frames suggests computing frame fields via manifold-based optimization algorithms; we show that these algorithms efficiently produce high-quality fields while maintaining stability and smoothness.},
-journal = {ACM Trans. Graph.},
-month = {apr},
-articleno = {16},
-numpages = {17},
-keywords = {Hexahedral meshing, convex algebraic geometry, octahedral frame fields, convex relaxations}
-}
-
-@online{Marek,
-  author = {Marek Teichmann},
-  title = {Robust Predicates and Degeneracy},
-  year = 2009,
-  url = {https://groups.csail.mit.edu/graphics/classes/6.838/S98/meetings/m12/pred/m12.html},
-  urldate = {2023-09-12}
-}
-
-
-@article{segura,
-title = {An algorithm for determining intersection segment-polygon in 3D},
-journal = {Computers \& Graphics},
-volume = {22},
-number = {5},
-pages = {587-592},
-year = {1998},
-issn = {0097-8493},
-doi = {https://doi.org/10.1016/S0097-8493-98-00064-8},
-url = {https://www.sciencedirect.com/science/article/pii/S0097849398000648},
-author = {Rafael J. Segura and Francisco R. Feito},
-keywords = {computer graphics, intersection, solid modelling, computational geometry, ray-casting, computer graphics and OOP},
-abstract = {In the fields related to geometric modelling, it is fundamental to count on robust. In this work we present a new algorithm for testing the intersection between a segment and a polygon in 3D space. This algorithm is robust and efficient, and it is the basis of most operations developed in geometric modelling. After, we will apply this algorithm to a classic problem in computer graphics: determining the hidden faces of a scene using the ray-casting algorithm. To solve the problem, an object-oriented approach will be used.}
 }

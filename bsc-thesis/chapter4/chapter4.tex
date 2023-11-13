@@ -104,21 +104,23 @@ $$\exp(u_{\times}) = \Id + \sin(\theta) \hat{u}_{\times} + (1-\cos(\theta)) \hat
 where $\theta = ||u||_2$ is the rotation angle and $\hat{u}= u/\theta$ is the rotation axis.
 We use the trapezoidal rule to evaluate the short interval of the integral of $W$, which is given by
 $$R_{ab}=\exp \left( \left(\frac{1}{2}(W_a + W_b)^{\top}(b-a)\right)_{\times}\right)$$
-where $W_a, W_b$ are solved for by the $9\times9$ linear system given by $A_{\times}$ and $\nabla \times A$ from equation \ref{eq:linearsystem}.
+where $W_a, W_b$ are solved for by the $9\times9$ linear system given by $A_{\times}$ and $\nabla \times A$ from Equation \ref{eq:linearsystem}.
 
 
 \section{Piecewise linear discretization}
 We discretize our metric field with a tetrahedral mesh $\mathcal{T}$.
 At each vertex, we attach a metric and linearly interpolate with barycentric coordinates within a tet.
 
-Let $A_i \in \mathbb{R}^{3x3}, i \in \{1,2,3,4\}$ be the square root metrics at the vertices $v_i \in \mathbb{R}^3$ of a tet, such that
-$A^2_i = g(v_i)$. We represent a tet given by its four vertices by a 3x4 matrix, i.e.
-$$\begin{pmatrix}
-  \vertbar & \vertbar & \vertbar & \vertbar \\
-  v_1 & v_2 & v_3 & v_4 \\
-  \vertbar & \vertbar & \vertbar & \vertbar
-\end{pmatrix} \in \mathbb{R}^{3\times 4}.$$
-Any point $p$ within the tet can then be represented as
+Let $A_i \in \mathbb{R}^{3x3}, i \in \{1,2,3,4\}$ represent the square root matrices of the metric at the vertices $v_i \in \mathbb{R}^3$ of a tet,
+i.e., such that
+$A^2_i = g(v_i)$. We represent a tet by its four vertices $\{v_1, v_2,v_3,v_4\}$.
+With barycentric coordinates,
+% $$\begin{pmatrix}
+%   \vertbar & \vertbar & \vertbar & \vertbar \\
+%   v_1 & v_2 & v_3 & v_4 \\
+%   \vertbar & \vertbar & \vertbar & \vertbar
+% \end{pmatrix} \in \mathbb{R}^{3\times 4}.$$
+any point $p$ within the tet can then be represented as
 $$p = \alpha v_1 + \beta v_2 + \gamma v_3 + \delta v_4$$
 with $\alpha, \beta, \gamma, \delta \ge 0$ and $\alpha + \beta + \gamma + \delta = 1$.
 This is a linear transformation between two coordinate systems, which we can write in matrix form as
@@ -194,7 +196,7 @@ This approach has the advantage of only sampling points where there is improveme
   If sampling more points within some line segment leads to noticable improvement, more points are sampled.}
   \label{fig:recursiveSubdivision}
 \end{figure}
-The algorithm for this simple recursive scheme is shown in below.
+The algorithm for this simple recursive scheme is shown below.
 \begin{algo*}
   \vbox{
     \small

@@ -50,7 +50,7 @@ which we can simplify to
 where the Leibnitz Rule for the exterior derivative is applied
 and $\wedge$ is the exterior product between a matrix-valued 1-form and a vector-valued 1-form,
 i.e. 1-forms in each component and the matrix vector product uses $\wedge$
-as the multiplication, see section \ref{sec:evaluation} for the evaluation.
+as the multiplication, see Section \ref{sec:evaluation} for the evaluation.
 We further define
 $$\omega = RdR^{\top} \in \mathfrak{so}(3)$$
 which is an antisymmetric matrix-valued 1-form. To see this, 
@@ -76,7 +76,7 @@ then try to match the $\omega$ with $R$. This can be expressed as
   \min_{R\in \mathrm{SO}(3)} ||RdR^{\top} - \omega ||^2,
 \end{equation}
 where $\omega$ is determined by $g$ through a system of linear equations (see \ref{sec:evaluation}).
-In general, equation \ref{eq:objective} cannot be minimised to zero, therefore we solve we solve
+In general, Equation \ref{eq:objective} cannot be minimised to zero, therefore we solve
 for the nearly integrable 3D rotation field $R$.
 
 \section{Smoothness measure}
@@ -84,7 +84,7 @@ Many frame field generation methods rely on maximising smoothness through
 the minimization of the Dirichlet energy.
 Here, we show that integrability through $\omega$ is closely related to the usual
 Dirichlet energy.
-We can take equation \ref{eq:objective} as a smoothness measure and reformulate, i.e.
+We can take Equation \ref{eq:objective} as a smoothness measure and reformulate, i.e.
 \begin{equation}\label{eq:smoothness}
   ||RdR^{\top}-\omega||^2 = ||-dRR^{\top} - \omega||^2 = ||-dRR^{\top}R-\omega R||^2 = ||dR+ \omega R||^2.
 \end{equation}
@@ -93,7 +93,7 @@ By defining
   \mathcal{D}R \triangleq dR + \omega R,
 \end{equation}
 we can measure the smoothness and the integrability with a single energy $\int_{\mathcal{R}}||\mathcal{D}R||^2$.
-Now, when $g$ is constant in euclidean coordinates $(x,y,z)$, equation \ref{eq:oneform} tells us
+Now, when $g$ is constant in euclidean coordinates $(x,y,z)$, Equation \ref{eq:oneform} tells us
 that $\omega = 0$, which reduces the smoothness measure $||\mathcal{D}R||$ to 
 $||dR||^2$, which corresponds to the usual Dirichlet energy.
 In fact, $\mathcal{D}R$ corresponds to the covariant derivative of $R$ under
@@ -103,10 +103,10 @@ Special care must be taken as we abuse the notation of the covariant derivative.
 covariant derivative $\mathcal{D}$ acts on each column of $R$ separately.
 We define 
 $$\mathcal{D}R_i \triangleq \nabla_{\dot{\gamma}(t)}R_i \triangleq dR_i + \omega R_i$$
-where $dR_i$ is the derivative of each entry with respect to the angle $\theta$ and $\gamma$ is some curve on the manifold.
+where $dR_i$ is the derivative of each entry with respect to the angle $\theta$ and $\gamma$ is some curve on the manifold (again, we assume $R$ rotates about an axis $a$ with angle $\theta$).
 
 \section{Connection evaluation}\label{sec:evaluation}
-To find $\omega$, we use equation \ref{eq:oneform}
+To find $\omega$, we use Equation \ref{eq:oneform}
 $$\bm{0} = \omega \wedge (g^{1/2}d\bm{p})+ d(g^{1/2}d\bm{p})$$
 and reformulate into a linear system.
 We represent the antisymmetric matrix-valued 1-form $\omega$
@@ -138,7 +138,7 @@ So e.g. for $\omega_{23}$ we get $$\omega_{23} = \begin{bmatrix}
 We also write $A = g^{1/2}= \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$.
-Starting with the first part of equation \ref{eq:oneform}, we get
+Starting with the first part of Equation \ref{eq:oneform}, we get
 \begin{align*}
   \omega \wedge g^{1/2}d\bm{p} &= 
   \begin{bmatrix}
@@ -196,7 +196,7 @@ We use the fact that $\begin{bmatrix}
 \end{bmatrix} = \begin{bmatrix}
   A^1, A^2, A^3
 \end{bmatrix}$ because $A$ is symmetric, and $W_1$ corresponds to $\omega_{23}$, $W_2$ to $\omega_{31}$ and $W_3$ to $\omega_{12}$.
-We continue with the second part of equation \ref{eq:oneform}:
+We continue with the second part of Equation \ref{eq:oneform}:
 \begin{align*}
   d(g^{1/2}d\bm{p})= d(Ad\bm{p}) = d\left(\begin{bmatrix}
     A^1_1 & A^2_1 & A^3_1 \\

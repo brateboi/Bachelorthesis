@@ -8,7 +8,7 @@
 
 \chapter{Algorithm for $R$ between two arbitrary points in a mesh}
 \label{ch:algorithm}
-To measure the modified Dirichlet energy from equation \ref{eq:dirichlet}, we need to calculate the rotation coefficient $R_{qp}$
+To measure the modified Dirichlet energy from Equation \ref{eq:dirichlet}, we need to calculate the rotation coefficient $R_{qp}$
 between two arbitrary points $q$ and $p$ that do not necessarily lie within the same 
 tetrahedron. Since the metric and curl are different in each tet, we need to be
 able to efficiently determine all tets that get intersected by the straight
@@ -76,16 +76,16 @@ coefficient for this segment.
 The straight walk in 3D works similarly, but edges are now faces and triangles are tets. The initialization step consists of finding a starting tet $t$
 where $q$ is contained. Then, we find the face of the tet $t$ that gets intersected by the ray
 $\vec{qp}$. Again, at each step, we know that the ray goes out of our current tet $t$ through some
-face $e$ defined by vertices $uvw$. We decide if the walk continues by checking on which side $p$ lies relative to $e$.
-If the walk should continue, we hop through $e$ to a new tet $t_{new}$. With two 3D orientation tests,
+face $f$ defined by vertices $uvw$. We decide if the walk continues by checking on which side $p$ lies relative to $f$.
+If the walk should continue, we hop through $f$ to a new tet $t_{new}$. With two 3D orientation tests,
 we decide which of the vertices $u, v, w$ gets moved to the new candidate point $s$. This defines
-a new face $e_{new}$ with which our ray intersects and the walk repeats.
+a new face $f_{new}$ with which our ray intersects and the walk repeats.
 Degenerate cases such as when the ray $\vec{qp}$ goes exactly through a vertex or
 when the ray lies within a face may get the algorithm into
 an invalid state, where the algorithm may then traverse through
 cells that do not get intersected by the ray. We need to detect and escape those degenerate cases
 through some additional checks.
-How we handle these degenerate cases is described in section \ref{subsec:degenerate}.
+How we handle these degenerate cases is described in Section \ref{subsec:degenerate}.
 
 \subsection{A note on orientation tests}
 To determine on which side some point $s$ lies relative to two other points $q$ and $p$ (that represent a line) in 2D, the geometric \emph{orientation} predicate is used.
@@ -142,13 +142,13 @@ we can be sure that the result has the correct sign.
 
 
 \section{Algorithm $\op{tetFinder}$}
-As described in section \ref{sec:framework}, the straight walk needs different
+As described in Section \ref{sec:framework}, the straight walk needs different
 components to work. These components are described in the following subsections.
-The final algorithm to find all intersected tetrahedra between two points is in section \ref{subsec:tetfinder}.
+The final algorithm to find all intersected tetrahedra between two points is in Section \ref{subsec:tetfinder}.
 
 \subsection{Starting tet}\label{subsec:starttet}
 To start, the algorithm needs to know in which tet the starting point $q$ is located.
-With a simple linear nearest neighbor search of point $q$, we find a good heuristic starting point
+With a simple linear nearest neighbor search of point $q$, we find a good heuristic starting vertex
 $s$. From $s$, every tet incident to $s$ is checked if it contains $q$.
 Most of the times, this
 method works for locating which tet contains $q$. In case it fails,
@@ -193,14 +193,14 @@ Again, by starting in this configuration, all faces $\triangle uvw$
 traversed get intersected by $\Vec{qp}$. Then, we find each
 intersection point with the ray, add the intersection points to a list
 with the current tet $t$ and finally use this as input for
-calculating the rotation coefficient as described in chapter \ref{ch:calculation}.
+calculating the rotation coefficient as described in Chapter \ref{ch:calculation}.
 To get into a valid state, an initialization needs to be performed.
 In \emph{Walking in a triangulation}~\cite{Devillers}, they assume that
 $q$ is a vertex in the tet mesh. Thus, their approach of turning around $q$
 is not applicable in our case.
 
 For simplicity, we solve this problem with a brute-force approach.
-First, we find which tet $t$ contains $q$ as described in section \ref{subsec:starttet}.
+First, we find which tet $t$ contains $q$ as described in Section \ref{subsec:starttet}.
 From there, we go through the four faces of the tet and check which
 one gets intersected by the ray $\Vec{qp}$.
 When the face which gets intersected was found,
@@ -219,9 +219,9 @@ cuts the triangle if and only if~\cite{segura}:
 \begin{equation}\label{eq:checks}
   \op{orient}(p,u,q,v) \ge 0 \land \op{orient}(p,w,v,q) \ge 0 \land \op{orient}(p,u,w,q) \ge 0 
 \end{equation}
-If $\op{orientation}(q,u,v,w) < 0$, then the orientation tests in equation \ref{eq:checks}
+If $\op{orientation}(q,u,v,w) < 0$, then the orientation tests in Equation \ref{eq:checks}
 must be less or equal to zero.
-Before checking for intersection with equation \ref{eq:checks}, we must ensure that 
+Before checking for intersection with Equation \ref{eq:checks}, we must ensure that 
 $p$ and $q$ lie on opposite sides of the triangle $\triangle uvw$, i.e.
 \begin{equation}\label{eq:sides}
   (\op{orient}(q,u,v,w) < 0 \land \op{orient}(p,u,v,w) > 0)  \lor (\op{orient}(q,u,v,w) > 0 \land \op{orient}(p,u,v,w) < 0)  
@@ -275,8 +275,8 @@ The final algorithm $\op{tetFinder}$ is presented in pseudocode and uses operati
   \item \texttt{s=vertex of $t, s \neq u, s \neq v, s \neq w$}, returns the remaining vertex of a tetrahedron whose other three
   vertices are known
   \item \texttt{intersection(ray, triangle)}, returns the intersection point of the ray with the triangle %calculated with FP arithmetic
-  \item \texttt{validState(q,p,u,v,w)}, checks if the current configuration is valid as in section \ref{subsec:validstate}
-  \item \texttt{initialization(t,q,p,u,v,w)}, tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in section \ref{subsec:validstate}. Returns \texttt{true} if successful
+  \item \texttt{validState(q,p,u,v,w)}, checks if the current configuration is valid as in Section \ref{subsec:validstate}
+  \item \texttt{initialization(t,q,p,u,v,w)}, tries to initialize by assigning vertices $u,v,w$ from tet $t$ as described in Section \ref{subsec:validstate}. Returns \texttt{true} if successful
   \item \texttt{locateTets(q)}, returns all tets that contain $q$
 \end{itemize}
 \begin{algo*}
